@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	
 	<groupId>com.thinkgem.jeesite</groupId>
-	<artifactId>jeesite</artifactId>
+	<artifactId>prho</artifactId>
 	<version>1.2.7</version>
 	<packaging>war</packaging>
 	
-	<name>JeeSite</name>
+	<name>PRHO</name>
 	<url>http://thinkgem.github.com/jeesite</url>
 	<inceptionYear>2012-2016</inceptionYear>
 	

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.prho.dao.PrhoTestLogDao">
+    
+	<sql id="prhoTestLogColumns">
+		a.id AS "id",
+		a.logcode AS "logcode",
+		a.experimentid AS "experimentid",
+		a.problemfeedback AS "problemfeedback",
+		a.problemstatus AS "problemstatus",
+		a.infourl AS "infourl",
+		a.liabler AS "liabler",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.updater_by AS "updaterBy",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="prhoTestLogJoins">
+	</sql>
+    
+	<select id="get" resultType="PrhoTestLog">
+		SELECT 
+			<include refid="prhoTestLogColumns"/>
+		FROM prho_test_log a
+		<include refid="prhoTestLogJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="PrhoTestLog">
+		SELECT 
+			<include refid="prhoTestLogColumns"/>
+		FROM prho_test_log a
+		<include refid="prhoTestLogJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="logcode != null and logcode != ''">
+				AND a.logcode = #{logcode}
+			</if>
+			<if test="liabler != null and liabler != ''">
+				AND a.liabler = #{liabler}
+			</if>
+			<if test="updateDate != null and updateDate != ''">
+				AND a.update_date = #{updateDate}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="PrhoTestLog">
+		SELECT 
+			<include refid="prhoTestLogColumns"/>
+		FROM prho_test_log a
+		<include refid="prhoTestLogJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO prho_test_log(
+			id,
+			logcode,
+			experimentid,
+			problemfeedback,
+			problemstatus,
+			infourl,
+			liabler,
+			create_by,
+			create_date,
+			updater_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{logcode},
+			#{experimentid},
+			#{problemfeedback},
+			#{problemstatus},
+			#{infourl},
+			#{liabler},
+			#{createBy.id},
+			#{createDate},
+			#{updaterBy},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE prho_test_log SET 	
+			logcode = #{logcode},
+			experimentid = #{experimentid},
+			problemfeedback = #{problemfeedback},
+			problemstatus = #{problemstatus},
+			infourl = #{infourl},
+			liabler = #{liabler},
+			updater_by = #{updaterBy},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE prho_test_log SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
