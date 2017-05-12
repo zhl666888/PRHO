@@ -26,17 +26,16 @@
 			$("#menu a.menu").click(function(){
 				// 一级菜单焦点
 				$("#menu li.menu").removeClass("active");
-				var thisParent = $(this).parents(".accordion-group");
 				$(this).parent().addClass("active");
 				// 左侧区域隐藏
-				/* if ($(this).attr("target") == "mainFrame"){
+				if ($(this).attr("target") == "mainFrame"){
 					$("#left,#openClose").hide();
 					wSizeWidth();
 					// <c:if test="${tabmode eq '1'}"> 隐藏页签
 					$(".jericho_tab").hide();
 					$("#mainFrame").show();//</c:if>
 					return true;
-				} */
+				}
 				// 左侧区域显示
 				$("#left,#openClose").show();
 				if(!$("#openClose").hasClass("close")){
@@ -65,8 +64,7 @@
 							return false;
 						}
 						$("#left .accordion").hide();
-						$(thisParent).append(data);
-						//$("#left").append(data);
+						$("#left").append(data);
 						// 链接去掉虚框
 						$(menuId + " a").bind("focus",function() {
 							if(this.blur) {this.blur()};
@@ -106,7 +104,6 @@
 			});
 			// 初始化点击第一个一级菜单
 			$("#menu a.menu:first span").click();
-			
 			// <c:if test="${tabmode eq '1'}"> 下拉菜单以选项卡方式打开
 			$("#userInfo .dropdown-menu a").mouseup(function(){
 				return addTab($(this), true);
@@ -184,7 +181,24 @@
 					</script>
 				</c:if> --%>
 				<div class="nav-collapse">
-			<%--
+					<ul id="menu" class="nav" style="*white-space:nowrap;float:none;">
+						<c:set var="firstMenu" value="true"/>
+						<c:forEach items="${fns:getMenuList()}" var="menu" varStatus="idxStatus">
+							<c:if test="${menu.parent.id eq '1'&&menu.isShow eq '1'}">
+								<li class="menu ${not empty firstMenu && firstMenu ? ' active' : ''}">
+									<c:if test="${empty menu.href}">
+										<a class="menu" href="javascript:" data-href="${ctx}/sys/menu/tree?parentId=${menu.id}" data-id="${menu.id}"><span>${menu.name}</span></a>
+									</c:if>
+									<c:if test="${not empty menu.href}">
+										<a class="menu" href="${fn:indexOf(menu.href, '://') eq -1 ? ctx : ''}${menu.href}" data-id="${menu.id}" target="mainFrame"><span>${menu.name}</span></a>
+									</c:if>
+								</li>
+								<c:if test="${firstMenu}">
+									<c:set var="firstMenuId" value="${menu.id}"/>
+								</c:if>
+								<c:set var="firstMenu" value="false"/>
+							</c:if>
+						</c:forEach><%--
 						<shiro:hasPermission name="cms:site:select">
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#">${fnc:getSite(fnc:getCurrentSiteId()).name}<b class="caret"></b></a>
@@ -193,39 +207,34 @@
 							</ul>
 						</li>
 						</shiro:hasPermission> --%>
+					</ul>
 				</div><!--/.nav-collapse -->
 			</div>
 	    </div>
 	    <div class="container-fluid">
 			<div id="content" class="row-fluid">
-					<div id="left">
-					<c:set var="firstMenu" value="true"/>
-					<c:forEach items="${fns:getMenuList()}" var="menu" varStatus="idxStatus">
-											
-						<c:if test="${menu.parent.id eq '1'&&menu.isShow eq '1'}">
-							<div class="accordion-group">
-								<div class="accordion-heading" id="menu">
+				<div id="left"><%-- 
+					<iframe id="menuFrame" name="menuFrame" src="" style="overflow:visible;" scrolling="yes" frameborder="no" width="100%" height="650"></iframe> --%>
+			<%-- 	<ul id="menu" class="nav" style="*white-space:nowrap;float:none;">
+						<c:set var="firstMenu" value="true"/>
+						<c:forEach items="${fns:getMenuList()}" var="menu" varStatus="idxStatus">
+							<c:if test="${menu.parent.id eq '1'&&menu.isShow eq '1'}">
+								<li class="menu ${not empty firstMenu && firstMenu ? ' active' : ''}">
 									<c:if test="${empty menu.href}">
-										
-										<a class="accordion-toggle menu" data-href="${ctx}/sys/menu/tree?parentId=${menu.id}" href="javascript:"  title=""   data-id="${menu.id}"><i class="${menu.icon}"></i><span>${menu.name}</span></a>
-									</c:if>	
+										<a class="menu" href="javascript:" data-href="${ctx}/sys/menu/tree?parentId=${menu.id}" data-id="${menu.id}"><span>${menu.name}</span></a>
+									</c:if>
 									<c:if test="${not empty menu.href}">
-										<a class="accordion-toggle menu" href="${fn:indexOf(menu.href, '://') eq -1 ? ctx : ''}${menu.href}" data-id="${menu.id}" target="mainFrame"><span>${menu.name}</span></a>
-									</c:if>								
-								</div>
-								<div id="collapse-71" class="accordion-body collapse ">
-									<div class="accordion-inner">
-									</div>
-								</div>
+										<a class="menu" href="${fn:indexOf(menu.href, '://') eq -1 ? ctx : ''}${menu.href}" data-id="${menu.id}" target="mainFrame"><span>${menu.name}</span></a>
+									</c:if>
+								</li>
 								<c:if test="${firstMenu}">
 									<c:set var="firstMenuId" value="${menu.id}"/>
 								</c:if>
 								<c:set var="firstMenu" value="false"/>
-							</div>
-						</c:if>
+							</c:if>
+						</c:forEach>
+						</ul> --%>
 						
-					</c:forEach>
-					
 				</div>
 				<div id="openClose" class="close">&nbsp;</div>
 				<div id="right">

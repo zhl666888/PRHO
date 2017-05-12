@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.prho.dao.PrhoProjectInfoDao">
+    
+	<sql id="prhoProjectInfoColumns">
+		a.id AS "id",
+		a.projectcode AS "projectcode",
+		a.user_id AS "user.id",
+		a.projectname AS "projectname",
+		a.projectbegintime AS "projectbegintime",
+		a.projectplanendtime AS "projectplanendtime",
+		a.projectendtime AS "projectendtime",
+		a.projectstatus AS "projectstatus",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		u3.name AS "user.name"
+	</sql>
+	
+	<sql id="prhoProjectInfoJoins">
+		LEFT JOIN sys_user u3 ON u3.id = a.user_id
+	</sql>
+    
+	<select id="get" resultType="PrhoProjectInfo">
+		SELECT 
+			<include refid="prhoProjectInfoColumns"/>
+		FROM prho_project_info a
+		<include refid="prhoProjectInfoJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="PrhoProjectInfo">
+		SELECT 
+			<include refid="prhoProjectInfoColumns"/>
+		FROM prho_project_info a
+		<include refid="prhoProjectInfoJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="projectname != null and projectname != ''">
+				AND a.projectname = #{projectname}
+			</if>
+			<if test="projectbegintime != null and projectbegintime != ''">
+				AND a.projectbegintime = #{projectbegintime}
+			</if>
+			<if test="projectendtime != null and projectendtime != ''">
+				AND a.projectendtime = #{projectendtime}
+			</if>
+			<if test="projectstatus != null and projectstatus != ''">
+				AND a.projectstatus = #{projectstatus}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="PrhoProjectInfo">
+		SELECT 
+			<include refid="prhoProjectInfoColumns"/>
+		FROM prho_project_info a
+		<include refid="prhoProjectInfoJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO prho_project_info(
+			id,
+			projectcode,
+			user_id,
+			projectname,
+			projectbegintime,
+			projectplanendtime,
+			projectendtime,
+			projectstatus,
+			create_date,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{projectcode},
+			#{user.id},
+			#{projectname},
+			#{projectbegintime},
+			#{projectplanendtime},
+			#{projectendtime},
+			#{projectstatus},
+			#{createDate},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE prho_project_info SET 	
+			projectcode = #{projectcode},
+			user_id = #{user.id},
+			projectname = #{projectname},
+			projectbegintime = #{projectbegintime},
+			projectplanendtime = #{projectplanendtime},
+			projectendtime = #{projectendtime},
+			projectstatus = #{projectstatus},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE prho_project_info SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

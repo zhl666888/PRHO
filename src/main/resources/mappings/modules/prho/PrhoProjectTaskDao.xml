@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.prho.dao.PrhoProjectTaskDao">
+    
+	<sql id="prhoProjectTaskColumns">
+		a.id AS "id",
+		a.project_id AS "projectId",
+		a.taskmanager AS "taskmanager",
+		a.taskname AS "taskname",
+		a.tastplanbegintime AS "tastplanbegintime",
+		a.taskplanendtime AS "taskplanendtime",
+		a.expectedhour AS "expectedhour",
+		a.taskcompleteschedule AS "taskcompleteschedule",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="prhoProjectTaskJoins">
+	</sql>
+    
+	<select id="get" resultType="PrhoProjectTask">
+		SELECT 
+			<include refid="prhoProjectTaskColumns"/>
+		FROM prho_project_task a
+		<include refid="prhoProjectTaskJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="PrhoProjectTask">
+		SELECT 
+			<include refid="prhoProjectTaskColumns"/>
+		FROM prho_project_task a
+		<include refid="prhoProjectTaskJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="taskmanager != null and taskmanager != ''">
+				AND a.taskmanager = #{taskmanager}
+			</if>
+			<if test="taskname != null and taskname != ''">
+				AND a.taskname = #{taskname}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="PrhoProjectTask">
+		SELECT 
+			<include refid="prhoProjectTaskColumns"/>
+		FROM prho_project_task a
+		<include refid="prhoProjectTaskJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO prho_project_task(
+			id,
+			project_id,
+			taskmanager,
+			taskname,
+			tastplanbegintime,
+			taskplanendtime,
+			expectedhour,
+			taskcompleteschedule,
+			create_date,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{projectId},
+			#{taskmanager},
+			#{taskname},
+			#{tastplanbegintime},
+			#{taskplanendtime},
+			#{expectedhour},
+			#{taskcompleteschedule},
+			#{createDate},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE prho_project_task SET 	
+			project_id = #{projectId},
+			taskmanager = #{taskmanager},
+			taskname = #{taskname},
+			tastplanbegintime = #{tastplanbegintime},
+			taskplanendtime = #{taskplanendtime},
+			expectedhour = #{expectedhour},
+			taskcompleteschedule = #{taskcompleteschedule},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE prho_project_task SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
