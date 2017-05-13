@@ -25,8 +25,11 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>任务负责人：</label>
-				<form:input path="taskmanager" htmlEscape="false" maxlength="200" class="input-medium"/>
+			<li><label>项目负责人：</label>
+			<form:select path="taskmanager" class="input-medium">
+					<form:option value="" label=""/>
+					<%-- <form:options items="${fnslms:getAllUser()}" itemLabel="name" itemValue="id" htmlEscape="false"/> --%>
+				</form:select>
 			</li>
 			<li><label>任务名称：</label>
 				<form:input path="taskname" htmlEscape="false" maxlength="200" class="input-medium"/>

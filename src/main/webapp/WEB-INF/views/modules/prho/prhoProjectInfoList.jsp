@@ -39,9 +39,9 @@
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 			</li>
 			<li><label>项目状态：</label>
-				<form:select path="projectstatus" class="input-medium">
+				<form:select path="projectstatus" class="input-medium ">
 					<form:option value="" label=""/>
-					<form:options items="${fns:getDictList('')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+					<form:options items="${fns:getDictList('project_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
@@ -84,7 +84,7 @@
 					<fmt:formatDate value="${prhoProjectInfo.projectendtime}" pattern="yyyy-MM-dd"/><!-- pattern="yyyy-MM-dd HH:mm:ss" -->
 				</td>
 				<td>
-					${fns:getDictLabel(prhoProjectInfo.projectstatus, '', '')}
+					${fns:getDictLabel(prhoProjectInfo.projectstatus, 'project_status', '')}
 				</td>
 				<shiro:hasPermission name="prho:prhoProjectInfo:edit"><td>
     				<a href="${ctx}/prho/prhoProjectInfo/form?id=${prhoProjectInfo.id}">修改</a>

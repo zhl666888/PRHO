@@ -38,6 +38,10 @@
 			<div class="controls">
 				<form:input path="taskmanager" htmlEscape="false" maxlength="200" class="input-xlarge "/>
 			</div>
+			<%-- <div class="controls">
+				<sys:treeselect id="user" name="user.id" value="${prhoProjectTask.user.id}" labelName="user.name" labelValue="${prhoProjectTask.user.name}"
+					title="用户" url="/sys/office/treeData?type=3" cssClass="" allowClear="true" notAllowSelectParent="true"/>
+			</div> --%>
 		</div>
 		<div class="control-group">
 			<label class="control-label">任务名称：</label>
