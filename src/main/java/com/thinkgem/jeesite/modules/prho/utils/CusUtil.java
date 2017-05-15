@@ -4,12 +4,17 @@ import java.util.List;
 
 import com.thinkgem.jeesite.common.utils.CacheUtils;
 import com.thinkgem.jeesite.common.utils.SpringContextHolder;
+import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectInfo;
+import com.thinkgem.jeesite.modules.prho.service.PrhoProjectInfoService;
 import com.thinkgem.jeesite.modules.prho.service.PrhoUserGroupService;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 
 public class CusUtil {
 	private static PrhoUserGroupService prhoUserGroupService = SpringContextHolder.getBean(PrhoUserGroupService.class);
+	private static PrhoProjectInfoService prhoProjectInfoService = SpringContextHolder.getBean(PrhoProjectInfoService.class);
+
 	public static final String USER_LIST_CACHE = "userListCache";
+	public static final String PRHOPROJECTINFO_LIST_CACHE = "prhoProjectInfoListCache";
 	/**
 	 * 返回所有用户
 	 */
@@ -23,4 +28,17 @@ public class CusUtil {
 		}
 		return userList;
 	}
+	/**
+	 * 
+	 * 获取项目信息的所有项目名称
+	 */
+	public static List<PrhoProjectInfo> getAllProjectName(){
+		@SuppressWarnings("unchecked")
+			List<PrhoProjectInfo> prList = (List<PrhoProjectInfo>) CacheUtils.get(PRHOPROJECTINFO_LIST_CACHE, "prhoProjectInfoListCache");
+			if (prList == null||prList.size()==0) {
+				PrhoProjectInfo ppi = new PrhoProjectInfo();
+				prList = prhoProjectInfoService.findProjectNameList(ppi);
+			}
+			return prList;
+		}
 }

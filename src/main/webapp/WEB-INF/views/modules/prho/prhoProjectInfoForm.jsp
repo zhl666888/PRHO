@@ -41,14 +41,15 @@
 		</div>
 		<div class="control-group">
 			<label class="control-label">项目负责人：</label>
-		<%-- 	<div class="controls">
-				<sys:treeselect id="user" name="user.id" value="${prhoProjectInfo.user.id}" labelName="user.name" labelValue="${prhoProjectInfo.user.name}"
-					title="用户" url="/sys/office/treeData?type=3" cssClass="" allowClear="true" notAllowSelectParent="true"/>
-			</div> --%>
+			<div class="controls">
+				<%-- sys:treeselect id="user" name="user.id" value="${prhoProjectInfo.user.id}" labelName="user.name" labelValue="${prhoProjectInfo.user.name}"
+					title="用户" url="/sys/office/treeData?type=3" cssClass="" allowClear="true" notAllowSelectParent="true"/> --%>
+			
 				<form:select path="userId" class="input-medium">
 					<form:option value="" label=""/>
-					<form:options items="${fnprho:getAllUser()}" itemLabel="" itemValue="" htmlEscape="false"/>
+					<form:options items="${fnprho:getAllUser()}" itemLabel="name" itemValue="id" htmlEscape="false"/>
 				</form:select>
+				</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">项目名称：</label>

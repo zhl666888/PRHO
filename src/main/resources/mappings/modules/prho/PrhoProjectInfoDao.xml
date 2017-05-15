@@ -5,7 +5,7 @@
 	<sql id="prhoProjectInfoColumns">
 		a.id AS "id",
 		a.projectcode AS "projectcode",
-		a.user_id AS "user.id",
+		a.user_id AS "userId",
 		a.projectname AS "projectname",
 		a.projectbegintime AS "projectbegintime",
 		a.projectplanendtime AS "projectplanendtime",
@@ -95,7 +95,7 @@
 		) VALUES (
 			#{id},
 			#{projectcode},
-			#{user.id},
+			#{userId},
 			#{projectname},
 			#{projectbegintime},
 			#{projectplanendtime},
@@ -111,7 +111,7 @@
 	<update id="update">
 		UPDATE prho_project_info SET 	
 			projectcode = #{projectcode},
-			user_id = #{user.id},
+			user_id = #{userId},
 			projectname = #{projectname},
 			projectbegintime = #{projectbegintime},
 			projectplanendtime = #{projectplanendtime},
@@ -127,5 +127,56 @@
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
-	
+	<select id="findPageBy" resultType="PrhoProjectInfo">
+		SELECT 
+			<include refid="prhoProjectInfoColumns"/>
+		FROM prho_project_info a
+		<include refid="prhoProjectInfoJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="projectname != null and projectname != ''">
+				AND a.projectname like concat('%',#{projectname} ,'%')
+			</if>
+			<!-- <if test="projectbegintime != null and projectbegintime != ''">
+				AND a.projectbegintime = #{projectbegintime}
+			</if>
+			<if test="projectendtime != null and projectendtime != ''">
+				AND a.projectendtime = #{projectendtime}
+			</if> -->
+			<if test="starttime!=null and starttime!=''">  
+    <![CDATA[   and DATE_FORMAT(projectbegintime, '%Y-%m-%d')>=  DATE_FORMAT(#{starttime}, '%Y-%m-%d')   ]]>  
+</if>  
+<if test="endtime!=null and endtime!=''">  
+    <![CDATA[  and DATE_FORMAT(projectendtime, '%Y-%m-%d') <= DATE_FORMAT(#{endtime}, '%Y-%m-%d')    ]]>  
+</if>  
+			<if test="projectstatus != null and projectstatus != ''">
+				AND a.projectstatus = #{projectstatus}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	<select id="findProjectNameList" resultType="PrhoProjectInfo">
+		SELECT 
+			<include refid="prhoProjectInfoColumns"/>
+		FROM prho_project_info a
+		<include refid="prhoProjectInfoJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
 </mapper>

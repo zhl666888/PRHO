@@ -22,7 +22,9 @@ public class PrhoProjectInfo extends DataEntity<PrhoProjectInfo> {
 	private User user;		// 用户id
 	private String projectname;		// 项目名称
 	private Date projectbegintime;		// 项目启动日期
+	private Date starttime;    // 查询条件的开始时间
 	private Date projectplanendtime;		// 预计结束日期
+	private Date endtime;    //查询条件的结束时间
 	private Date projectendtime;		// 实际结束日期
 	private String projectstatus;		// 项目状态 未开始1、进行中2、已结束3
 	private String userId; //项目负责人
@@ -104,6 +106,24 @@ public class PrhoProjectInfo extends DataEntity<PrhoProjectInfo> {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+	
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	public Date getStarttime() {
+		return starttime;
+	}
+
+	public void setStarttime(Date starttime) {
+		this.starttime = starttime;
+	}
+	
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	public Date getEndtime() {
+		return endtime;
+	}
+
+	public void setEndtime(Date endtime) {
+		this.endtime = endtime;
 	}
 	
 	

@@ -50,19 +50,28 @@
 			</div>
 		</div>
 		<div class="control-group">
+		<label class="control-label">项目名称：</label>  <!-- 保存项目id -->
+		<div class="controls">
+		<form:select path="projectId" class="input-medium">
+					<form:option value="" label=""/>
+					<form:options items="${fnprho:getAllProjectName()}" itemLabel="projectname" itemValue="id" htmlEscape="false"/>
+		</form:select>
+		</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">计划开始时间：</label>
 			<div class="controls">
 				<input name="tastplanbegintime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
-					value="<fmt:formatDate value="${prhoProjectTask.tastplanbegintime}" pattern="yyyy-MM-dd"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+					value="<fmt:formatDate value="${prhoProjectTask.tastplanbegintime}" pattern="yyyy-MM-dd HH:mm"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false});"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">计划结束时间：</label>
 			<div class="controls">
 				<input name="taskplanendtime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
-					value="<fmt:formatDate value="${prhoProjectTask.taskplanendtime}" pattern="yyyy-MM-dd"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+					value="<fmt:formatDate value="${prhoProjectTask.taskplanendtime}" pattern="yyyy-MM-dd HH:mm"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false});"/>
 			</div>
 		</div>
 		<div class="control-group">

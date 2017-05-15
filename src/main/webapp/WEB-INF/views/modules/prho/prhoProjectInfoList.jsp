@@ -29,13 +29,13 @@
 				<form:input path="projectname" htmlEscape="false" maxlength="150" class="input-medium"/>
 			</li>
 			<li><label style="width:100px">项目启动日期：</label>
-				<input name="projectbegintime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
-					value="<fmt:formatDate value="${prhoProjectInfo.projectbegintime}" pattern="yyyy-MM-dd"/>"
+				<input name="starttime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
+					value="<fmt:formatDate value="${prhoProjectInfo.starttime}" pattern="yyyy-MM-dd"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 			</li>
 			<li><label style="width:100px">实际结束日期：</label>
-				<input name="projectendtime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
-					value="<fmt:formatDate value="${prhoProjectInfo.projectendtime}" pattern="yyyy-MM-dd"/>"
+				<input name="endtime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
+					value="<fmt:formatDate value="${prhoProjectInfo.endtime}" pattern="yyyy-MM-dd"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 			</li>
 			<li><label>项目状态：</label>

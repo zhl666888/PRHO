@@ -243,5 +243,11 @@
     <function-signature>java.lang.String toJsonString(java.lang.Object)</function-signature>
     <example>${fns:toJson(object)}</example>  
   </function>
-  
+     <function>
+    <description>获取所有用户</description>
+    <name>getAllUser</name>
+    <function-class>com.thinkgem.jeesite.modules.prho.utils.CusUtil</function-class>
+    <function-signature>java.util.List getAllUser()</function-signature>
+    <example>${fns:getAllUser()}</example>  
+  </function>
 </taglib>

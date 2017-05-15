@@ -7,7 +7,7 @@
    <description>JSTL 1.1 functions library</description>
   <display-name>JSTL functions prho</display-name>
   <tlib-version>1.1</tlib-version>
-  <short-name>prho</short-name>
+  <short-name>fnprho</short-name>
   <uri>http://java.sun.com/jsp/jstl/functionsc</uri>
    <function>
     <description>获取所有用户</description>
@@ -15,5 +15,12 @@
     <function-class>com.thinkgem.jeesite.modules.prho.utils.CusUtil</function-class>
     <function-signature>java.util.List getAllUser()</function-signature>
     <example>${fnprho:getAllUser()}</example>  
+  </function>
+  <function>
+    <description>获取项目信息中的所有项目名称</description>
+    <name>getAllProjectName</name>
+    <function-class>com.thinkgem.jeesite.modules.prho.utils.CusUtil</function-class>
+    <function-signature>java.util.List getAllProjectName()</function-signature>
+    <example>${fnprho:getAllProjectName()}</example>  
   </function>
   </taglib>

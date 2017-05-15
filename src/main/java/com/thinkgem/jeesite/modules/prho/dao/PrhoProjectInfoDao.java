@@ -3,6 +3,8 @@
  */
 package com.thinkgem.jeesite.modules.prho.dao;
 
+import java.util.List;
+
 import com.thinkgem.jeesite.common.persistence.CrudDao;
 import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
 import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectInfo;
@@ -14,5 +16,6 @@ import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectInfo;
  */
 @MyBatisDao
 public interface PrhoProjectInfoDao extends CrudDao<PrhoProjectInfo> {
-	
+	public List<PrhoProjectInfo> findPageBy(PrhoProjectInfo prhoProjectInfo);
+    public List<PrhoProjectInfo> findProjectNameList(PrhoProjectInfo prhoProjectInfo);
 }

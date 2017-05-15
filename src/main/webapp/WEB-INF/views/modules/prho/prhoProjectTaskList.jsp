@@ -25,17 +25,20 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>项目负责人：</label>
-			<form:select path="taskmanager" class="input-medium">
+			<li><label>项目名称：</label>
+			<form:select path="projectId" class="input-medium">
 					<form:option value="" label=""/>
-					<%-- <form:options items="${fnslms:getAllUser()}" itemLabel="name" itemValue="id" htmlEscape="false"/> --%>
+					<form:options items="${fnprho:getAllProjectName()}" itemLabel="projectname" itemValue="id" htmlEscape="false"/>
 				</form:select>
 			</li>
 			<li><label>任务名称：</label>
 				<form:input path="taskname" htmlEscape="false" maxlength="200" class="input-medium"/>
 			</li>
 			<li><label>任务状态：</label>
-				<form:input path="taskstatus" htmlEscape="false" maxlength="200" class="input-medium"/>
+				<form:select path="taskstatus" class="input-medium ">
+					<form:option value="" label=""/>
+					<form:options items="${fns:getDictList('task_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
@@ -50,6 +53,7 @@
 				<th>计划开始时间</th>
 				<th>计划结束时间</th>
 				<th>预计用时</th>
+				<th>所属项目</th>
 				<th>任务完成进度</th>
 				<shiro:hasPermission name="prho:prhoProjectTask:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
@@ -64,13 +68,16 @@
 					${prhoProjectTask.taskname}
 				</td>
 				<td>
-					<fmt:formatDate value="${prhoProjectTask.tastplanbegintime}" pattern="yyyy-MM-dd"/>
+					<fmt:formatDate value="${prhoProjectTask.tastplanbegintime}" pattern="yyyy-MM-dd HH:mm"/>
 				</td>
 				<td>
-					<fmt:formatDate value="${prhoProjectTask.taskplanendtime}" pattern="yyyy-MM-dd"/>
+					<fmt:formatDate value="${prhoProjectTask.taskplanendtime}" pattern="yyyy-MM-dd HH:mm"/>
 				</td>
 				<td>
 					${prhoProjectTask.expectedhour}
+				</td>
+				<td>
+					${prhoProjectTask.prhoProjectInfo.projectname}
 				</td>
 				<td>
 					${prhoProjectTask.taskcompleteschedule}

@@ -25,7 +25,7 @@ public class PrhoProjectTask extends DataEntity<PrhoProjectTask> {
 	private String expectedhour;		// 预计用时 decimal
 	private String taskcompleteschedule;		// 任务完成进度
 	private String taskstatus;		// 任务完成进度
-	
+	private PrhoProjectInfo prhoProjectInfo;  //项目信息对象
 	public PrhoProjectTask() {
 		super();
 	}
@@ -102,6 +102,14 @@ public class PrhoProjectTask extends DataEntity<PrhoProjectTask> {
 
 	public void setTaskstatus(String taskstatus) {
 		this.taskstatus = taskstatus;
+	}
+
+	public PrhoProjectInfo getPrhoProjectInfo() {
+		return prhoProjectInfo;
+	}
+
+	public void setPrhoProjectInfo(PrhoProjectInfo prhoProjectInfo) {
+		this.prhoProjectInfo = prhoProjectInfo;
 	}
 	
 }

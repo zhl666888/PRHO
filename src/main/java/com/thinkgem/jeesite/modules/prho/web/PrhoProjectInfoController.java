@@ -49,7 +49,7 @@ public class PrhoProjectInfoController extends BaseController {
 	@RequiresPermissions("prho:prhoProjectInfo:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(PrhoProjectInfo prhoProjectInfo, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<PrhoProjectInfo> page = prhoProjectInfoService.findPage(new Page<PrhoProjectInfo>(request, response), prhoProjectInfo); 
+		Page<PrhoProjectInfo> page = prhoProjectInfoService.findPageBy(new Page<PrhoProjectInfo>(request, response), prhoProjectInfo); 
 		model.addAttribute("page", page);
 		return "modules/prho/prhoProjectInfoList";
 	}
