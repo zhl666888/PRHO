@@ -14,10 +14,14 @@
 		a.create_date AS "createDate",
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
-		a.del_flag AS "delFlag"
+		a.del_flag AS "delFlag",
+		u3.name AS "userName",
+		prinfo.projectName AS "projectName"
 	</sql>
 	
 	<sql id="prhoProjectTaskJoins">
+	LEFT JOIN sys_user u3 ON u3.id = a.taskmanager
+	LEFT JOIN prho_project_info prinfo ON prinfo.id = a.project_id
 	</sql>
     
 	<select id="get" resultType="PrhoProjectTask">
@@ -126,8 +130,8 @@
 		<include refid="prhoProjectTaskJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="taskmanager != null and taskmanager != ''">
-				AND a.taskmanager = #{taskmanager}
+			<if test="projectId != null and projectId != ''">
+				AND a.project_id = #{projectId}
 			</if>
 			<if test="taskname != null and taskname != ''">
 				AND a.taskname = #{taskname}

@@ -69,7 +69,7 @@
 					${prhoProjectInfo.projectcode}
 				</a></td>
 				<td>
-					${prhoProjectInfo.user.name}
+					${prhoProjectInfo.userName}
 				</td>
 				<td>
 					${prhoProjectInfo.projectname}

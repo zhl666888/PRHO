@@ -15,7 +15,7 @@
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
-		u3.name AS "user.name"
+		u3.name AS "userName"
 	</sql>
 	
 	<sql id="prhoProjectInfoJoins">

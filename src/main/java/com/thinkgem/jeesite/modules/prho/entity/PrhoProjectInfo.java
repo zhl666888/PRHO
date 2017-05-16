@@ -28,7 +28,7 @@ public class PrhoProjectInfo extends DataEntity<PrhoProjectInfo> {
 	private Date projectendtime;		// 实际结束日期
 	private String projectstatus;		// 项目状态 未开始1、进行中2、已结束3
 	private String userId; //项目负责人
-	
+	private String userName;//显示的项目负责人
 	public PrhoProjectInfo() {
 		super();
 	}
@@ -124,6 +124,14 @@ public class PrhoProjectInfo extends DataEntity<PrhoProjectInfo> {
 
 	public void setEndtime(Date endtime) {
 		this.endtime = endtime;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	
 	

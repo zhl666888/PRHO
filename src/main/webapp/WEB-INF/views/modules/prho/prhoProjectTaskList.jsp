@@ -62,7 +62,7 @@
 		<c:forEach items="${page.list}" var="prhoProjectTask">
 			<tr>
 				<td><a href="${ctx}/prho/prhoProjectTask/form?id=${prhoProjectTask.id}">
-					${prhoProjectTask.taskmanager}
+					${prhoProjectTask.userName}
 				</a></td>
 				<td>
 					${prhoProjectTask.taskname}
@@ -77,7 +77,7 @@
 					${prhoProjectTask.expectedhour}
 				</td>
 				<td>
-					${prhoProjectTask.prhoProjectInfo.projectname}
+					${prhoProjectTask.projectName}
 				</td>
 				<td>
 					${prhoProjectTask.taskcompleteschedule}

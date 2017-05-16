@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
-import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectInfo;
 import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectTask;
 import com.thinkgem.jeesite.modules.prho.dao.PrhoProjectInfoDao;
 import com.thinkgem.jeesite.modules.prho.dao.PrhoProjectTaskDao;
@@ -26,6 +25,8 @@ import com.thinkgem.jeesite.modules.prho.dao.PrhoProjectTaskDao;
 public class PrhoProjectTaskService extends CrudService<PrhoProjectTaskDao, PrhoProjectTask> {
 	@Autowired
     private PrhoProjectInfoDao prInfoDao;
+	@Autowired
+	private PrhoProjectTaskDao prTaskDao;
 	public PrhoProjectTask get(String id) {
 		return super.get(id);
 	}
@@ -51,13 +52,13 @@ public class PrhoProjectTaskService extends CrudService<PrhoProjectTaskDao, Prho
 	@Transactional(readOnly = false)
 	public Page<PrhoProjectTask> findPageBy(Page<PrhoProjectTask> page,PrhoProjectTask prhoProjectTask){
 		prhoProjectTask.setPage(page);
-		List<PrhoProjectTask> list = dao.findPageBy(prhoProjectTask);
-		for(PrhoProjectTask prtask: list){
+		List<PrhoProjectTask> list = prTaskDao.findPageBy(prhoProjectTask);
+		/*for(PrhoProjectTask prtask: list){
 			PrhoProjectInfo prhoProjectInfo=prInfoDao.get(prtask.getProjectId());
 			if(!"".equals(prhoProjectInfo)&&null!=prhoProjectInfo){
 				prtask.setPrhoProjectInfo(prhoProjectInfo);
 			}
-		}
+		}*/
 		page.setList(list);
 		return page;
 		

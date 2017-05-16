@@ -14,7 +14,6 @@ import com.thinkgem.jeesite.common.service.CrudService;
 import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectInfo;
 import com.thinkgem.jeesite.modules.prho.dao.PrhoProjectInfoDao;
 import com.thinkgem.jeesite.modules.sys.dao.UserDao;
-import com.thinkgem.jeesite.modules.sys.entity.User;
 
 /**
  * 项目信息Service
@@ -55,12 +54,12 @@ public class PrhoProjectInfoService extends CrudService<PrhoProjectInfoDao, Prho
 	public Page<PrhoProjectInfo> findPageBy(Page<PrhoProjectInfo> page,PrhoProjectInfo prhoProjectInfo){
 		prhoProjectInfo.setPage(page);
 		List<PrhoProjectInfo> list = dao.findPageBy(prhoProjectInfo);
-		for(PrhoProjectInfo prinfo: list){
+	/*	for(PrhoProjectInfo prinfo: list){
 			User user=userDao.get(prinfo.getUserId());
 			if(!"".equals(user)&&null!=user){
 				prinfo.setUser(user);
 			}
-		}
+		}*/
 		page.setList(list);
 		return page;
 		

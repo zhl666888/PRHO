@@ -26,6 +26,9 @@ public class PrhoProjectTask extends DataEntity<PrhoProjectTask> {
 	private String taskcompleteschedule;		// 任务完成进度
 	private String taskstatus;		// 任务完成进度
 	private PrhoProjectInfo prhoProjectInfo;  //项目信息对象
+	private String userName;  //显示的项目负责人
+	private String projectName;//显示的 项目名称
+	
 	public PrhoProjectTask() {
 		super();
 	}
@@ -110,6 +113,22 @@ public class PrhoProjectTask extends DataEntity<PrhoProjectTask> {
 
 	public void setPrhoProjectInfo(PrhoProjectInfo prhoProjectInfo) {
 		this.prhoProjectInfo = prhoProjectInfo;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
 	}
 	
 }

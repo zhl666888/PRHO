@@ -36,7 +36,10 @@
 		<div class="control-group">
 			<label class="control-label">任务负责人：</label>
 			<div class="controls">
-				<form:input path="taskmanager" htmlEscape="false" maxlength="200" class="input-xlarge "/>
+				<form:select path="taskmanager" class="input-medium">
+					<form:option value="" label=""/>
+					<form:options items="${fnprho:getAllUser()}" itemLabel="name" itemValue="id" htmlEscape="false"/>
+				</form:select>
 			</div>
 			<%-- <div class="controls">
 				<sys:treeselect id="user" name="user.id" value="${prhoProjectTask.user.id}" labelName="user.name" labelValue="${prhoProjectTask.user.name}"
