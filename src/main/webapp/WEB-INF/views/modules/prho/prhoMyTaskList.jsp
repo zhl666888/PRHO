@@ -18,10 +18,10 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/prho/prhoProjectTask/">项目任务列表</a></li>
-		<shiro:hasPermission name="prho:prhoProjectTask:edit"><li><a href="${ctx}/prho/prhoProjectTask/form">项目任务添加</a></li></shiro:hasPermission>
+		<li class="active"><a href="${ctx}/prho/prhoMyTask/">我的任务列表</a></li>
+		<shiro:hasPermission name="prho:prhoMyTask:edit"><li><a href="${ctx}/prho/prhoMyTask/form">我的任务添加</a></li></shiro:hasPermission>
 	</ul>
-	<form:form id="searchForm" modelAttribute="prhoProjectTask" action="${ctx}/prho/prhoProjectTask/" method="post" class="breadcrumb form-search">
+	<form:form id="searchForm" modelAttribute="prhoMyTask" action="${ctx}/prho/prhoMyTask/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
@@ -31,8 +31,15 @@
 					<form:options items="${fnprho:getAllProjectName()}" itemLabel="projectname" itemValue="id" htmlEscape="false"/>
 				</form:select>
 			</li>
-			<li><label>任务名称：</label>
-				<form:input path="taskname" htmlEscape="false" maxlength="200" class="input-medium"/>
+					<li><label style="width:100px">计划开始时间：</label>
+				<input name="starttime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
+					value="<fmt:formatDate value="${prhoMyTask.starttime}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+			</li>
+			<li><label style="width:100px">计划结束时间：</label>
+				<input name="endtime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
+					value="<fmt:formatDate value="${prhoMyTask.endtime}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 			</li>
 			<li><label>任务状态：</label>
 				<form:select path="taskstatus" class="input-medium ">
@@ -55,36 +62,37 @@
 				<th>预计用时</th>
 				<th>所属项目</th>
 				<th>任务完成进度</th>
-				<shiro:hasPermission name="prho:prhoProjectTask:edit"><th>操作</th></shiro:hasPermission>
+				<shiro:hasPermission name="prho:prhoMyTask:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach items="${page.list}" var="prhoProjectTask">
+		<c:forEach items="${page.list}" var="prhoMyTask">
 			<tr>
-				<td><a href="${ctx}/prho/prhoProjectTask/form?id=${prhoProjectTask.id}">
-					${prhoProjectTask.userName}
+				<td><a href="${ctx}/prho/prhoMyTask/form?id=${prhoProjectTask.id}">
+					${prhoMyTask.userName}
 				</a></td>
 				<td>
-					${prhoProjectTask.taskname}
+					${prhoMyTask.taskname}
 				</td>
 				<td>
-					<fmt:formatDate value="${prhoProjectTask.tastplanbegintime}" pattern="yyyy-MM-dd"/>
+					<fmt:formatDate value="${prhoMyTask.tastplanbegintime}" pattern="yyyy-MM-dd"/>
 				</td>
 				<td>
-					<fmt:formatDate value="${prhoProjectTask.taskplanendtime}" pattern="yyyy-MM-dd"/>
+					<fmt:formatDate value="${prhoMyTask.taskplanendtime}" pattern="yyyy-MM-dd"/>
 				</td>
 				<td>
-					${prhoProjectTask.expectedhour}
+					${prhoMyTask.expectedhour}
 				</td>
 				<td>
-					${prhoProjectTask.projectName}
+					${prhoMyTask.projectName}
 				</td>
 				<td>
-					${prhoProjectTask.taskcompleteschedule}
+					${prhoMyTask.taskcompleteschedule}
 				</td>
-				<shiro:hasPermission name="prho:prhoProjectTask:edit"><td>
-    				<a href="${ctx}/prho/prhoProjectTask/form?id=${prhoProjectTask.id}">修改</a>
-					<a href="${ctx}/prho/prhoProjectTask/delete?id=${prhoProjectTask.id}" onclick="return confirmx('确认要删除该项目任务吗？', this.href)">删除</a>
+				<shiro:hasPermission name="prho:prhoMyTask:edit"><td>
+				<a href="${ctx}/prho/prhoMyTask/form?id=${prhoProjectTask.id}">工时填报</a>
+    				<%-- <a href="${ctx}/prho/prhoMyTask/form?id=${prhoProjectTask.id}">修改</a>
+					<a href="${ctx}/prho/prhoMyTask/delete?id=${prhoProjectTask.id}" onclick="return confirmx('确认要删除该项目任务吗？', this.href)">删除</a> --%>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>
