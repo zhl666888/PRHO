@@ -28,8 +28,8 @@ public class PrhoMyTask extends DataEntity<PrhoMyTask> {
 	private PrhoProjectInfo prhoProjectInfo;  //项目信息对象
 	private String userName;  //显示的项目负责人
 	private String projectName;//显示的 项目名称
-	private String starttime;   //查询 计划开始时间
-	private String endtime;   //查询 计划结束时间
+	private Date starttime;   //查询 计划开始时间
+	private Date endtime;   //查询 计划结束时间
 	
 	public PrhoMyTask() {
 		super();
@@ -133,19 +133,19 @@ public class PrhoMyTask extends DataEntity<PrhoMyTask> {
 		this.projectName = projectName;
 	}
 
-	public String getStarttime() {
+	public Date getStarttime() {
 		return starttime;
 	}
 
-	public void setStarttime(String starttime) {
+	public void setStarttime(Date starttime) {
 		this.starttime = starttime;
 	}
 
-	public String getEndtime() {
+	public Date getEndtime() {
 		return endtime;
 	}
 
-	public void setEndtime(String endtime) {
+	public void setEndtime(Date endtime) {
 		this.endtime = endtime;
 	}
 	
