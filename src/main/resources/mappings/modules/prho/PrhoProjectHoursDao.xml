@@ -26,11 +26,14 @@
 		a.del_flag AS "delFlag",
 		u14.name AS "user.name",
 		a.projectmanager_id AS "projectmanagerId",
-		a.taskCompleteSchedule AS "taskcompleteschedule"
+		a.taskCompleteSchedule AS "taskcompleteschedule",
+		prinfo.projectName AS "projectName",
+		u14.name AS "projectmanager"
 	</sql>
 	
 	<sql id="prhoProjectHoursJoins">
-		LEFT JOIN sys_user u14 ON u14.id = a.user_id
+		LEFT JOIN sys_user u14 ON u14.id = a.projectmanager_id
+		LEFT JOIN prho_project_info prinfo ON prinfo.id = a.project_id
 	</sql>
     
 	<select id="get" resultType="PrhoProjectHours">
@@ -48,12 +51,16 @@
 		<include refid="prhoProjectHoursJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="taskstarttime != null and taskstarttime != ''">
-				AND a.taskstarttime = #{taskstarttime}
+			<if test="projectId != null and projectId != ''">
+				AND a.project_id = #{projectId}
 			</if>
-			<if test="taskendtime != null and taskendtime != ''">
-				AND a.taskendtime = #{taskendtime}
-			</if>
+			<if test="starttime!=null and starttime!=''">  
+    <![CDATA[   and DATE_FORMAT(taskstarttime, '%Y-%m-%d')>=  DATE_FORMAT(#{starttime}, '%Y-%m-%d')   ]]>  
+			</if>  
+			<if test="endtime!=null and endtime!=''">  
+    <![CDATA[  and DATE_FORMAT(taskendtime, '%Y-%m-%d') <= DATE_FORMAT(#{endtime}, '%Y-%m-%d')    ]]>  
+			</if>  
+	
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">

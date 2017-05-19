@@ -62,12 +62,9 @@
 		<div class="control-group">
 			<label class="control-label">任务名称：</label>
 			<div class="controls">
-				<form:input path="taskId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				<form:input path="taskId" htmlEscape="false" maxlength="64" class="input-xlarge "/>  <!-- 需要写个方法获得任务名称 -->
 			</div>
 		</div>
-	
-	
-
 		<div class="control-group">
 			<label class="control-label">工作类型 ：</label>
 			<div class="controls">

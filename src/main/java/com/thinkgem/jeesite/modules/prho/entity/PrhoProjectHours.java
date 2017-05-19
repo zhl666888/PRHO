@@ -37,7 +37,10 @@ public class PrhoProjectHours extends DataEntity<PrhoProjectHours> {
 	private PrhoProjectInfo prhoProjectInfo;
 	private String projectmanagerId;//项目负责人id
 	private String taskcompleteschedule;//任务完成进度
-	
+	private String projectName; //显示的项目名称
+	private String projectmanager; //显示的项目负责人
+	private Date starttime; //查询的任务开始时间
+	private Date endtime; //查询的任务结束时间
 	public PrhoProjectHours() {
 		super();
 	}
@@ -211,6 +214,38 @@ public class PrhoProjectHours extends DataEntity<PrhoProjectHours> {
 
 	public void setTaskcompleteschedule(String taskcompleteschedule) {
 		this.taskcompleteschedule = taskcompleteschedule;
+	}
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+
+	public String getProjectmanager() {
+		return projectmanager;
+	}
+
+	public void setProjectmanager(String projectmanager) {
+		this.projectmanager = projectmanager;
+	}
+
+	public Date getStarttime() {
+		return starttime;
+	}
+
+	public void setStarttime(Date starttime) {
+		this.starttime = starttime;
+	}
+
+	public Date getEndtime() {
+		return endtime;
+	}
+
+	public void setEndtime(Date endtime) {
+		this.endtime = endtime;
 	}
 	
 }
