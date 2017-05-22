@@ -23,10 +23,6 @@
     <function-signature>java.util.List getAllProjectName()</function-signature>
     <example>${fnprho:getAllProjectName()}</example>  
   </function>
-<<<<<<< HEAD
-  
-  
-=======
    <function>
     <description>获取项目信息中的所有任务名称</description>
     <name>getAllTaskName</name>
@@ -34,5 +30,4 @@
     <function-signature>java.util.List getAllTaskName()</function-signature>
     <example>${fnprho:getAllTaskName()}</example>  
   </function>
->>>>>>> 4c7f1d271e95255603f604d9e37f55663fe0c7cd
   </taglib>
