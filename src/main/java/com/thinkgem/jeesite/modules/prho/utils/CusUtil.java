@@ -2,19 +2,26 @@ package com.thinkgem.jeesite.modules.prho.utils;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.thinkgem.jeesite.common.utils.CacheUtils;
 import com.thinkgem.jeesite.common.utils.SpringContextHolder;
 import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectInfo;
+import com.thinkgem.jeesite.modules.prho.service.PrhoProjectHoursSatisticsService;
 import com.thinkgem.jeesite.modules.prho.service.PrhoProjectInfoService;
 import com.thinkgem.jeesite.modules.prho.service.PrhoUserGroupService;
 import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectHoursStatics;
+
 
 public class CusUtil {
 	private static PrhoUserGroupService prhoUserGroupService = SpringContextHolder.getBean(PrhoUserGroupService.class);
 	private static PrhoProjectInfoService prhoProjectInfoService = SpringContextHolder.getBean(PrhoProjectInfoService.class);
-
+	private static PrhoProjectHoursSatisticsService prhoProjectHoursSatisticsService = SpringContextHolder.getBean(PrhoProjectHoursSatisticsService.class);
+	
 	public static final String USER_LIST_CACHE = "userListCache";
 	public static final String PRHOPROJECTINFO_LIST_CACHE = "prhoProjectInfoListCache";
+	public static final String PRHOPROJECTHOURS_LIST_CACHE = "prhoProjectHoursListCache";
 	/**
 	 * 返回所有用户
 	 */
@@ -41,4 +48,6 @@ public class CusUtil {
 			}
 			return prList;
 		}
+	
+	
 }

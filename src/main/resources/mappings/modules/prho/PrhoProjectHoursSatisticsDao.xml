@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.prho.dao.PrhoProjectHoursSatisticsDao">
+    
+	<sql id="prhoProjectHoursSatisticsColumns">
+		pph.id AS "id",
+		pph.staff AS "staff",
+		pph.project_id AS "projectid",
+		pph.realhours AS "realhours",
+		ppi.projectname AS "projectname"
+	</sql>
+	
+	<sql id="prhoProjectHoursSatisticsJoins">
+		LEFT JOIN prho_project_info ppi ON ppi.id = pph.project_id
+	</sql>
+    
+	
+	<select id="findPageBy" resultType="PrhoProjectHoursStatics">
+		SELECT 
+			<include refid="prhoProjectHoursSatisticsColumns"/>
+		FROM prho_project_hours pph
+		<include refid="prhoProjectHoursSatisticsJoins"/>
+		<where>
+			<if test="projectid != null and projectid != ''">
+				AND pph.project_id = #{projectid}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+		</choose>
+	</select>
+	
+	<select id="findHoursSatisticsList" resultType="PrhoProjectHoursStatics">
+		SELECT 
+			<include refid="prhoProjectHoursSatisticsColumns"/>
+		FROM prho_project_hours pph
+		<include refid="prhoProjectHoursSatisticsJoins"/>
+		<where>
+			<if test="projectid != null and projectid != ''">
+				AND pph.project_id = #{projectid}
+			</if>
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+		</choose>
+	</select>
+</mapper>
