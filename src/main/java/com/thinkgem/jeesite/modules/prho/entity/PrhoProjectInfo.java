@@ -4,10 +4,12 @@
 package com.thinkgem.jeesite.modules.prho.entity;
 
 import org.hibernate.validator.constraints.Length;
-import com.thinkgem.jeesite.modules.sys.entity.User;
-import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
+import com.thinkgem.jeesite.modules.sys.entity.User;
+
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.thinkgem.jeesite.common.persistence.DataEntity;
 
 /**
@@ -29,6 +31,8 @@ public class PrhoProjectInfo extends DataEntity<PrhoProjectInfo> {
 	private String projectstatus;		// 项目状态 未开始1、进行中2、已结束3
 	private String userId; //项目负责人
 	private String userName;//显示的项目负责人
+	private String estimatehours;  //预估工时 新增字段
+	
 	public PrhoProjectInfo() {
 		super();
 	}
@@ -133,6 +137,13 @@ public class PrhoProjectInfo extends DataEntity<PrhoProjectInfo> {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	
+
+	public String getEstimatehours() {
+		return estimatehours;
+	}
+
+	public void setEstimatehours(String estimatehours) {
+		this.estimatehours = estimatehours;
+	}
 	
 }

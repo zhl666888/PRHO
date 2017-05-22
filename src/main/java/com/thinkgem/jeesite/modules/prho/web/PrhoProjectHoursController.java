@@ -20,8 +20,10 @@ import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectHours;
+import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectTask;
 import com.thinkgem.jeesite.modules.prho.service.PrhoProjectHoursService;
 import com.thinkgem.jeesite.modules.prho.service.PrhoProjectInfoService;
+import com.thinkgem.jeesite.modules.prho.service.PrhoProjectTaskService;
 
 /**
  * 项目工时Controller
@@ -36,6 +38,8 @@ public class PrhoProjectHoursController extends BaseController {
 	private PrhoProjectHoursService prhoProjectHoursService;
 	@Autowired
 	private PrhoProjectInfoService prhoProjectInfoService;
+	@Autowired
+	private PrhoProjectTaskService prhoProjectTaskService;
 	@ModelAttribute
 	public PrhoProjectHours get(@RequestParam(required=false) String id) {
 		PrhoProjectHours entity = null;
@@ -78,6 +82,13 @@ public class PrhoProjectHoursController extends BaseController {
 			prhoProjectHours.setStaff(staffId);
 		}
 		prhoProjectHoursService.save(prhoProjectHours);
+		//保存项目完成进度(项目完成时间)
+		String taskId=prhoProjectHours.getTaskId();
+		PrhoProjectTask prhoProjectTask=  prhoProjectTaskService.get(taskId);
+		if(prhoProjectTask.getTasktype().equals("private")){
+			prhoProjectTaskService.updateProjectProgress(prhoProjectHours,taskId);
+		}
+		
 		addMessage(redirectAttributes, "保存项目工时成功");
 		return "redirect:"+Global.getAdminPath()+"/prho/prhoProjectHours/?repage";
 	}

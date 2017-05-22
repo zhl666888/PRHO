@@ -28,6 +28,9 @@ public class PrhoProjectTask extends DataEntity<PrhoProjectTask> {
 	private PrhoProjectInfo prhoProjectInfo;  //项目信息对象
 	private String userName;  //显示的项目负责人
 	private String projectName;//显示的 项目名称
+	private Date taskcompletetime; //任务完成时间，(依据工时填报的私有任务结束时间)
+	private String tasktype;  //任务类型
+	private String worktype;  //工作类型
 	
 	public PrhoProjectTask() {
 		super();
@@ -129,6 +132,32 @@ public class PrhoProjectTask extends DataEntity<PrhoProjectTask> {
 
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
+	}
+	
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	public Date getTaskcompletetime() {
+		return taskcompletetime;
+	}
+
+	public void setTaskcompletetime(Date taskcompletetime) {
+		this.taskcompletetime = taskcompletetime;
+	}
+	@Length(min=0, max=64, message="任务类型必须介于 0 和 64之间")
+	public String getTasktype() {
+		return tasktype;
+	}
+
+	public void setTasktype(String tasktype) {
+		this.tasktype = tasktype;
+	}
+	
+	@Length(min=0, max=64, message="工作类型必须介于 0 和 64之间")
+	public String getWorktype() {
+		return worktype;
+	}
+
+	public void setWorktype(String worktype) {
+		this.worktype = worktype;
 	}
 	
 }

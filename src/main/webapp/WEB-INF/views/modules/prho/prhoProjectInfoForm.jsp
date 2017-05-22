@@ -45,7 +45,7 @@
 				<%-- sys:treeselect id="user" name="user.id" value="${prhoProjectInfo.user.id}" labelName="user.name" labelValue="${prhoProjectInfo.user.name}"
 					title="用户" url="/sys/office/treeData?type=3" cssClass="" allowClear="true" notAllowSelectParent="true"/> --%>
 			
-				<form:select path="userId" class="input-medium">
+				<form:select path="userId" class="input-xlarge">
 					<form:option value="" label=""/>
 					<form:options items="${fnprho:getAllUser()}" itemLabel="name" itemValue="id" htmlEscape="false"/>
 				</form:select>
@@ -58,9 +58,15 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">预估工时：</label>
+			<div class="controls">
+				<form:input path="estimatehours" htmlEscape="false"  class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">项目启动日期：</label>
 			<div class="controls">
-				<input name="projectbegintime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+				<input name="projectbegintime" type="text" readonly="readonly" maxlength="20" class="input-xlarge Wdate "
 					value="<fmt:formatDate value="${prhoProjectInfo.projectbegintime}" pattern="yyyy-MM-dd"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 			</div>
@@ -68,7 +74,7 @@
 		<div class="control-group">
 			<label class="control-label">预计结束日期：</label>
 			<div class="controls">
-				<input name="projectplanendtime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+				<input name="projectplanendtime" type="text" readonly="readonly" maxlength="20" class="input-xlarge Wdate "
 					value="<fmt:formatDate value="${prhoProjectInfo.projectplanendtime}" pattern="yyyy-MM-dd"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 			</div>
@@ -76,7 +82,7 @@
 		<div class="control-group">
 			<label class="control-label">实际结束日期：</label>
 			<div class="controls">
-				<input name="projectendtime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+				<input name="projectendtime" type="text" readonly="readonly" maxlength="20" class="input-xlarge Wdate "
 					value="<fmt:formatDate value="${prhoProjectInfo.projectendtime}" pattern="yyyy-MM-dd"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 			</div>
@@ -84,7 +90,7 @@
 		<div class="control-group">
 			<label class="control-label">项目状态 ：</label>
 			<div class="controls">
-				<form:select path="projectstatus" class="input-medium ">
+				<form:select path="projectstatus" class="input-xlarge ">
 					<form:option value="" label=""/>
 					<form:options items="${fns:getDictList('project_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>

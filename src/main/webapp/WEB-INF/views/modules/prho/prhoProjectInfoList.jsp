@@ -55,6 +55,7 @@
 				<th>项目编号</th>
 				<th>项目负责人</th>
 				<th>项目名称</th>
+				<th>预估工时</th>
 				<th>项目启动日期</th>
 				<th>预计结束日期</th>
 				<th>实际结束日期</th>
@@ -73,6 +74,9 @@
 				</td>
 				<td>
 					${prhoProjectInfo.projectname}
+				</td>
+				<td>
+					${prhoProjectInfo.estimatehours}
 				</td>
 				<td>
 					<fmt:formatDate value="${prhoProjectInfo.projectbegintime}" pattern="yyyy-MM-dd"/>

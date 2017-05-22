@@ -8,7 +8,6 @@
 		a.task_id AS "taskId",
 		a.staff AS "staff",
 		a.realhours AS "realhours",
-		a.taskname AS "taskname",
 		a.jobtype AS "jobtype",
 		a.workhourstype AS "workhourstype",
 		a.workdesc AS "workdesc",
@@ -28,12 +27,14 @@
 		a.projectmanager_id AS "projectmanagerId",
 		a.taskCompleteSchedule AS "taskcompleteschedule",
 		prinfo.projectName AS "projectName",
-		u14.name AS "projectmanager"
+		u14.name AS "projectmanager",
+		prtask.taskName AS "taskname"
 	</sql>
 	
 	<sql id="prhoProjectHoursJoins">
 		LEFT JOIN sys_user u14 ON u14.id = a.projectmanager_id
 		LEFT JOIN prho_project_info prinfo ON prinfo.id = a.project_id
+		LEFT JOIN prho_project_task prtask ON prtask.id = a.task_id
 	</sql>
     
 	<select id="get" resultType="PrhoProjectHours">
@@ -97,7 +98,6 @@
 			task_id,
 			staff,
 			realhours,
-			taskname,
 			jobtype,
 			workhourstype,
 			workdesc,
@@ -121,7 +121,6 @@
 			#{taskId},
 			#{staff},
 			#{realhours},
-			#{taskname},
 			#{jobtype},
 			#{workhourstype},
 			#{workdesc},
@@ -148,7 +147,6 @@
 			task_id = #{taskId},
 			staff = #{staff},
 			realhours = #{realhours},
-			taskname = #{taskname},
 			jobtype = #{jobtype},
 			workhourstype = #{workhourstype},
 			workdesc = #{workdesc},

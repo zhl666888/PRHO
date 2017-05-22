@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
+import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectHours;
 import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectTask;
 import com.thinkgem.jeesite.modules.prho.dao.PrhoProjectInfoDao;
 import com.thinkgem.jeesite.modules.prho.dao.PrhoProjectTaskDao;
@@ -62,5 +63,18 @@ public class PrhoProjectTaskService extends CrudService<PrhoProjectTaskDao, Prho
 		page.setList(list);
 		return page;
 		
+	}
+	/**
+	 * 更新任务完成时间和任务完成进度
+	 * @param prhoProjectHours
+	 * @param taskId
+	 */
+	@Transactional(readOnly = false)
+	public void updateProjectProgress(PrhoProjectHours prhoProjectHours,String taskId){
+		PrhoProjectTask prhoProjectTask=new PrhoProjectTask();
+		prhoProjectTask.setId(taskId);
+		prhoProjectTask.setTaskcompleteschedule(prhoProjectHours.getTaskcompleteschedule());
+		prhoProjectTask.setTaskcompletetime(prhoProjectHours.getTaskendtime());
+		prTaskDao.updateProjectProgress(prhoProjectTask);
 	}
 }

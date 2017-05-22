@@ -82,7 +82,7 @@
 					${prhoProjectHours.projectName}
 				</td>
 				<td>
-					
+					${prhoProjectHours.taskname}
 				</td>
 				<td>
 					${fns:getDictLabel(prhoProjectHours.jobtype, 'work_type', '')}
@@ -100,7 +100,7 @@
 					${prhoProjectHours.realhours}
 				</td>
 				<td>
-					${prhoProjectHours.taskcompleteschedule}
+					${fns:getDictLabel(prhoProjectHours.taskcompleteschedule, 'taskComplete_schedule', '')}
 				</td>
 				<td>
 					${prhoProjectHours.projectmanager}

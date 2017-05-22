@@ -32,7 +32,11 @@
 				</form:select>
 			</li>
 			<li><label>任务名称：</label>
-				<form:input path="taskname" htmlEscape="false" maxlength="200" class="input-medium"/>
+				<form:select id="id" path="id" class="input-medium">
+					<form:option value="" label=""/>
+					<form:options items="${fnprho:getAllTaskName()}" itemLabel="taskname" itemValue="id" htmlEscape="false"/>
+				</form:select>
+				<%-- <form:input path="taskname" htmlEscape="false" maxlength="200" class="input-medium"/> --%>
 			</li>
 			<li><label>任务状态：</label>
 				<form:select path="taskstatus" class="input-medium ">
@@ -55,6 +59,9 @@
 				<th>预计用时</th>
 				<th>所属项目</th>
 				<th>任务完成进度</th>
+				<th>任务完成时间</th>
+				<th>工作类型</th>
+				<th>任务类型</th>
 				<shiro:hasPermission name="prho:prhoProjectTask:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
@@ -80,7 +87,16 @@
 					${prhoProjectTask.projectName}
 				</td>
 				<td>
-					${prhoProjectTask.taskcompleteschedule}
+					${fns:getDictLabel(prhoProjectTask.taskcompleteschedule, 'taskComplete_schedule', '')}
+				</td>
+				<td>
+					<fmt:formatDate value="${prhoProjectTask.taskcompletetime}" pattern="yyyy-MM-dd"/>
+				</td>
+				<td>
+					${fns:getDictLabel(prhoProjectTask.tasktype, 'task_type', '')}
+				</td>
+				<td>
+					${fns:getDictLabel(prhoProjectTask.worktype, 'work_type', '')}
 				</td>
 				<shiro:hasPermission name="prho:prhoProjectTask:edit"><td>
     				<a href="${ctx}/prho/prhoProjectTask/form?id=${prhoProjectTask.id}">修改</a>
