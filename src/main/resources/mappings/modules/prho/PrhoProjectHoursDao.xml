@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.prho.dao.PrhoProjectHoursDao">
+    
+	<sql id="prhoProjectHoursColumns">
+		a.id AS "id",
+		a.project_id AS "projectId",
+		a.task_id AS "taskId",
+		a.staff AS "staff",
+		a.realhours AS "realhours",
+		a.taskname AS "taskname",
+		a.jobtype AS "jobtype",
+		a.workhourstype AS "workhourstype",
+		a.workdesc AS "workdesc",
+		a.taskstarttime AS "taskstarttime",
+		a.taskendtime AS "taskendtime",
+		a.approvalstatus AS "approvalstatus",
+		a.approvalopinion AS "approvalopinion",
+		a.user_id AS "user.id",
+		a.approvaltime AS "approvaltime",
+		a.filltime AS "filltime",
+		a.worktime AS "worktime",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		u14.name AS "user.name",
+		a.projectmanager_id AS "projectmanagerId",
+		a.taskCompleteSchedule AS "taskcompleteschedule",
+		prinfo.projectName AS "projectName",
+		u14.name AS "projectmanager"
+	</sql>
+	
+	<sql id="prhoProjectHoursJoins">
+		LEFT JOIN sys_user u14 ON u14.id = a.projectmanager_id
+		LEFT JOIN prho_project_info prinfo ON prinfo.id = a.project_id
+	</sql>
+    
+	<select id="get" resultType="PrhoProjectHours">
+		SELECT 
+			<include refid="prhoProjectHoursColumns"/>
+		FROM prho_project_hours a
+		<include refid="prhoProjectHoursJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="PrhoProjectHours">
+		SELECT 
+			<include refid="prhoProjectHoursColumns"/>
+		FROM prho_project_hours a
+		<include refid="prhoProjectHoursJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="projectId != null and projectId != ''">
+				AND a.project_id = #{projectId}
+			</if>
+			<if test="starttime!=null and starttime!=''">  
+    <![CDATA[   and DATE_FORMAT(taskstarttime, '%Y-%m-%d')>=  DATE_FORMAT(#{starttime}, '%Y-%m-%d')   ]]>  
+			</if>  
+			<if test="endtime!=null and endtime!=''">  
+    <![CDATA[  and DATE_FORMAT(taskendtime, '%Y-%m-%d') <= DATE_FORMAT(#{endtime}, '%Y-%m-%d')    ]]>  
+			</if>  
+	
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="PrhoProjectHours">
+		SELECT 
+			<include refid="prhoProjectHoursColumns"/>
+		FROM prho_project_hours a
+		<include refid="prhoProjectHoursJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO prho_project_hours(
+			id,
+			project_id,
+			task_id,
+			staff,
+			realhours,
+			taskname,
+			jobtype,
+			workhourstype,
+			workdesc,
+			taskstarttime,
+			taskendtime,
+			approvalstatus,
+			approvalopinion,
+			user_id,
+			approvaltime,
+			filltime,
+			worktime,
+			create_date,
+			update_date,
+			remarks,
+			del_flag,
+			projectmanager_id,
+			taskCompleteSchedule
+		) VALUES (
+			#{id},
+			#{projectId},
+			#{taskId},
+			#{staff},
+			#{realhours},
+			#{taskname},
+			#{jobtype},
+			#{workhourstype},
+			#{workdesc},
+			#{taskstarttime},
+			#{taskendtime},
+			#{approvalstatus},
+			#{approvalopinion},
+			#{user.id},
+			#{approvaltime},
+			#{filltime},
+			#{worktime},
+			#{createDate},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{projectmanagerId},
+			#{taskcompleteschedule}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE prho_project_hours SET 	
+			project_id = #{projectId},
+			task_id = #{taskId},
+			staff = #{staff},
+			realhours = #{realhours},
+			taskname = #{taskname},
+			jobtype = #{jobtype},
+			workhourstype = #{workhourstype},
+			workdesc = #{workdesc},
+			taskstarttime = #{taskstarttime},
+			taskendtime = #{taskendtime},
+			worktime = #{worktime},
+			remarks = #{remarks},
+			projectmanager_id = #{projectmanagerId},
+			taskCompleteSchedule = #{taskcompleteschedule}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE prho_project_hours SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.prho.dao.PrhoMyTaskDao">
+    
+	<sql id="prhoMyTaskColumns">
+		a.id AS "id",
+		a.project_id AS "projectId",
+		a.taskmanager AS "taskmanager",
+		a.taskname AS "taskname",
+		a.tastplanbegintime AS "tastplanbegintime",
+		a.taskplanendtime AS "taskplanendtime",
+		a.expectedhour AS "expectedhour",
+		a.taskcompleteschedule AS "taskcompleteschedule",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		u3.name AS "userName",
+		prinfo.projectName AS "projectName"
+	</sql>
+	
+	<sql id="prhoMyTaskJoins">
+	LEFT JOIN sys_user u3 ON u3.id = a.taskmanager
+	LEFT JOIN prho_project_info prinfo ON prinfo.id = a.project_id
+	</sql>
+    
+	<select id="get" resultType="PrhoMyTask">
+		SELECT 
+			<include refid="prhoMyTaskColumns"/>
+		FROM prho_project_task a
+		<include refid="prhoMyTaskJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="PrhoMyTask">
+		SELECT 
+			<include refid="prhoMyTaskColumns"/>
+		FROM prho_project_task a
+		<include refid="prhoMyTaskJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="taskmanager != null and taskmanager != ''">
+				AND a.taskmanager = #{taskmanager}
+			</if>
+			<if test="taskname != null and taskname != ''">
+				AND a.taskname = #{taskname}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="PrhoMyTask">
+		SELECT 
+			<include refid="prhoMyTaskColumns"/>
+		FROM prho_project_task a
+		<include refid="prhoMyTaskJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO prho_project_task(
+			id,
+			project_id,
+			taskmanager,
+			taskname,
+			tastplanbegintime,
+			taskplanendtime,
+			expectedhour,
+			taskcompleteschedule,
+			create_date,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{projectId},
+			#{taskmanager},
+			#{taskname},
+			#{tastplanbegintime},
+			#{taskplanendtime},
+			#{expectedhour},
+			#{taskcompleteschedule},
+			#{createDate},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE prho_project_task SET 	
+			project_id = #{projectId},
+			taskmanager = #{taskmanager},
+			taskname = #{taskname},
+			tastplanbegintime = #{tastplanbegintime},
+			taskplanendtime = #{taskplanendtime},
+			expectedhour = #{expectedhour},
+			taskcompleteschedule = #{taskcompleteschedule},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE prho_project_task SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	<select id="findPageBy" resultType="PrhoMyTask">
+		SELECT 
+			<include refid="prhoMyTaskColumns"/>
+		FROM prho_project_task a
+		<include refid="prhoMyTaskJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="projectId != null and projectId != ''">
+				AND a.project_id = #{projectId}
+			</if>
+			<if test="taskname != null and taskname != ''">
+				AND a.taskname = #{taskname}
+			</if>
+				<if test="starttime!=null and starttime!=''">  
+    <![CDATA[   and DATE_FORMAT(tastplanbegintime, '%Y-%m-%d')>=  DATE_FORMAT(#{starttime}, '%Y-%m-%d')   ]]>  
+</if>  
+<if test="endtime!=null and endtime!=''">  
+    <![CDATA[  and DATE_FORMAT(taskplanendtime, '%Y-%m-%d') <= DATE_FORMAT(#{endtime}, '%Y-%m-%d')    ]]>  
+</if>  
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+</mapper>

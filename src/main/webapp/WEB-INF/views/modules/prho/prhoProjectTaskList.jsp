@@ -68,10 +68,10 @@
 					${prhoProjectTask.taskname}
 				</td>
 				<td>
-					<fmt:formatDate value="${prhoProjectTask.tastplanbegintime}" pattern="yyyy-MM-dd HH:mm"/>
+					<fmt:formatDate value="${prhoProjectTask.tastplanbegintime}" pattern="yyyy-MM-dd"/>
 				</td>
 				<td>
-					<fmt:formatDate value="${prhoProjectTask.taskplanendtime}" pattern="yyyy-MM-dd HH:mm"/>
+					<fmt:formatDate value="${prhoProjectTask.taskplanendtime}" pattern="yyyy-MM-dd"/>
 				</td>
 				<td>
 					${prhoProjectTask.expectedhour}

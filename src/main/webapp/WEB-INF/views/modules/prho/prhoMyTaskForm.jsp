@@ -27,10 +27,10 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/prho/prhoProjectTask/">项目任务列表</a></li>
-		<li class="active"><a href="${ctx}/prho/prhoProjectTask/form?id=${prhoProjectTask.id}">项目任务<shiro:hasPermission name="prho:prhoProjectTask:edit">${not empty prhoProjectTask.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="prho:prhoProjectTask:edit">查看</shiro:lacksPermission></a></li>
+		<li><a href="${ctx}/prho/prhoMyTask/">我的任务列表</a></li>
+		<li class="active"><a href="${ctx}/prho/prhoMyTask/form?id=${prhoMyTask.id}">我的任务<shiro:hasPermission name="prho:prhoMyTask:edit">${not empty prhoMyTask.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="prho:prhoMyTask:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
-	<form:form id="inputForm" modelAttribute="prhoProjectTask" action="${ctx}/prho/prhoProjectTask/save" method="post" class="form-horizontal">
+	<form:form id="inputForm" modelAttribute="prhoMyTask" action="${ctx}/prho/prhoMyTask/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group">
@@ -65,7 +65,7 @@
 			<label class="control-label">计划开始时间：</label>
 			<div class="controls">
 				<input name="tastplanbegintime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
-					value="<fmt:formatDate value="${prhoProjectTask.tastplanbegintime}" pattern="yyyy-MM-dd"/>"
+					value="<fmt:formatDate value="${prhoMyTask.tastplanbegintime}" pattern="yyyy-MM-dd"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 			</div>
 		</div>
@@ -73,7 +73,7 @@
 			<label class="control-label">计划结束时间：</label>
 			<div class="controls">
 				<input name="taskplanendtime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
-					value="<fmt:formatDate value="${prhoProjectTask.taskplanendtime}" pattern="yyyy-MM-dd"/>"
+					value="<fmt:formatDate value="${prhoMyTask.taskplanendtime}" pattern="yyyy-MM-dd"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 			</div>
 		</div>
@@ -96,7 +96,7 @@
 			</div>
 		</div>
 		<div class="form-actions">
-			<shiro:hasPermission name="prho:prhoProjectTask:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
+			<shiro:hasPermission name="prho:prhoMyTask:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
 	</form:form>
