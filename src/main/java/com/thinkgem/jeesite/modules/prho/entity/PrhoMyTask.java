@@ -4,9 +4,10 @@
 package com.thinkgem.jeesite.modules.prho.entity;
 
 import org.hibernate.validator.constraints.Length;
-import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.thinkgem.jeesite.common.persistence.DataEntity;
 
 /**
@@ -30,6 +31,9 @@ public class PrhoMyTask extends DataEntity<PrhoMyTask> {
 	private String projectName;//显示的 项目名称
 	private Date starttime;   //查询 计划开始时间
 	private Date endtime;   //查询 计划结束时间
+	private Date taskcompletetime;  //任务完成时间
+	private String tasktype;  //任务类型
+	private String worktype;  //工作类型 
 	
 	public PrhoMyTask() {
 		super();
@@ -147,6 +151,30 @@ public class PrhoMyTask extends DataEntity<PrhoMyTask> {
 
 	public void setEndtime(Date endtime) {
 		this.endtime = endtime;
+	}
+
+	public Date getTaskcompletetime() {
+		return taskcompletetime;
+	}
+
+	public void setTaskcompletetime(Date taskcompletetime) {
+		this.taskcompletetime = taskcompletetime;
+	}
+
+	public String getTasktype() {
+		return tasktype;
+	}
+
+	public void setTasktype(String tasktype) {
+		this.tasktype = tasktype;
+	}
+
+	public String getWorktype() {
+		return worktype;
+	}
+
+	public void setWorktype(String worktype) {
+		this.worktype = worktype;
 	}
 	
 }

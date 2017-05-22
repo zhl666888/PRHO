@@ -13,8 +13,6 @@
 				 $("#s2id_projectId").find(".select2-chosen").html(projectName);
 				// alert(projectName);
 			} 
-			
-			//$("#name").focus();
 			$("#inputForm").validate({
 				submitHandler: function(form){
 					loading('正在提交，请稍等...');
@@ -62,8 +60,11 @@
 		<div class="control-group">
 			<label class="control-label">任务名称：</label>
 			<div class="controls">
-				<form:input path="taskId" htmlEscape="false" maxlength="64" class="input-xlarge "/>  <!-- 需要写个方法获得任务名称 -->
-			</div>
+			<form:select id="taskId" path="taskId" class="input-medium">
+					<%-- <form:option value="" label=""/> --%>
+					<form:options items="${fnprho:getAllTaskName()}" itemLabel="taskname" itemValue="id" htmlEscape="false"/>
+				</form:select>
+		</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">工作类型 ：</label>
@@ -102,13 +103,17 @@
 		<div class="control-group">
 			<label class="control-label">实际用时：</label>
 			<div class="controls">
-				<form:input path="realhours" htmlEscape="false" class="input-midum "/>
+				<form:input path="realhours" htmlEscape="false" class="input-medium "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">任务完成进度：</label>
 			<div class="controls">
-				<form:input path="taskcompleteschedule" htmlEscape="false" maxlength="50" class="input-midum "/>
+				<form:select path="taskcompleteschedule" class="input-medium ">
+					<form:option value="" label=""/>
+					<form:options items="${fns:getDictList('taskComplete_schedule')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
+				%
 			</div>
 		</div>
 		<div class="control-group">

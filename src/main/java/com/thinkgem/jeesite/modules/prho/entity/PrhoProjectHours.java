@@ -84,7 +84,6 @@ public class PrhoProjectHours extends DataEntity<PrhoProjectHours> {
 		this.realhours = realhours;
 	}
 	
-	@Length(min=0, max=255, message="任务名称长度必须介于 0 和 255 之间")
 	public String getTaskname() {
 		return taskname;
 	}

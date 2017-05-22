@@ -11,6 +11,9 @@
 		a.taskplanendtime AS "taskplanendtime",
 		a.expectedhour AS "expectedhour",
 		a.taskcompleteschedule AS "taskcompleteschedule",
+		a.taskcompletetime AS "taskcompletetime",
+		a.tasktype AS "tasktype",
+		a.worktype AS "worktype",
 		a.create_date AS "createDate",
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
@@ -22,6 +25,7 @@
 	<sql id="prhoProjectTaskJoins">
 	LEFT JOIN sys_user u3 ON u3.id = a.taskmanager
 	LEFT JOIN prho_project_info prinfo ON prinfo.id = a.project_id
+
 	</sql>
     
 	<select id="get" resultType="PrhoProjectTask">
@@ -84,6 +88,9 @@
 			taskplanendtime,
 			expectedhour,
 			taskcompleteschedule,
+			taskcompletetime,
+			tasktype,
+			worktype,
 			create_date,
 			update_date,
 			remarks,
@@ -97,6 +104,9 @@
 			#{taskplanendtime},
 			#{expectedhour},
 			#{taskcompleteschedule},
+			#{taskcompletetime},
+			#{tasktype},
+			#{worktype},
 			#{createDate},
 			#{updateDate},
 			#{remarks},
@@ -113,6 +123,9 @@
 			taskplanendtime = #{taskplanendtime},
 			expectedhour = #{expectedhour},
 			taskcompleteschedule = #{taskcompleteschedule},
+			taskcompletetime = #{taskcompletetime},
+			tasktype = #{tasktype},
+			worktype = #{worktype},
 			update_date = #{updateDate},
 			remarks = #{remarks}
 		WHERE id = #{id}
@@ -136,6 +149,9 @@
 			<if test="taskname != null and taskname != ''">
 				AND a.taskname = #{taskname}
 			</if>
+			<if test="id != null and id != ''">
+				AND a.id = #{id}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -146,4 +162,20 @@
 			</otherwise>
 		</choose>
 	</select>
+	<update id="updateProjectProgress">
+		UPDATE prho_project_task SET 	
+			project_id = #{projectId},
+			taskmanager = #{taskmanager},
+			taskname = #{taskname},
+			tastplanbegintime = #{tastplanbegintime},
+			taskplanendtime = #{taskplanendtime},
+			expectedhour = #{expectedhour},
+			taskcompleteschedule = #{taskcompleteschedule},
+			taskcompletetime = #{taskcompletetime},
+			tasktype = #{tasktype},
+			worktype = #{worktype},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
 </mapper>

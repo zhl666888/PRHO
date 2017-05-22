@@ -19,7 +19,7 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/prho/prhoMyTask/">我的任务列表</a></li>
-		<shiro:hasPermission name="prho:prhoMyTask:edit"><li><a href="${ctx}/prho/prhoMyTask/form">我的任务添加</a></li></shiro:hasPermission>
+		<%-- <shiro:hasPermission name="prho:prhoMyTask:edit"><li><a href="${ctx}/prho/prhoMyTask/form">我的任务添加</a></li></shiro:hasPermission> --%>
 	</ul>
 	<form:form id="searchForm" modelAttribute="prhoMyTask" action="${ctx}/prho/prhoMyTask/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
@@ -62,6 +62,9 @@
 				<th>预计用时</th>
 				<th>所属项目</th>
 				<th>任务完成进度</th>
+				<th>任务完成时间</th>
+				<th>工作类型</th>
+				<th>任务类型</th>
 				<shiro:hasPermission name="prho:prhoMyTask:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
@@ -87,7 +90,16 @@
 					${prhoMyTask.projectName}
 				</td>
 				<td>
-					${prhoMyTask.taskcompleteschedule}
+					${fns:getDictLabel(prhoMyTask.taskcompleteschedule, 'taskComplete_schedule', '')}
+				</td>
+				<td>
+					<fmt:formatDate value="${prhoMyTask.taskcompletetime}" pattern="yyyy-MM-dd"/>
+				</td>
+				<td>
+					${fns:getDictLabel(prhoMyTask.tasktype, 'task_type', '')}
+				</td>
+				<td>
+					${fns:getDictLabel(prhoMyTask.worktype, 'work_type', '')}
 				</td>
 				<shiro:hasPermission name="prho:prhoMyTask:edit"><td>
 				<a href="${ctx}/prho/prhoProjectHours/form?ppiid=${prhoMyTask.projectId}">工时填报</a>

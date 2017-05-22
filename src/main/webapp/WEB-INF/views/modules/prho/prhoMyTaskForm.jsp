@@ -49,7 +49,7 @@
 		<div class="control-group">
 			<label class="control-label">任务名称：</label>
 			<div class="controls">
-				<form:input path="taskname" htmlEscape="false" maxlength="200" class="input-xlarge "/>
+				<form:input path="taskname" htmlEscape="false" maxlength="200" class="input-medium "/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -80,13 +80,17 @@
 		<div class="control-group">
 			<label class="control-label">预计用时：</label>
 			<div class="controls">
-				<form:input path="expectedhour" htmlEscape="false" class="input-xlarge "/>
+				<form:input path="expectedhour" htmlEscape="false" class="input-medium "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">任务完成进度：</label>
 			<div class="controls">
-				<form:input path="taskcompleteschedule" htmlEscape="false" maxlength="50" class="input-xlarge "/>
+				<form:select path="taskcompleteschedule" class="input-medium ">
+					<form:option value="" label=""/>
+					<form:options items="${fns:getDictList('taskComplete_schedule')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
+				%
 			</div>
 		</div>
 		<div class="control-group">

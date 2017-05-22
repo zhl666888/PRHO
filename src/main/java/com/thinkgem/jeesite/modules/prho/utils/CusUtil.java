@@ -5,16 +5,21 @@ import java.util.List;
 import com.thinkgem.jeesite.common.utils.CacheUtils;
 import com.thinkgem.jeesite.common.utils.SpringContextHolder;
 import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectInfo;
+import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectTask;
 import com.thinkgem.jeesite.modules.prho.service.PrhoProjectInfoService;
+import com.thinkgem.jeesite.modules.prho.service.PrhoProjectTaskService;
 import com.thinkgem.jeesite.modules.prho.service.PrhoUserGroupService;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 
 public class CusUtil {
 	private static PrhoUserGroupService prhoUserGroupService = SpringContextHolder.getBean(PrhoUserGroupService.class);
 	private static PrhoProjectInfoService prhoProjectInfoService = SpringContextHolder.getBean(PrhoProjectInfoService.class);
+	private static PrhoProjectTaskService prhoProjectTaskService = SpringContextHolder.getBean(PrhoProjectTaskService.class);
 
 	public static final String USER_LIST_CACHE = "userListCache";
 	public static final String PRHOPROJECTINFO_LIST_CACHE = "prhoProjectInfoListCache";
+	public static final String PRHOPROJECTTASK_LIST_CACHE = "prhoProjectTaskListCache";
+
 	/**
 	 * 返回所有用户
 	 */
@@ -40,5 +45,18 @@ public class CusUtil {
 				prList = prhoProjectInfoService.findProjectNameList(ppi);
 			}
 			return prList;
+		}
+	/**
+	 * 
+	 * 获取项目任务的所有任务名称
+	 */
+	public static List<PrhoProjectTask> getAllTaskName(){
+		@SuppressWarnings("unchecked")
+			List<PrhoProjectTask> prtList = (List<PrhoProjectTask>) CacheUtils.get(PRHOPROJECTTASK_LIST_CACHE, "prhoProjectTaskListCache");
+			if (prtList == null||prtList.size()==0) {
+				PrhoProjectTask ppt = new PrhoProjectTask();
+				prtList = prhoProjectTaskService.findList(ppt);
+			}
+			return prtList;
 		}
 }
