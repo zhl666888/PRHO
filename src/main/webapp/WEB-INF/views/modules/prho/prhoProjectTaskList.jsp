@@ -68,9 +68,10 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="prhoProjectTask">
 			<tr>
-				<td><a href="${ctx}/prho/prhoProjectTask/form?id=${prhoProjectTask.id}">
+				<td><%-- <a href="${ctx}/prho/prhoProjectTask/form?id=${prhoProjectTask.id}"> --%>
 					${prhoProjectTask.userName}
-				</a></td>
+				<!-- </a> -->
+				</td>
 				<td>
 					${prhoProjectTask.taskname}
 				</td>

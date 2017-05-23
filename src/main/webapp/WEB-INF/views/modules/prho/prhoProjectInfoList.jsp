@@ -26,7 +26,11 @@
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
 			<li><label>项目名称：</label>
-				<form:input path="projectname" htmlEscape="false" maxlength="150" class="input-medium"/>
+			<form:select path="projectname" class="input-medium">
+					<form:option value="" label=""/>
+					<form:options items="${fnprho:getAllProjectName()}" itemLabel="projectname" itemValue="projectname" htmlEscape="false"/>
+				</form:select>
+				<%-- <form:input path="projectname" htmlEscape="false" maxlength="150" class="input-medium"/> --%>
 			</li>
 			<li><label style="width:100px">项目启动日期：</label>
 				<input name="starttime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"

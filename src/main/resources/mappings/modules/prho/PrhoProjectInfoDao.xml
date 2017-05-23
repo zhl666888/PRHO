@@ -153,7 +153,8 @@
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="projectname != null and projectname != ''">
-				AND a.projectname like concat('%',#{projectname} ,'%')
+				AND a.projectname = #{projectname}
+				<!-- AND a.projectname like concat('%',#{projectname} ,'%') -->
 			</if>
 			<if test="starttime!=null and starttime!=''">  
     <![CDATA[   and DATE_FORMAT(projectbegintime, '%Y-%m-%d')>=  DATE_FORMAT(#{starttime}, '%Y-%m-%d')   ]]>  
@@ -208,6 +209,7 @@
 			#{id}
 		)
 	</insert>
+	<!-- 获取当前用户下的项目名称 -->
 	<select id="getPersonalProjectName" resultType="PrhoProjectInfo">
 		SELECT 
 			<include refid="getPersonalProjectNameColumns"/>

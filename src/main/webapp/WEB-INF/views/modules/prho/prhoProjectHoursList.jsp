@@ -75,9 +75,9 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="prhoProjectHours">
 			<tr>
-				<td><a href="${ctx}/prho/prhoProjectHours/form?id=${prhoProjectHours.id}">
+				<td>
 					<fmt:formatDate value="${prhoProjectHours.worktime}" pattern="yyyy-MM-dd"/>
-				</a></td>
+				</td>
 				<td>
 					${prhoProjectHours.projectName}
 				</td>

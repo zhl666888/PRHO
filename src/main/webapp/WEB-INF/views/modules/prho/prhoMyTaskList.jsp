@@ -71,9 +71,9 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="prhoMyTask">
 			<tr>
-				<td><a href="${ctx}/prho/prhoMyTask/form?id=${prhoMyTask.id}">
+				<td>
 					${prhoMyTask.userName}
-				</a></td>
+				</td>
 				<td>
 					${prhoMyTask.taskname}
 				</td>
@@ -102,7 +102,7 @@
 					${fns:getDictLabel(prhoMyTask.worktype, 'work_type', '')}
 				</td>
 				<shiro:hasPermission name="prho:prhoMyTask:edit"><td>
-				<a href="${ctx}/prho/prhoProjectHours/form?ppiid=${prhoMyTask.projectId}">工时填报</a>
+				<a href="${ctx}/prho/prhoProjectHours/saveMyHours?pmtid=${prhoMyTask.id}">工时填报</a>
     				<%-- <a href="${ctx}/prho/prhoMyTask/form?id=${prhoProjectTask.id}">修改</a>
 					<a href="${ctx}/prho/prhoMyTask/delete?id=${prhoProjectTask.id}" onclick="return confirmx('确认要删除该项目任务吗？', this.href)">删除</a> --%>
 				</td></shiro:hasPermission>

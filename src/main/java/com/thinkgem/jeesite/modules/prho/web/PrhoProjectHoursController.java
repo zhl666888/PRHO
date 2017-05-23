@@ -18,13 +18,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.common.utils.DateUtils;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectHours;
+import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectInfo;
 import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectTask;
 import com.thinkgem.jeesite.modules.prho.service.PrhoProjectHoursService;
 import com.thinkgem.jeesite.modules.prho.service.PrhoProjectInfoService;
 import com.thinkgem.jeesite.modules.prho.service.PrhoProjectTaskService;
 import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.modules.sys.utils.DictUtils;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
@@ -66,11 +69,12 @@ public class PrhoProjectHoursController extends BaseController {
 
 	@RequiresPermissions("prho:prhoProjectHours:view")
 	@RequestMapping(value = "form")
-	public String form(String ppiid,PrhoProjectHours prhoProjectHours, Model model) {
-		if(null != ppiid && !"".equals(ppiid)){
-			/*PrhoProjectInfo	prhoProjectInfo	=prhoProjectInfoService.get(ppiid);
-			prhoProjectHours.setJobtype(prhoProjectInfo.get);*/
-			model.addAttribute("ppiid",ppiid);
+	public String form(PrhoProjectHours prhoProjectHours, Model model) {
+		if(StringUtils.isBlank(prhoProjectHours.getId())){
+			String date=DateUtils.getDate();
+			prhoProjectHours.setWorktime(DateUtils.parseDate(date));
+			prhoProjectHours.setTaskstarttime(DateUtils.parseDate(date));
+			prhoProjectHours.setTaskendtime(DateUtils.parseDate(date));
 		}
 		model.addAttribute("prhoProjectHours", prhoProjectHours);
 		return "modules/prho/prhoProjectHoursForm";
@@ -78,9 +82,9 @@ public class PrhoProjectHoursController extends BaseController {
 
 	@RequiresPermissions("prho:prhoProjectHours:edit")
 	@RequestMapping(value = "save")
-	public String save(String ppiid,PrhoProjectHours prhoProjectHours, Model model, RedirectAttributes redirectAttributes,@RequestParam(required = false) String staffId) {
+	public String save(PrhoProjectHours prhoProjectHours, Model model, RedirectAttributes redirectAttributes,@RequestParam(required = false) String staffId) {
 		if (!beanValidator(model, prhoProjectHours)){
-			return form(ppiid,prhoProjectHours, model);
+			return form(prhoProjectHours, model);
 		}
 		if(staffId!=""&&staffId!=null){
 			prhoProjectHours.setStaff(staffId);
@@ -104,5 +108,25 @@ public class PrhoProjectHoursController extends BaseController {
 		addMessage(redirectAttributes, "删除项目工时成功");
 		return "redirect:"+Global.getAdminPath()+"/prho/prhoProjectHours/?repage";
 	}
-
+	
+	@RequiresPermissions("prho:prhoProjectHours:view")
+	@RequestMapping(value = "saveMyHours")
+	public String saveMyHours(String pmtid,PrhoProjectHours prhoProjectHours, Model model) {
+		if(StringUtils.isNotBlank(pmtid)){
+			PrhoProjectTask	prhoProjectTask	=prhoProjectTaskService.get(pmtid);
+			prhoProjectHours.setJobtype(prhoProjectTask.getWorktype());
+			prhoProjectHours.setTaskId(prhoProjectTask.getId());
+			prhoProjectHours.setJobtypelabel(DictUtils.getDictLabel(prhoProjectTask.getWorktype(), "work_type", ""));
+			
+			PrhoProjectInfo	prhoProjectInfo =prhoProjectInfoService.get(prhoProjectTask.getProjectId());
+			prhoProjectHours.setProjectId(prhoProjectInfo.getId());
+			prhoProjectHours.setProjectmanagerId(prhoProjectInfo.getUserId());
+		}
+		String date=DateUtils.getDate();
+		prhoProjectHours.setWorktime(DateUtils.parseDate(date));
+		prhoProjectHours.setTaskstarttime(DateUtils.parseDate(date));
+		prhoProjectHours.setTaskendtime(DateUtils.parseDate(date));
+		model.addAttribute("prhoProjectHours", prhoProjectHours);
+		return "modules/prho/prhoProjectHoursForm";
+	}
 }

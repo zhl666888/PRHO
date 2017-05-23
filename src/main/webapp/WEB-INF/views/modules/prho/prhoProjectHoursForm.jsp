@@ -6,13 +6,13 @@
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			var ppiid=$("#ppiid").val();
+			/* var ppiid=$("#ppiid").val();
 			 if(ppiid){
 				   $("#projectId").find("option[value='"+ppiid+"']").attr("selected", "selected");
 				 var projectName=  $('#projectId option:selected').text();
 				 $("#s2id_projectId").find(".select2-chosen").html(projectName);
 				// alert(projectName);
-			} 
+			} */ 
 			$("#inputForm").validate({
 				submitHandler: function(form){
 					loading('正在提交，请稍等...');
@@ -69,10 +69,18 @@
 		<div class="control-group">
 			<label class="control-label">工作类型 ：</label>
 			<div class="controls">
+			<c:choose>
+			<c:when test="${''!=prhoProjectHours.jobtypelabel&& null!=prhoProjectHours.jobtypelabel}">
+			<input id="jobtype" name="jobtype" value="${prhoProjectHours.jobtype}" type="hidden">
+			  <form:input path="jobtypelabel" value="${prhoProjectHours.jobtypelabel}" readonly="true" htmlEscape="false"  class="input-medium "/>
+			</c:when>
+			<c:otherwise>
 				<form:select path="jobtype" class="input-medium ">
 					<form:option value="" label=""/>
-					<form:options items="${fns:getDictList('work_type')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+					<form:options items="${fns:getDictList('work_type')}" itemLabel="label" itemValue="value" readonly="true" htmlEscape="false"/>
 				</form:select>
+			</c:otherwise>
+			</c:choose>
 			</div>
 		</div>
 		<div class="control-group">
@@ -103,7 +111,8 @@
 		<div class="control-group">
 			<label class="control-label">实际用时：</label>
 			<div class="controls">
-				<form:input path="realhours" htmlEscape="false" class="input-medium "/>
+				<form:input path="realhours" htmlEscape="false" class="input-medium required"/>
+				<span class="help-inline"><font color="red">*</font></span>
 			</div>
 		</div>
 		<div class="control-group">
