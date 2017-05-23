@@ -51,7 +51,11 @@
 				<!-- <th>编号</th> -->
 				<th>人员名称</th>
 				<th>项目名称</th>
-				<th>投入工时</th>
+				<th>投入工时(小时)</th>
+				<th>工作日加班(小时)</th>
+				<th>节假日加班(小时)</th>
+				<th>实际工作日(天)</th>
+				<th>实际工作量(天)</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -63,11 +67,29 @@
 				<td>
 					${prhoProjectHoursSatistic.staff}
 				</td>
+				
 				<td>
 					${prhoProjectHoursSatistic.projectname}
 				</td>
+				
 				<td>
 					${prhoProjectHoursSatistic.realhours}
+				</td>
+				
+				<td>
+					${prhoProjectHoursSatistic.workOverTime}
+				</td>
+				
+				<td>
+					${prhoProjectHoursSatistic.vacationOverTime}
+				</td>
+				
+				<td>
+					${prhoProjectHoursSatistic.actualWorkDay}
+				</td>
+				
+				<td>
+					${prhoProjectHoursSatistic.workLoad}
 				</td>
 			</tr>
 		</c:forEach>
