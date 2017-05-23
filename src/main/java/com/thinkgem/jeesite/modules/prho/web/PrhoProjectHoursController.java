@@ -24,6 +24,8 @@ import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectTask;
 import com.thinkgem.jeesite.modules.prho.service.PrhoProjectHoursService;
 import com.thinkgem.jeesite.modules.prho.service.PrhoProjectInfoService;
 import com.thinkgem.jeesite.modules.prho.service.PrhoProjectTaskService;
+import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 项目工时Controller
@@ -55,6 +57,8 @@ public class PrhoProjectHoursController extends BaseController {
 	@RequiresPermissions("prho:prhoProjectHours:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(PrhoProjectHours prhoProjectHours, HttpServletRequest request, HttpServletResponse response, Model model) {
+		User user = UserUtils.getUser();
+		prhoProjectHours.setStaff(user.getId());
 		Page<PrhoProjectHours> page = prhoProjectHoursService.findPage(new Page<PrhoProjectHours>(request, response), prhoProjectHours); 
 		model.addAttribute("page", page);
 		return "modules/prho/prhoProjectHoursList";
@@ -65,7 +69,7 @@ public class PrhoProjectHoursController extends BaseController {
 	public String form(String ppiid,PrhoProjectHours prhoProjectHours, Model model) {
 		if(null != ppiid && !"".equals(ppiid)){
 			/*PrhoProjectInfo	prhoProjectInfo	=prhoProjectInfoService.get(ppiid);
-			prhoProjectHours.setPrhoProjectInfo(prhoProjectInfo);*/
+			prhoProjectHours.setJobtype(prhoProjectInfo.get);*/
 			model.addAttribute("ppiid",ppiid);
 		}
 		model.addAttribute("prhoProjectHours", prhoProjectHours);
@@ -85,7 +89,7 @@ public class PrhoProjectHoursController extends BaseController {
 		//保存项目完成进度(项目完成时间)
 		String taskId=prhoProjectHours.getTaskId();
 		PrhoProjectTask prhoProjectTask=  prhoProjectTaskService.get(taskId);
-		if(prhoProjectTask.getTasktype().equals("private")){
+		if(("private").equals(prhoProjectTask.getTasktype())){
 			prhoProjectTaskService.updateProjectProgress(prhoProjectHours,taskId);
 		}
 		

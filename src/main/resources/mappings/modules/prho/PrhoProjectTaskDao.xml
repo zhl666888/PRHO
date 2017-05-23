@@ -152,6 +152,12 @@
 			<if test="id != null and id != ''">
 				AND a.id = #{id}
 			</if>
+			<if test="taskstatus == 'finish'">
+				AND a.taskcompleteschedule = '100'
+			</if>
+			<if test="taskstatus == 'unfinished'">
+				AND a.taskcompleteschedule != '100'
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -164,18 +170,8 @@
 	</select>
 	<update id="updateProjectProgress">
 		UPDATE prho_project_task SET 	
-			project_id = #{projectId},
-			taskmanager = #{taskmanager},
-			taskname = #{taskname},
-			tastplanbegintime = #{tastplanbegintime},
-			taskplanendtime = #{taskplanendtime},
-			expectedhour = #{expectedhour},
 			taskcompleteschedule = #{taskcompleteschedule},
-			taskcompletetime = #{taskcompletetime},
-			tasktype = #{tasktype},
-			worktype = #{worktype},
-			update_date = #{updateDate},
-			remarks = #{remarks}
+			taskcompletetime = #{taskcompletetime}
 		WHERE id = #{id}
 	</update>
 </mapper>

@@ -91,6 +91,7 @@
 					${fns:getDictLabel(prhoProjectInfo.projectstatus, 'project_status', '')}
 				</td>
 				<shiro:hasPermission name="prho:prhoProjectInfo:edit"><td>
+					<a href="${ctx}/prho/prhoProjectInfo/addStaff?id=${prhoProjectInfo.id}">添加人员</a>
     				<a href="${ctx}/prho/prhoProjectInfo/form?id=${prhoProjectInfo.id}">修改</a>
 					<a href="${ctx}/prho/prhoProjectInfo/delete?id=${prhoProjectInfo.id}" onclick="return confirmx('确认要删除该项目信息吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>

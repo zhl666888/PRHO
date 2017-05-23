@@ -139,6 +139,9 @@
 			<if test="taskname != null and taskname != ''">
 				AND a.taskname = #{taskname}
 			</if>
+			<if test="taskmanager != null and taskmanager != ''">
+				AND a.taskmanager = #{taskmanager}
+			</if>
 				<if test="starttime!=null and starttime!=''">  
     <![CDATA[   and DATE_FORMAT(tastplanbegintime, '%Y-%m-%d')>=  DATE_FORMAT(#{starttime}, '%Y-%m-%d')   ]]>  
 </if>  

@@ -63,8 +63,8 @@
 				<th>所属项目</th>
 				<th>任务完成进度</th>
 				<th>任务完成时间</th>
-				<th>工作类型</th>
 				<th>任务类型</th>
+				<th>工作类型</th>
 				<shiro:hasPermission name="prho:prhoMyTask:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>

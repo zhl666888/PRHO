@@ -18,7 +18,21 @@
 		a.del_flag AS "delFlag",
 		u3.name AS "userName"
 	</sql>
-	
+	<sql id="getPersonalProjectNameColumns">
+		a.id AS "id",
+		a.projectcode AS "projectcode",
+		a.user_id AS "userId",
+		a.projectname AS "projectname",
+		a.estimatehours AS "estimatehours",
+		a.projectbegintime AS "projectbegintime",
+		a.projectplanendtime AS "projectplanendtime",
+		a.projectendtime AS "projectendtime",
+		a.projectstatus AS "projectstatus",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
 	<sql id="prhoProjectInfoJoins">
 		LEFT JOIN sys_user u3 ON u3.id = a.user_id
 	</sql>
@@ -141,12 +155,6 @@
 			<if test="projectname != null and projectname != ''">
 				AND a.projectname like concat('%',#{projectname} ,'%')
 			</if>
-			<!-- <if test="projectbegintime != null and projectbegintime != ''">
-				AND a.projectbegintime = #{projectbegintime}
-			</if>
-			<if test="projectendtime != null and projectendtime != ''">
-				AND a.projectendtime = #{projectendtime}
-			</if> -->
 			<if test="starttime!=null and starttime!=''">  
     <![CDATA[   and DATE_FORMAT(projectbegintime, '%Y-%m-%d')>=  DATE_FORMAT(#{starttime}, '%Y-%m-%d')   ]]>  
 </if>  
@@ -166,6 +174,7 @@
 			</otherwise>
 		</choose>
 	</select>
+	<!-- 获取所有项目名称 -->
 	<select id="findProjectNameList" resultType="PrhoProjectInfo">
 		SELECT 
 			<include refid="prhoProjectInfoColumns"/>
@@ -183,4 +192,48 @@
 			</otherwise>
 		</choose>
 	</select>
+	<!-- 添加人员前先删除数据 -->
+	<delete id="deleteprinfo" parameterType="user">
+	delete from 
+		prho_user_project 
+		WHERE project_id = #{projectId}
+	</delete>
+	<!-- 项目添加人员 -->
+	<insert id="saveProjectByStaff" parameterType="user">
+		INSERT INTO prho_user_project(
+			project_id,
+			user_id
+		) VALUES (
+			#{projectId},
+			#{id}
+		)
+	</insert>
+	<select id="getPersonalProjectName" resultType="PrhoProjectInfo">
+		SELECT 
+			<include refid="getPersonalProjectNameColumns"/>
+		FROM prho_project_info a
+		LEFT JOIN prho_user_project pup ON a.id = pup.project_id
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="userId != null and userId != ''">
+				AND pup.user_id = #{userId}
+			</if>
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	<!-- 取到所属项目下的人员 -->
+	<select id="getPersonProlist" resultType="PrhoProjectInfo">
+	SELECT 
+		a.user_id AS "userId"
+		FROM prho_user_project a
+		WHERE 	a.project_id = #{id} 
+	</select>
+	
 </mapper>

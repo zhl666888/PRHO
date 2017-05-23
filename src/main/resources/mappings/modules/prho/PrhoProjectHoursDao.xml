@@ -61,7 +61,9 @@
 			<if test="endtime!=null and endtime!=''">  
     <![CDATA[  and DATE_FORMAT(taskendtime, '%Y-%m-%d') <= DATE_FORMAT(#{endtime}, '%Y-%m-%d')    ]]>  
 			</if>  
-	
+			<if test="staff != null and staff != ''">
+				AND a.staff = #{staff}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">

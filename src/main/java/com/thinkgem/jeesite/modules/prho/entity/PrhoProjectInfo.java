@@ -8,8 +8,10 @@ import org.hibernate.validator.constraints.Length;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.persistence.DataEntity;
 
 /**
@@ -32,6 +34,8 @@ public class PrhoProjectInfo extends DataEntity<PrhoProjectInfo> {
 	private String userId; //项目负责人
 	private String userName;//显示的项目负责人
 	private String estimatehours;  //预估工时 新增字段
+	private String staffId; //项目所属人员id
+	private List<User> userList = Lists.newArrayList();  //项目与人员关系列表
 	
 	public PrhoProjectInfo() {
 		super();
@@ -145,5 +149,21 @@ public class PrhoProjectInfo extends DataEntity<PrhoProjectInfo> {
 	public void setEstimatehours(String estimatehours) {
 		this.estimatehours = estimatehours;
 	}
-	
+
+	public String getStaffId() {
+		return staffId;
+	}
+
+	public void setStaffId(String staffId) {
+		this.staffId = staffId;
+	}
+
+	public List<User> getUserList() {
+		return userList;
+	}
+
+	public void setUserList(List<User> userList) {
+		this.userList = userList;
+	}
+
 }

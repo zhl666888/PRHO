@@ -8,6 +8,7 @@ import java.util.List;
 import com.thinkgem.jeesite.common.persistence.CrudDao;
 import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
 import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectInfo;
+import com.thinkgem.jeesite.modules.sys.entity.User;
 
 /**
  * 项目信息DAO接口
@@ -18,4 +19,8 @@ import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectInfo;
 public interface PrhoProjectInfoDao extends CrudDao<PrhoProjectInfo> {
 	public List<PrhoProjectInfo> findPageBy(PrhoProjectInfo prhoProjectInfo);
     public List<PrhoProjectInfo> findProjectNameList(PrhoProjectInfo prhoProjectInfo);
+    public void deleteprinfo(User user);
+    public void saveProjectByStaff(User user);
+    public List<PrhoProjectInfo> getPersonalProjectName(PrhoProjectInfo prhoProjectInfo);
+    public List<PrhoProjectInfo> getPersonProlist(String id);
 }

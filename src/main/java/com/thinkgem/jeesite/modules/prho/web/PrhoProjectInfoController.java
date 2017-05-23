@@ -79,5 +79,23 @@ public class PrhoProjectInfoController extends BaseController {
 		addMessage(redirectAttributes, "删除项目信息成功");
 		return "redirect:"+Global.getAdminPath()+"/prho/prhoProjectInfo/?repage";
 	}
-
+	@RequiresPermissions("prho:prhoProjectInfo:edit")
+	@RequestMapping(value = "addStaff")
+	public String addStuff(PrhoProjectInfo prhoProjectInfo, Model model) {
+		//添加人员时，项目有人员则回显人员
+		prhoProjectInfo = prhoProjectInfoService.getStaffFromProject(prhoProjectInfo);
+		model.addAttribute("prhoProjectInfo", prhoProjectInfo);
+		return "modules/prho/prhoProjectInfoAddStaff";
+	}
+	
+	@RequiresPermissions("prho:prhoProjectInfo:edit")
+	@RequestMapping(value = "saveProjectByStaff")
+	public String saveProjectByStaff(PrhoProjectInfo prhoProjectInfo, Model model, RedirectAttributes redirectAttributes) {
+		if (!beanValidator(model, prhoProjectInfo)){
+			return addStuff(prhoProjectInfo, model);
+		}
+		prhoProjectInfoService.saveProjectByStaff(prhoProjectInfo);
+		addMessage(redirectAttributes, "保存项目所属人员信息成功");
+		return "redirect:"+Global.getAdminPath()+"/prho/prhoProjectInfo/?repage";
+	}
 }

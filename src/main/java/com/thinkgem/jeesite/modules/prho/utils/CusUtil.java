@@ -10,6 +10,7 @@ import com.thinkgem.jeesite.modules.prho.service.PrhoProjectInfoService;
 import com.thinkgem.jeesite.modules.prho.service.PrhoProjectTaskService;
 import com.thinkgem.jeesite.modules.prho.service.PrhoUserGroupService;
 import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 
 public class CusUtil {
@@ -58,5 +59,20 @@ public class CusUtil {
 				prtList = prhoProjectTaskService.findList(ppt);
 			}
 			return prtList;
+		}
+	/**
+	 * 
+	 * 获取当前用户下的项目名称
+	 */
+	public static List<PrhoProjectInfo> getPersonalProjectName(){
+		@SuppressWarnings("unchecked")
+			List<PrhoProjectInfo> ppiList = (List<PrhoProjectInfo>) CacheUtils.get(PRHOPROJECTINFO_LIST_CACHE, "prhoProjectInfoListCache");
+			User user = UserUtils.getUser();
+			if (ppiList == null||ppiList.size()==0) {
+				PrhoProjectInfo pri = new PrhoProjectInfo();
+				pri.setUserId(user.getId());
+				ppiList = prhoProjectInfoService.getPersonalProjectName(pri);
+			}
+			return ppiList;
 		}
 }
