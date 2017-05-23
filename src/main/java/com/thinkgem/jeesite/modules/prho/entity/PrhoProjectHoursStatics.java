@@ -4,6 +4,8 @@
 package com.thinkgem.jeesite.modules.prho.entity;
 
 
+import java.util.Date;
+
 import com.thinkgem.jeesite.common.persistence.DataEntity;
 import com.thinkgem.jeesite.common.utils.excel.annotation.ExcelField;
 import com.thinkgem.jeesite.common.supcan.annotation.treelist.cols.SupCol;
@@ -19,12 +21,24 @@ public class PrhoProjectHoursStatics extends DataEntity<PrhoProjectHoursStatics>
 	private String projectid;		// 项目id
 	private String taskid;		// 任务id
 	private String staff;		// 人员名称
-	private Double realhours;	// 投入工时
+	private Double realhours;	// 投入工时（小时）
 	private String taskName;// 任务名称
 	private String jobType; //工作类型
+	private Date taskStartTime;		// 任务开始时间
+	private Date taskEndTime;		// 任务结束时间
+	
+	//工时类型 holidayOvertime节假日加班 
+	//workingDayOvertime 工作日加班 workingDay工作日
+	private String workHoursType; 
+	
 	
 	//扩展字段 
 	private String projectname;		// 项目名称
+	
+	private Double workOverTime;	// 工作日加班（小时）
+	private Double vacationOverTime;	// 节假日加班（小时）
+	private Double actualWorkDay;	// 实际工作日（天）
+	private Double workLoad;	// 实际工作量（天）
 	
 	
 	@SupCol(isUnique="true", isHide="true")
@@ -59,7 +73,7 @@ public class PrhoProjectHoursStatics extends DataEntity<PrhoProjectHoursStatics>
 	public void setProjectname(String projectname) {
 		this.projectname = projectname;
 	}
-	@ExcelField(title="投入工时", align=2, sort=40)
+	@ExcelField(title="投入工时(小时)", align=2, sort=40)
 	public Double getRealhours() {
 		return realhours;
 	}
@@ -81,6 +95,65 @@ public class PrhoProjectHoursStatics extends DataEntity<PrhoProjectHoursStatics>
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	@ExcelField(title="工作日加班(小时)", align=2, sort=40)
+	public Double getWorkOverTime() {
+		return workOverTime;
+	}
+
+	public void setWorkOverTime(Double workOverTime) {
+		this.workOverTime = workOverTime;
+	}
+	@ExcelField(title="节假日加班(小时)", align=2, sort=40)
+	public Double getVacationOverTime() {
+		return vacationOverTime;
+	}
+
+	public void setVacationOverTime(Double vacationOverTime) {
+		this.vacationOverTime = vacationOverTime;
+	}
+	
+	@ExcelField(title="实际工作日(天)", align=2, sort=40)
+
+	public Double getActualWorkDay() {
+		return actualWorkDay;
+	}
+
+	public void setActualWorkDay(Double actualWorkDay) {
+		this.actualWorkDay = actualWorkDay;
+	}
+	@ExcelField(title="实际工作量(天)", align=2, sort=40)
+	public Double getWorkLoad() {
+		return workLoad;
+	}
+
+	public void setWorkLoad(Double workLoad) {
+		this.workLoad = workLoad;
+	}
+
+	public Date getTaskStartTime() {
+		return taskStartTime;
+	}
+
+	public void setTaskStartTime(Date taskStartTime) {
+		this.taskStartTime = taskStartTime;
+	}
+
+	public Date getTaskEndTime() {
+		return taskEndTime;
+	}
+
+	public void setTaskEndTime(Date taskEndTime) {
+		this.taskEndTime = taskEndTime;
+	}
+
+	public String getWorkHoursType() {
+		return workHoursType;
+	}
+
+	public void setWorkHoursType(String workHoursType) {
+		this.workHoursType = workHoursType;
+	}
+
 	
 	
 	
