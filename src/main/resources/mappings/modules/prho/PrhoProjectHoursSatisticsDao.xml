@@ -3,11 +3,19 @@
 <mapper namespace="com.thinkgem.jeesite.modules.prho.dao.PrhoProjectHoursSatisticsDao">
     
 	<sql id="prhoProjectHoursSatisticsColumns">
+		IF (sum(pph.realHours) >= 4, 1, 0.5) AS "workLoad",
 		pph.id AS "id",
 		pph.staff AS "staff",
 		pph.project_id AS "projectid",
 		pph.realhours AS "realhours",
-		ppi.projectname AS "projectname"
+		pph.TaskStartTime AS "taskStartTime",
+		pph.TaskEndTime AS "taskEndTime",
+		pph.workHoursType AS "workHoursType",
+		ppi.projectname AS "projectname",
+		MAX(CASE pph.workHoursType WHEN 'workingDay' THEN realhours ELSE 0 END )as 'actualWorkDay',
+        MAX(CASE pph.workHoursType WHEN 'workingDayOvertime' THEN realhours ELSE 0 END ) as 'workOverTime',
+        MAX(CASE pph.workHoursType WHEN 'holidayOvertime' THEN realhours ELSE 0 END ) as 'vacationOverTime'
+		
 	</sql>
 	
 	<sql id="prhoProjectHoursSatisticsJoins">
@@ -29,6 +37,11 @@
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}
 			</when>
+			<otherwise>
+				GROUP BY 	
+				pph.staff,
+	            pph.project_id
+			</otherwise>
 		</choose>
 	</select>
 	
@@ -46,6 +59,11 @@
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}
 			</when>
+			<otherwise>
+				GROUP BY 	
+				pph.staff,
+	            pph.project_id
+			</otherwise>
 		</choose>
 	</select>
 </mapper>
