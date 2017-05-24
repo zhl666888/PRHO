@@ -45,6 +45,12 @@ public class DateUtils extends DateFormatUtils{
     public static String formatDateTime(Date date) {
         return formatDate(date, "yyyy-MM-dd HH:mm:ss");
     }
+    /**
+     * 得到日期时间字符串，转换格式（yyyy-MM-dd）
+     */
+    public static String formatDate(Date date) {
+        return formatDate(date, "yyyy-MM-dd");
+    }
 
     /**
      * 得到当前时间字符串 格式（HH:mm:ss）

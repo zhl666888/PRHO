@@ -6,6 +6,7 @@ package com.thinkgem.jeesite.modules.prho.entity;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.thinkgem.jeesite.common.persistence.DataEntity;
 import com.thinkgem.jeesite.common.utils.excel.annotation.ExcelField;
 import com.thinkgem.jeesite.common.supcan.annotation.treelist.cols.SupCol;
@@ -15,7 +16,7 @@ import com.thinkgem.jeesite.common.supcan.annotation.treelist.cols.SupCol;
  * @author ldx
  * @version 2017-05-17
  */
-public class PrhoProjectHoursStatics extends DataEntity<PrhoProjectHoursStatics> {
+public class PrhoProjectDailyStatics extends DataEntity<PrhoProjectDailyStatics> {
 	
 	private static final long serialVersionUID = 1L;
 	private String projectid;		// 项目id
@@ -48,7 +49,7 @@ public class PrhoProjectHoursStatics extends DataEntity<PrhoProjectHoursStatics>
 	private String ifOverTime;		// 是否加班
 	private Date starttime; //查询的任务开始时间
 	private Date endtime; //查询的任务结束时间
-	
+	private String name;		// 姓名
 	
 	@SupCol(isUnique="true", isHide="true")
 	@ExcelField(title="ID", type=1, align=2, sort=1)
@@ -186,7 +187,7 @@ public class PrhoProjectHoursStatics extends DataEntity<PrhoProjectHoursStatics>
 	public void setIfOverTime(String ifOverTime) {
 		this.ifOverTime = ifOverTime;
 	}
-
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	public Date getWorkTime() {
 		return workTime;
 	}
@@ -226,6 +227,15 @@ public class PrhoProjectHoursStatics extends DataEntity<PrhoProjectHoursStatics>
 	public void setEndtime(Date endtime) {
 		this.endtime = endtime;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	
 	
 	
