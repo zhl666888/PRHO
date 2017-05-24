@@ -11,7 +11,6 @@
 				   $("#projectId").find("option[value='"+ppiid+"']").attr("selected", "selected");
 				 var projectName=  $('#projectId option:selected').text();
 				 $("#s2id_projectId").find(".select2-chosen").html(projectName);
-				// alert(projectName);
 			} */ 
 			$("#inputForm").validate({
 				submitHandler: function(form){
@@ -30,6 +29,50 @@
 			});
 			
 		});
+		$(function(){
+		
+			$("#projectId").click(function(){
+				var projectId = $("#projectId").val();
+				$.ajax( {  
+	                type : "post",  
+	                url : '${ctx}/prho/prhoProjectHours/getProjectManager',
+	                data:{projectId:projectId},
+	                success: function(data) {
+	                	if(data.userId){
+	                		  $("#projectmanagerId").find("option[value='"+data.userId+"']").attr("selected", "selected");
+	                		  var projectmanager=  $('#projectmanagerId option:selected').text();
+	         				  $("#s2id_projectmanagerId").find(".select2-chosen").html(projectmanager);
+	                	}
+	                	/* if(data.slmsExperimentBill.shiuser){
+	                	  $("#liablerName").val(data.slmsExperimentBill.shiuser.id); 
+	                	  $("#liabler").val(data.slmsExperimentBill.shiuser.name); 
+	                	} */
+	                
+	                },
+	            	error: function(request) {
+	                	alert("出错");
+	            	}
+	            }); 
+			});
+			$("#taskId").click(function(){
+				var taskId = $("#taskId").val();
+				$.ajax( {  
+	                type : "post",  
+	                url : '${ctx}/prho/prhoProjectHours/getWorkType',
+	                data:{taskId:taskId},
+	                success: function(data) {
+	                	if(data.worktype){
+	                		  $("#jobtype").find("option[value='"+data.worktype+"']").attr("selected", "selected");
+	                		  var jobtype=  $('#jobtype option:selected').text();
+	         				  $("#s2id_jobtype").find(".select2-chosen").html(jobtype);
+	                	}
+	                },
+	            	error: function(request) {
+	                	alert("出错");
+	            	}
+	            }); 
+			});
+		}); 
 	</script>
 </head>
 <body>
@@ -75,9 +118,9 @@
 			  <form:input path="jobtypelabel" value="${prhoProjectHours.jobtypelabel}" readonly="true" htmlEscape="false"  class="input-medium "/>
 			</c:when>
 			<c:otherwise>
-				<form:select path="jobtype" class="input-medium ">
+				<form:select id="jobtype" path="jobtype" class="input-medium ">
 					<form:option value="" label=""/>
-					<form:options items="${fns:getDictList('work_type')}" itemLabel="label" itemValue="value" readonly="true" htmlEscape="false"/>
+					<form:options items="${fns:getDictList('work_type')}" itemLabel="label" itemValue="value"  htmlEscape="false"/>
 				</form:select>
 			</c:otherwise>
 			</c:choose>
@@ -109,7 +152,7 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">实际用时：</label>
+			<label class="control-label">实际用时(小时)：</label>
 			<div class="controls">
 				<form:input path="realhours" htmlEscape="false" class="input-medium required"/>
 				<span class="help-inline"><font color="red">*</font></span>

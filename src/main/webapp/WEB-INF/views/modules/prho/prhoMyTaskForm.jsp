@@ -78,7 +78,7 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">预计用时：</label>
+			<label class="control-label">预计用时(小时)：</label>
 			<div class="controls">
 				<form:input path="expectedhour" htmlEscape="false" class="input-medium "/>
 			</div>

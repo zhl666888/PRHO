@@ -24,7 +24,13 @@
 				}
 			});
 		});
+		/* $(function(){
+		$("#s2id_userId").addClass("zhl");
+		}); */
 	</script>
+	<style type="text/css">
+	   .zhl{padding:4px 6px;}
+	</style>
 </head>
 <body>
 	<ul class="nav nav-tabs">
@@ -58,7 +64,7 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">预估工时：</label>
+			<label class="control-label">预估工时(小时)：</label>
 			<div class="controls">
 				<form:input path="estimatehours" htmlEscape="false"  class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>

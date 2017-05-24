@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.thinkgem.jeesite.common.config.Global;
@@ -75,6 +76,8 @@ public class PrhoProjectHoursController extends BaseController {
 			prhoProjectHours.setWorktime(DateUtils.parseDate(date));
 			prhoProjectHours.setTaskstarttime(DateUtils.parseDate(date));
 			prhoProjectHours.setTaskendtime(DateUtils.parseDate(date));
+			prhoProjectHours.setTaskcompleteschedule("100");
+			prhoProjectHours.setWorkhourstype("workingDay");
 		}
 		model.addAttribute("prhoProjectHours", prhoProjectHours);
 		return "modules/prho/prhoProjectHoursForm";
@@ -128,5 +131,28 @@ public class PrhoProjectHoursController extends BaseController {
 		prhoProjectHours.setTaskendtime(DateUtils.parseDate(date));
 		model.addAttribute("prhoProjectHours", prhoProjectHours);
 		return "modules/prho/prhoProjectHoursForm";
+	}
+	/*
+	 * 项目名称级联审批人
+	 */
+	@ResponseBody
+	@RequiresPermissions("prho:prhoProjectHours:view")
+	@RequestMapping(value="getProjectManager")
+	public PrhoProjectInfo getProjectManager(String projectId){
+		PrhoProjectInfo prhoProjectInfo=new PrhoProjectInfo();
+		if(StringUtils.isNotBlank(projectId)){
+		 prhoProjectInfo=prhoProjectInfoService.get(projectId);
+		}
+		return prhoProjectInfo;
+	}
+	@ResponseBody
+	@RequiresPermissions("prho:prhoProjectHours:view")
+	@RequestMapping(value="getWorkType")
+	public PrhoProjectTask getWorkType(String taskId){
+		PrhoProjectTask prhoProjectTask=new PrhoProjectTask();
+		if(StringUtils.isNotBlank(taskId)){
+			prhoProjectTask=prhoProjectTaskService.get(taskId);
+		}
+		return prhoProjectTask;
 	}
 }
