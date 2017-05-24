@@ -17,6 +17,11 @@ import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectHoursStatics;
 @MyBatisDao
 public interface PrhoProjectHoursSatisticsDao extends CrudDao<PrhoProjectHoursStatics> {
 	
+	/**
+	 * 项目工时统计查询
+	 * @param prhoProjectHoursStatics
+	 * @return
+	 */
 	public List<PrhoProjectHoursStatics> findPageBy(PrhoProjectHoursStatics prhoProjectHoursStatics);
 	
     public List<PrhoProjectHoursStatics> findHoursSatisticsList(PrhoProjectHoursStatics prhoProjectHoursStatics);

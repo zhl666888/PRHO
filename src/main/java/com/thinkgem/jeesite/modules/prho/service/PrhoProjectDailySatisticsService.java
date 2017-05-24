@@ -39,7 +39,12 @@ public class PrhoProjectDailySatisticsService extends CrudService<PrhoProjectDai
 		return super.get(id);
 	}
 	
-	
+	/**
+	 * 日报统计查询
+	 * @param page
+	 * @param prhoProjectDailyStatics
+	 * @return
+	 */
 	@Transactional(readOnly = false)
 	public Page<PrhoProjectDailyStatics> findPageBy(Page<PrhoProjectDailyStatics> page,PrhoProjectDailyStatics prhoProjectDailyStatics){
 		prhoProjectDailyStatics.setPage(page);
