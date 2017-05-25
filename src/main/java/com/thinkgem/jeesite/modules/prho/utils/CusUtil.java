@@ -1,5 +1,6 @@
 package com.thinkgem.jeesite.modules.prho.utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.thinkgem.jeesite.common.utils.CacheUtils;
@@ -49,7 +50,7 @@ public class CusUtil {
 		}
 	/**
 	 * 
-	 * 获取项目任务的所有任务名称
+	 * 获取项目任务的所有任务名称(任务名称去空)
 	 */
 	public static List<PrhoProjectTask> getAllTaskName(){
 		@SuppressWarnings("unchecked")
@@ -58,7 +59,13 @@ public class CusUtil {
 				PrhoProjectTask ppt = new PrhoProjectTask();
 				prtList = prhoProjectTaskService.findList(ppt);
 			}
-			return prtList;
+			List<PrhoProjectTask> prtListnew=new ArrayList<PrhoProjectTask>();
+			for(PrhoProjectTask pptnew:prtList){
+				if(StringUtils.isNotBlank(pptnew.getTaskname())){
+					prtListnew.add(pptnew);
+				}
+			}
+			return prtListnew;
 		}
 	/**
 	 * 
