@@ -30,6 +30,8 @@ public class PrhoProjectInfoService extends CrudService<PrhoProjectInfoDao, Prho
 	private UserDao userDao;
 	@Autowired
 	private PrhoProjectInfoDao dao;
+	@Autowired
+	private PrhoProjectTaskService prhoProjectTaskService;
 	
 	public PrhoProjectInfo get(String id) {
 		return super.get(id);
@@ -113,5 +115,20 @@ public class PrhoProjectInfoService extends CrudService<PrhoProjectInfoDao, Prho
 			prhoProjectInfo.setUserList(listuser);
 		}
 		return prhoProjectInfo;
+	}
+	@Transactional(readOnly = false)
+	public void saveNew(PrhoProjectInfo prhoProjectInfo) {
+		if (prhoProjectInfo.getIsNewRecord()){
+			prhoProjectInfo.preInsert();
+			//添加项目后，在任务中保存公有任务多条(依据工作类型)
+			PrhoProjectInfo prhoProjectInfonew=get(prhoProjectInfo.getId());
+			if(null==prhoProjectInfonew){
+				prhoProjectTaskService.savePersonalTask(prhoProjectInfo);
+			}
+			dao.insert(prhoProjectInfo);
+		}else{
+			prhoProjectInfo.preUpdate();
+			dao.update(prhoProjectInfo);
+		}
 	}
 }

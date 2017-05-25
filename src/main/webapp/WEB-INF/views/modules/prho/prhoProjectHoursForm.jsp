@@ -92,9 +92,9 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">项目名称：</label>
+		<label class="control-label">项目名称：</label>
 			<div class="controls">
-			<form:select id="projectId" path="projectId" class="input-medium">
+			<form:select id="projectId" path="projectId" class="input-select_medium">
 					<%-- <form:option value="" label=""/> --%>
 					<form:options items="${fnprho:getPersonalProjectName()}" itemLabel="projectname" itemValue="id" htmlEscape="false"/>
 				</form:select>
@@ -103,7 +103,7 @@
 		<div class="control-group">
 			<label class="control-label">任务名称：</label>
 			<div class="controls">
-			<form:select id="taskId" path="taskId" class="input-medium">
+			<form:select id="taskId" path="taskId" class="input-select_medium">
 					<%-- <form:option value="" label=""/> --%>
 					<form:options items="${fnprho:getAllTaskName()}" itemLabel="taskname" itemValue="id" htmlEscape="false"/>
 				</form:select>
@@ -118,7 +118,7 @@
 			  <form:input path="jobtypelabel" value="${prhoProjectHours.jobtypelabel}" readonly="true" htmlEscape="false"  class="input-medium "/>
 			</c:when>
 			<c:otherwise>
-				<form:select id="jobtype" path="jobtype" class="input-medium ">
+				<form:select id="jobtype" path="jobtype" class="input-select_medium ">
 					<form:option value="" label=""/>
 					<form:options items="${fns:getDictList('work_type')}" itemLabel="label" itemValue="value"  htmlEscape="false"/>
 				</form:select>
@@ -129,7 +129,7 @@
 		<div class="control-group">
 			<label class="control-label">工时类型 ：</label>
 			<div class="controls">
-				<form:select path="workhourstype" class="input-medium ">
+				<form:select path="workhourstype" class="input-select_medium ">
 					<form:option value="" label=""/>
 					<form:options items="${fns:getDictList('workHours_type')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
@@ -161,7 +161,7 @@
 		<div class="control-group">
 			<label class="control-label">任务完成进度：</label>
 			<div class="controls">
-				<form:select path="taskcompleteschedule" class="input-medium ">
+				<form:select path="taskcompleteschedule" class="input-select_medium ">
 					<form:option value="" label=""/>
 					<form:options items="${fns:getDictList('taskComplete_schedule')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
@@ -169,9 +169,9 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">项目负责人：</label>
+			<label class="control-label">审批人：</label>
 			<div class="controls">
-				<form:select path="projectmanagerId" class="input-medium">
+				<form:select path="projectmanagerId" class="input-select_medium">
 					<form:option value="" label=""/>
 					<form:options items="${fnprho:getAllUser()}"  itemLabel="name" itemValue="id" htmlEscape="false"/>
 				</form:select>

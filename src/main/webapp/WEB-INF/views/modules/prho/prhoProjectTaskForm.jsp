@@ -36,7 +36,7 @@
 		<div class="control-group">
 			<label class="control-label">任务负责人：</label>
 			<div class="controls">
-				<form:select path="taskmanager" class="input-medium">
+				<form:select path="taskmanager" class="input-select_medium">
 					<form:option value="" label=""/>
 					<form:options items="${fnprho:getAllUser()}" itemLabel="name" itemValue="id" htmlEscape="false"/>
 				</form:select>
@@ -55,7 +55,7 @@
 		<div class="control-group">
 		<label class="control-label">项目名称：</label>  <!-- 保存项目id -->
 		<div class="controls">
-		<form:select path="projectId" class="input-medium">
+		<form:select path="projectId" class="input-select_medium">
 					<form:option value="" label=""/>
 					<form:options items="${fnprho:getAllProjectName()}" itemLabel="projectname" itemValue="id" htmlEscape="false"/>
 		</form:select>
@@ -87,7 +87,7 @@
 		<div class="control-group">
 			<label class="control-label">任务完成进度：</label>
 			<div class="controls">
-				<form:select path="taskcompleteschedule" class="input-medium ">
+				<form:select path="taskcompleteschedule" class="input-select_medium ">
 					<form:option value="" label=""/>
 					<form:options items="${fns:getDictList('taskComplete_schedule')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
@@ -97,7 +97,7 @@
 		<div class="control-group">
 			<label class="control-label">工作类型 ：</label>
 			<div class="controls">
-				<form:select path="worktype" class="input-medium ">
+				<form:select path="worktype" class="input-select_medium ">
 					<form:option value="" label=""/>
 					<form:options items="${fns:getDictList('work_type')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
@@ -106,7 +106,7 @@
 		<div class="control-group">
 			<label class="control-label">任务类型 ：</label>
 			<div class="controls">
-				<form:select path="tasktype" class="input-medium ">
+				<form:select path="tasktype" class="input-select_medium ">
 					<form:option value="" label=""/>
 					<form:options items="${fns:getDictList('task_type')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>

@@ -111,7 +111,13 @@ public class PrhoProjectHoursController extends BaseController {
 		addMessage(redirectAttributes, "删除项目工时成功");
 		return "redirect:"+Global.getAdminPath()+"/prho/prhoProjectHours/?repage";
 	}
-	
+	/**
+	 * 我的任务点击工时填报
+	 * @param pmtid
+	 * @param prhoProjectHours
+	 * @param model
+	 * @return
+	 */
 	@RequiresPermissions("prho:prhoProjectHours:view")
 	@RequestMapping(value = "saveMyHours")
 	public String saveMyHours(String pmtid,PrhoProjectHours prhoProjectHours, Model model) {
