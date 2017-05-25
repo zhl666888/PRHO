@@ -37,7 +37,8 @@ public class PrhoProjectHoursStatics extends DataEntity<PrhoProjectHoursStatics>
 	
 	//扩展字段 
 	private String projectname;		// 项目名称
-	private String userid;		
+	private String userid;	
+	private String name;		// 人员名称
 
 	private Double workOverTime;	// 工作日加班（小时）
 	private Double vacationOverTime;	// 节假日加班（小时）
@@ -225,6 +226,14 @@ public class PrhoProjectHoursStatics extends DataEntity<PrhoProjectHoursStatics>
 
 	public void setEndtime(Date endtime) {
 		this.endtime = endtime;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	
