@@ -65,7 +65,7 @@
 					${prhoProjectHoursSatistic.id}
 				</td> --%>
 				<td>
-					${prhoProjectHoursSatistic.staff}
+					${prhoProjectHoursSatistic.name}
 				</td>
 				
 				<td>
