@@ -20,6 +20,7 @@ import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectDailyStatics;
+import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectHoursStatics;
 import com.thinkgem.jeesite.modules.prho.service.PrhoProjectDailySatisticsService;
 import com.thinkgem.jeesite.common.utils.DateUtils;
 import com.thinkgem.jeesite.common.utils.excel.ExportExcel;
@@ -65,7 +66,27 @@ public class PrhoProjectDailySatisticsController extends BaseController {
 		model.addAttribute("page", page);
 		return "modules/prho/prhoProjectDailySatisticList";
 	}
-	
+	/**
+	 * 导出日报统计数据
+	 * @param prhoProjectHoursStatics
+	 * @param request
+	 * @param response
+	 * @param redirectAttributess
+	 * @return
+	 */
+	//@RequiresPermissions("prho:prhoProjectHoursSatistic:view")
+	  @RequestMapping(value = "export", method=RequestMethod.POST)
+    public String exportFile(PrhoProjectDailyStatics prhoProjectDailyStatics, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
+		try {
+            String fileName = "日报统计数据"+DateUtils.getDate("yyyyMMddHHmmss")+".xlsx";
+            Page<PrhoProjectDailyStatics> page = prhoProjectDailySatisticsService.findDailySatisticsListForExport(new Page<PrhoProjectDailyStatics>(request, response, -1), prhoProjectDailyStatics);
+            new ExportExcel("日报统计数据", PrhoProjectDailyStatics.class).setDataList(page.getList()).write(response, fileName).dispose();
+    		return null;
+		} catch (Exception e) {
+			addMessage(redirectAttributes, "导出日报统计数据失败！失败信息："+e.getMessage());
+		}
+		return "redirect:" + adminPath + "/prho/prhoProjectHoursSatistic/list?repage";
+    }
 
 
 }

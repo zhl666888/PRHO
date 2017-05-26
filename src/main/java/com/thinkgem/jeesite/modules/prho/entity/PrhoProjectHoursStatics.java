@@ -69,7 +69,6 @@ public class PrhoProjectHoursStatics extends DataEntity<PrhoProjectHoursStatics>
 	public void setTaskid(String taskid) {
 		this.taskid = taskid;
 	}
-	@ExcelField(title="人员名称", align=2, sort=40)
 	public String getStaff() {
 		return staff;
 	}
@@ -131,7 +130,7 @@ public class PrhoProjectHoursStatics extends DataEntity<PrhoProjectHoursStatics>
 	public void setActualWorkDay(Double actualWorkDay) {
 		this.actualWorkDay = actualWorkDay;
 	}
-	@ExcelField(title="实际工作量(天)", align=2, sort=40)
+	@ExcelField(title="实际工作量(小时)", align=2, sort=40)
 	public Double getWorkLoad() {
 		return workLoad;
 	}
@@ -171,7 +170,7 @@ public class PrhoProjectHoursStatics extends DataEntity<PrhoProjectHoursStatics>
 	public void setWeekName(String weekName) {
 		this.weekName = weekName;
 	}
-
+	//@ExcelField(title="加班小时数", align=2, sort=40)
 	public Double getOverTime() {
 		return overTime;
 	}
@@ -179,7 +178,7 @@ public class PrhoProjectHoursStatics extends DataEntity<PrhoProjectHoursStatics>
 	public void setOverTime(Double overTime) {
 		this.overTime = overTime;
 	}
-
+	//@ExcelField(title="是否加班", align=2, sort=40)
 	public String getIfOverTime() {
 		return ifOverTime;
 	}
@@ -227,7 +226,7 @@ public class PrhoProjectHoursStatics extends DataEntity<PrhoProjectHoursStatics>
 	public void setEndtime(Date endtime) {
 		this.endtime = endtime;
 	}
-
+	@ExcelField(title="人员名称", align=2, sort=40)
 	public String getName() {
 		return name;
 	}

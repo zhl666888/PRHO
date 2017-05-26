@@ -4,6 +4,8 @@
 package com.thinkgem.jeesite.modules.prho.service;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
 import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectDailyStatics;
+import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectHoursStatics;
 import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectInfo;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.prho.dao.PrhoProjectDailySatisticsDao;
@@ -78,15 +81,52 @@ public class PrhoProjectDailySatisticsService extends CrudService<PrhoProjectDai
 		
 	}
 	
-	@Transactional(readOnly = false)
-	public  List<PrhoProjectDailyStatics> findHoursSatisticsList(PrhoProjectDailyStatics prhoProjectDailyStatics){
-		List<PrhoProjectDailyStatics> list=dao.findHoursSatisticsList(prhoProjectDailyStatics);
-		return list;
+	
+	public Page<PrhoProjectDailyStatics> findDailySatisticsListForExport(Page<PrhoProjectDailyStatics> page, PrhoProjectDailyStatics prhoProjectDailyStatics){
+		// 生成数据权限过滤条件（dsf为dataScopeFilter的简写，在xml中使用 ${sqlMap.dsf}调用权限SQL）
+		//prhoProjectHoursStatics.getSqlMap().put("dsf", dataScopeFilter("", "o", "a"));
+		// 设置分页参数
+		prhoProjectDailyStatics.setPage(page);
 		
+		List<PrhoProjectDailyStatics> list = dao.findPageBy(prhoProjectDailyStatics);
+		String weekName="";
+		//String newWorkTime="";
+		if(null!=list && list.size()>0){
+			for(int i=0;i<list.size();i++){
+				weekName = list.get(i).getWeekName();
+				/*if(null!=list.get(i).getWorkTime()){
+				  newWorkTime = DateUtils.formatDate(list.get(i).getWorkTime());
+				}*/
+				if(null != weekName && !weekName.equals("")){
+					if(weekName.equals("星期1")){
+						list.get(i).setWeekName("星期一");
+					}else if(weekName.equals("星期2")){
+						list.get(i).setWeekName("星期二");
+					}else if(weekName.equals("星期3")){
+						list.get(i).setWeekName("星期三");
+					}else if(weekName.equals("星期4")){
+						list.get(i).setWeekName("星期四");
+					}else if(weekName.equals("星期5")){
+						list.get(i).setWeekName("星期五");
+					}else if(weekName.equals("星期6")){
+						list.get(i).setWeekName("星期六");
+					}else if(weekName.equals("星期7")){
+						list.get(i).setWeekName("星期日");
+					}
+				}
+				/*if(null!=newWorkTime&&!newWorkTime.equals("")){
+					SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		            Date time = df.parse(newWorkTime);
+		            list.get(i).setWorkTime(time);	
+				}*/
+				
+			}
+		}
+		
+		// 执行分页查询
+		page.setList(list);
+		return page;
 	}
-	
-	
-	
 	
 	
 	

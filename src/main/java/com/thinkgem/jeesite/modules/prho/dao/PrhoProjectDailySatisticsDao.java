@@ -24,5 +24,4 @@ public interface PrhoProjectDailySatisticsDao extends CrudDao<PrhoProjectDailySt
 	 */
 	public List<PrhoProjectDailyStatics> findPageBy(PrhoProjectDailyStatics prhoProjectDailyStatics);
 	
-    public List<PrhoProjectDailyStatics> findHoursSatisticsList(PrhoProjectDailyStatics prhoProjectDailyStatics);
 }
