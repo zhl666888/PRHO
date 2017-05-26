@@ -22,6 +22,8 @@ import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.prho.entity.PrhoMyTask;
 import com.thinkgem.jeesite.modules.prho.service.PrhoMyTaskService;
 import com.thinkgem.jeesite.modules.prho.service.PrhoProjectTaskService;
+import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 我的任务Controller
@@ -52,6 +54,8 @@ public class PrhoMyTaskController extends BaseController {
 	@RequiresPermissions("prho:prhoMyTask:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(PrhoMyTask prhoMyTask, HttpServletRequest request, HttpServletResponse response, Model model) {
+		User user = UserUtils.getUser();
+		prhoMyTask.setTaskmanager(user.getId());
 		Page<PrhoMyTask> page = prhoMyTaskService.findPageBy(new Page<PrhoMyTask>(request, response), prhoMyTask); 
 		model.addAttribute("page", page);
 		return "modules/prho/prhoMyTaskList";

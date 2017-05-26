@@ -24,7 +24,7 @@ public class PrhoProjectTask extends DataEntity<PrhoProjectTask> {
 	private Date taskplanendtime;		// 计划结束时间
 	private String expectedhour;		// 预计用时 decimal
 	private String taskcompleteschedule;		// 任务完成进度
-	private String taskstatus;		// 任务完成进度
+	private String taskstatus;		// 任务状态 
 	private PrhoProjectInfo prhoProjectInfo;  //项目信息对象
 	private String userName;  //显示的项目负责人
 	private String projectName;//显示的 项目名称

@@ -26,7 +26,11 @@
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
 			<li><label>项目名称：</label>
-				<form:input path="projectname" htmlEscape="false" maxlength="150" class="input-medium"/>
+			<form:select path="projectname" class="input-medium">
+					<form:option value="" label=""/>
+					<form:options items="${fnprho:getAllProjectName()}" itemLabel="projectname" itemValue="projectname" htmlEscape="false"/>
+				</form:select>
+				<%-- <form:input path="projectname" htmlEscape="false" maxlength="150" class="input-medium"/> --%>
 			</li>
 			<li><label style="width:100px">项目启动日期：</label>
 				<input name="starttime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
@@ -91,6 +95,7 @@
 					${fns:getDictLabel(prhoProjectInfo.projectstatus, 'project_status', '')}
 				</td>
 				<shiro:hasPermission name="prho:prhoProjectInfo:edit"><td>
+					<a href="${ctx}/prho/prhoProjectInfo/addStaff?id=${prhoProjectInfo.id}">添加人员</a>
     				<a href="${ctx}/prho/prhoProjectInfo/form?id=${prhoProjectInfo.id}">修改</a>
 					<a href="${ctx}/prho/prhoProjectInfo/delete?id=${prhoProjectInfo.id}" onclick="return confirmx('确认要删除该项目信息吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>

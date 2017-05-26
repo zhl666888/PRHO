@@ -9,6 +9,7 @@
 			//$("#name").focus();
 			$("#inputForm").validate({
 				submitHandler: function(form){
+				//	document.getElementById('btnSubmit').disabled=true;
 					loading('正在提交，请稍等...');
 					form.submit();
 				},
@@ -24,6 +25,9 @@
 			});
 		});
 	</script>
+	<style type="text/css">
+	   /* .input-select{width:282px;} */
+	</style>
 </head>
 <body>
 	<ul class="nav nav-tabs">
@@ -44,8 +48,7 @@
 			<div class="controls">
 				<%-- sys:treeselect id="user" name="user.id" value="${prhoProjectInfo.user.id}" labelName="user.name" labelValue="${prhoProjectInfo.user.name}"
 					title="用户" url="/sys/office/treeData?type=3" cssClass="" allowClear="true" notAllowSelectParent="true"/> --%>
-			
-				<form:select path="userId" class="input-xlarge">
+				<form:select path="userId" class="input-select_xlarge">
 					<form:option value="" label=""/>
 					<form:options items="${fnprho:getAllUser()}" itemLabel="name" itemValue="id" htmlEscape="false"/>
 				</form:select>
@@ -58,9 +61,10 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">预估工时：</label>
+			<label class="control-label">预估工时(小时)：</label>
 			<div class="controls">
-				<form:input path="estimatehours" htmlEscape="false"  class="input-xlarge "/>
+				<form:input path="estimatehours" htmlEscape="false"  class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
@@ -90,7 +94,7 @@
 		<div class="control-group">
 			<label class="control-label">项目状态 ：</label>
 			<div class="controls">
-				<form:select path="projectstatus" class="input-xlarge ">
+				<form:select path="projectstatus" class="input-select_xlarge ">
 					<form:option value="" label=""/>
 					<form:options items="${fns:getDictList('project_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>

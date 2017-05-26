@@ -30,4 +30,11 @@
     <function-signature>java.util.List getAllTaskName()</function-signature>
     <example>${fnprho:getAllTaskName()}</example>  
   </function>
+   <function>
+    <description>获取当前用户的所有项目名称</description>
+    <name>getPersonalProjectName</name>
+    <function-class>com.thinkgem.jeesite.modules.prho.utils.CusUtil</function-class>
+    <function-signature>java.util.List getPersonalProjectName()</function-signature>
+    <example>${fnprho:getPersonalProjectName()}</example>  
+  </function>
   </taglib>

@@ -43,5 +43,19 @@ public class PrhoProjectHoursService extends CrudService<PrhoProjectHoursDao, Pr
 	public void delete(PrhoProjectHours prhoProjectHours) {
 		super.delete(prhoProjectHours);
 	}
+/*	public Page<PrhoProjectHours> findPageBy(Page<PrhoProjectHours> page,PrhoProjectHours prhoProjectHours){
+		prhoProjectHours.setPage(page);
+		List<PrhoProjectHours> list=dao.findPageBy(prhoProjectHours);
+		List<PrhoProjectHours> listnew=new ArrayList<PrhoProjectHours>();
+		for (PrhoProjectHours pph:list){
+			if(StringUtils.isNotBlank(pph.getTaskId())){
+				listnew.add(pph);
+			}
+		}
+		
+		page.setList(list);
+		return page;
+		
+	}*/
 	
 }

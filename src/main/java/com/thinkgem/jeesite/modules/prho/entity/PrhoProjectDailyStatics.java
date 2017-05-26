@@ -65,7 +65,7 @@ public class PrhoProjectDailyStatics extends DataEntity<PrhoProjectDailyStatics>
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	@ExcelField(title="日期",type=0,align=1, sort=110)
+	@ExcelField(title="日期",type=1,align=1, sort=110)
 	public Date getWorkTime() {
 		return workTime;
 	}

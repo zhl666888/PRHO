@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>项目工时管理</title>
+	<title>我的工时管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -18,8 +18,8 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/prho/prhoProjectHours/">项目工时列表</a></li>
-		<shiro:hasPermission name="prho:prhoProjectHours:edit"><li><a href="${ctx}/prho/prhoProjectHours/form">项目工时添加</a></li></shiro:hasPermission>
+		<li class="active"><a href="${ctx}/prho/prhoProjectHours/">我的工时列表</a></li>
+		<shiro:hasPermission name="prho:prhoProjectHours:edit"><li><a href="${ctx}/prho/prhoProjectHours/form">我的工时添加</a></li></shiro:hasPermission>
 	</ul>
 	<form:form id="searchForm" modelAttribute="prhoProjectHours" action="${ctx}/prho/prhoProjectHours/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
@@ -28,7 +28,7 @@
 		<li><label>项目名称：</label>
 		<form:select path="projectId" class="input-medium">
 					<form:option value="" label=""/>
-					<form:options items="${fnprho:getAllProjectName()}" itemLabel="projectname" itemValue="id" htmlEscape="false"/>
+					<form:options items="${fnprho:getPersonalProjectName()}" itemLabel="projectname" itemValue="id" htmlEscape="false"/>
 				</form:select>
 				</li>
 			<li><label style="width:100px">任务开始时间：</label>
@@ -75,9 +75,9 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="prhoProjectHours">
 			<tr>
-				<td><a href="${ctx}/prho/prhoProjectHours/form?id=${prhoProjectHours.id}">
+				<td>
 					<fmt:formatDate value="${prhoProjectHours.worktime}" pattern="yyyy-MM-dd"/>
-				</a></td>
+				</td>
 				<td>
 					${prhoProjectHours.projectName}
 				</td>

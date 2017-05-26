@@ -12,9 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
 import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectHours;
+import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectInfo;
 import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectTask;
 import com.thinkgem.jeesite.modules.prho.dao.PrhoProjectInfoDao;
 import com.thinkgem.jeesite.modules.prho.dao.PrhoProjectTaskDao;
+import com.thinkgem.jeesite.modules.sys.entity.Dict;
+import com.thinkgem.jeesite.modules.sys.utils.DictUtils;
 
 /**
  * 项目任务Service
@@ -50,7 +53,6 @@ public class PrhoProjectTaskService extends CrudService<PrhoProjectTaskDao, Prho
 		super.delete(prhoProjectTask);
 	}
 	
-	@Transactional(readOnly = false)
 	public Page<PrhoProjectTask> findPageBy(Page<PrhoProjectTask> page,PrhoProjectTask prhoProjectTask){
 		prhoProjectTask.setPage(page);
 		List<PrhoProjectTask> list = prTaskDao.findPageBy(prhoProjectTask);
@@ -76,5 +78,20 @@ public class PrhoProjectTaskService extends CrudService<PrhoProjectTaskDao, Prho
 		prhoProjectTask.setTaskcompleteschedule(prhoProjectHours.getTaskcompleteschedule());
 		prhoProjectTask.setTaskcompletetime(prhoProjectHours.getTaskendtime());
 		prTaskDao.updateProjectProgress(prhoProjectTask);
+	}
+	/**
+	 * 添加项目后，在任务中保存公有任务多条(依据工作类型)
+	 * @param prhoProjectInfo
+	 */
+	@Transactional(readOnly = false)
+	public void savePersonalTask(PrhoProjectInfo prhoProjectInfo){
+		List<Dict> dictList=DictUtils.getDictList("work_type");
+		for(int i=0;i<dictList.size();i++){
+			PrhoProjectTask prhoProjectTask=new PrhoProjectTask();
+			prhoProjectTask.setProjectId(prhoProjectInfo.getId());
+			prhoProjectTask.setWorktype(dictList.get(i).getValue());
+			prhoProjectTask.setTasktype("public");
+			save(prhoProjectTask);
+		}
 	}
 }

@@ -21,6 +21,7 @@ import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectInfo;
 import com.thinkgem.jeesite.modules.prho.service.PrhoProjectInfoService;
+import com.thinkgem.jeesite.modules.prho.service.PrhoProjectTaskService;
 
 /**
  * 项目信息Controller
@@ -33,6 +34,8 @@ public class PrhoProjectInfoController extends BaseController {
 
 	@Autowired
 	private PrhoProjectInfoService prhoProjectInfoService;
+	@Autowired
+	private PrhoProjectTaskService prhoProjectTaskService;
 	
 	@ModelAttribute
 	public PrhoProjectInfo get(@RequestParam(required=false) String id) {
@@ -67,7 +70,9 @@ public class PrhoProjectInfoController extends BaseController {
 		if (!beanValidator(model, prhoProjectInfo)){
 			return form(prhoProjectInfo, model);
 		}
-		prhoProjectInfoService.save(prhoProjectInfo);
+		//prhoProjectInfoService.save(prhoProjectInfo);
+		prhoProjectInfoService.saveNew(prhoProjectInfo);
+		//添加项目后，在任务中保存公有任务多条(依据工作类型)
 		addMessage(redirectAttributes, "保存项目信息成功");
 		return "redirect:"+Global.getAdminPath()+"/prho/prhoProjectInfo/?repage";
 	}
@@ -79,5 +84,23 @@ public class PrhoProjectInfoController extends BaseController {
 		addMessage(redirectAttributes, "删除项目信息成功");
 		return "redirect:"+Global.getAdminPath()+"/prho/prhoProjectInfo/?repage";
 	}
-
+	@RequiresPermissions("prho:prhoProjectInfo:edit")
+	@RequestMapping(value = "addStaff")
+	public String addStuff(PrhoProjectInfo prhoProjectInfo, Model model) {
+		//添加人员时，项目有人员则回显人员
+		prhoProjectInfo = prhoProjectInfoService.getStaffFromProject(prhoProjectInfo);
+		model.addAttribute("prhoProjectInfo", prhoProjectInfo);
+		return "modules/prho/prhoProjectInfoAddStaff";
+	}
+	
+	@RequiresPermissions("prho:prhoProjectInfo:edit")
+	@RequestMapping(value = "saveProjectByStaff")
+	public String saveProjectByStaff(PrhoProjectInfo prhoProjectInfo, Model model, RedirectAttributes redirectAttributes) {
+		if (!beanValidator(model, prhoProjectInfo)){
+			return addStuff(prhoProjectInfo, model);
+		}
+		prhoProjectInfoService.saveProjectByStaff(prhoProjectInfo);
+		addMessage(redirectAttributes, "保存项目所属人员信息成功");
+		return "redirect:"+Global.getAdminPath()+"/prho/prhoProjectInfo/?repage";
+	}
 }

@@ -13,17 +13,23 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.common.utils.DateUtils;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectHours;
+import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectInfo;
 import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectTask;
 import com.thinkgem.jeesite.modules.prho.service.PrhoProjectHoursService;
 import com.thinkgem.jeesite.modules.prho.service.PrhoProjectInfoService;
 import com.thinkgem.jeesite.modules.prho.service.PrhoProjectTaskService;
+import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.modules.sys.utils.DictUtils;
+import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 项目工时Controller
@@ -55,6 +61,8 @@ public class PrhoProjectHoursController extends BaseController {
 	@RequiresPermissions("prho:prhoProjectHours:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(PrhoProjectHours prhoProjectHours, HttpServletRequest request, HttpServletResponse response, Model model) {
+		User user = UserUtils.getUser();
+		prhoProjectHours.setStaff(user.getId());
 		Page<PrhoProjectHours> page = prhoProjectHoursService.findPage(new Page<PrhoProjectHours>(request, response), prhoProjectHours); 
 		model.addAttribute("page", page);
 		return "modules/prho/prhoProjectHoursList";
@@ -62,11 +70,14 @@ public class PrhoProjectHoursController extends BaseController {
 
 	@RequiresPermissions("prho:prhoProjectHours:view")
 	@RequestMapping(value = "form")
-	public String form(String ppiid,PrhoProjectHours prhoProjectHours, Model model) {
-		if(null != ppiid && !"".equals(ppiid)){
-			/*PrhoProjectInfo	prhoProjectInfo	=prhoProjectInfoService.get(ppiid);
-			prhoProjectHours.setPrhoProjectInfo(prhoProjectInfo);*/
-			model.addAttribute("ppiid",ppiid);
+	public String form(PrhoProjectHours prhoProjectHours, Model model) {
+		if(StringUtils.isBlank(prhoProjectHours.getId())){
+			String date=DateUtils.getDate();
+			prhoProjectHours.setWorktime(DateUtils.parseDate(date));
+			prhoProjectHours.setTaskstarttime(DateUtils.parseDate(date));
+			prhoProjectHours.setTaskendtime(DateUtils.parseDate(date));
+			prhoProjectHours.setTaskcompleteschedule("100");
+			prhoProjectHours.setWorkhourstype("workingDay");
 		}
 		model.addAttribute("prhoProjectHours", prhoProjectHours);
 		return "modules/prho/prhoProjectHoursForm";
@@ -74,9 +85,9 @@ public class PrhoProjectHoursController extends BaseController {
 
 	@RequiresPermissions("prho:prhoProjectHours:edit")
 	@RequestMapping(value = "save")
-	public String save(String ppiid,PrhoProjectHours prhoProjectHours, Model model, RedirectAttributes redirectAttributes,@RequestParam(required = false) String staffId) {
+	public String save(PrhoProjectHours prhoProjectHours, Model model, RedirectAttributes redirectAttributes,@RequestParam(required = false) String staffId) {
 		if (!beanValidator(model, prhoProjectHours)){
-			return form(ppiid,prhoProjectHours, model);
+			return form(prhoProjectHours, model);
 		}
 		if(staffId!=""&&staffId!=null){
 			prhoProjectHours.setStaff(staffId);
@@ -85,7 +96,7 @@ public class PrhoProjectHoursController extends BaseController {
 		//保存项目完成进度(项目完成时间)
 		String taskId=prhoProjectHours.getTaskId();
 		PrhoProjectTask prhoProjectTask=  prhoProjectTaskService.get(taskId);
-		if(prhoProjectTask.getTasktype().equals("private")){
+		if(("private").equals(prhoProjectTask.getTasktype())){
 			prhoProjectTaskService.updateProjectProgress(prhoProjectHours,taskId);
 		}
 		
@@ -100,5 +111,54 @@ public class PrhoProjectHoursController extends BaseController {
 		addMessage(redirectAttributes, "删除项目工时成功");
 		return "redirect:"+Global.getAdminPath()+"/prho/prhoProjectHours/?repage";
 	}
-
+	/**
+	 * 我的任务点击工时填报
+	 * @param pmtid
+	 * @param prhoProjectHours
+	 * @param model
+	 * @return
+	 */
+	@RequiresPermissions("prho:prhoProjectHours:view")
+	@RequestMapping(value = "saveMyHours")
+	public String saveMyHours(String pmtid,PrhoProjectHours prhoProjectHours, Model model) {
+		if(StringUtils.isNotBlank(pmtid)){
+			PrhoProjectTask	prhoProjectTask	=prhoProjectTaskService.get(pmtid);
+			prhoProjectHours.setJobtype(prhoProjectTask.getWorktype());
+			prhoProjectHours.setTaskId(prhoProjectTask.getId());
+			prhoProjectHours.setJobtypelabel(DictUtils.getDictLabel(prhoProjectTask.getWorktype(), "work_type", ""));
+			
+			PrhoProjectInfo	prhoProjectInfo =prhoProjectInfoService.get(prhoProjectTask.getProjectId());
+			prhoProjectHours.setProjectId(prhoProjectInfo.getId());
+			prhoProjectHours.setProjectmanagerId(prhoProjectInfo.getUserId());
+		}
+		String date=DateUtils.getDate();
+		prhoProjectHours.setWorktime(DateUtils.parseDate(date));
+		prhoProjectHours.setTaskstarttime(DateUtils.parseDate(date));
+		prhoProjectHours.setTaskendtime(DateUtils.parseDate(date));
+		model.addAttribute("prhoProjectHours", prhoProjectHours);
+		return "modules/prho/prhoProjectHoursForm";
+	}
+	/*
+	 * 项目名称级联审批人
+	 */
+	@ResponseBody
+	@RequiresPermissions("prho:prhoProjectHours:view")
+	@RequestMapping(value="getProjectManager")
+	public PrhoProjectInfo getProjectManager(String projectId){
+		PrhoProjectInfo prhoProjectInfo=new PrhoProjectInfo();
+		if(StringUtils.isNotBlank(projectId)){
+		 prhoProjectInfo=prhoProjectInfoService.get(projectId);
+		}
+		return prhoProjectInfo;
+	}
+	@ResponseBody
+	@RequiresPermissions("prho:prhoProjectHours:view")
+	@RequestMapping(value="getWorkType")
+	public PrhoProjectTask getWorkType(String taskId){
+		PrhoProjectTask prhoProjectTask=new PrhoProjectTask();
+		if(StringUtils.isNotBlank(taskId)){
+			prhoProjectTask=prhoProjectTaskService.get(taskId);
+		}
+		return prhoProjectTask;
+	}
 }

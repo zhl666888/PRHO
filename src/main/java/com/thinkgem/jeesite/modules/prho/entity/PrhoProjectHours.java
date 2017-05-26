@@ -41,6 +41,7 @@ public class PrhoProjectHours extends DataEntity<PrhoProjectHours> {
 	private String projectmanager; //显示的项目负责人
 	private Date starttime; //查询的任务开始时间
 	private Date endtime; //查询的任务结束时间
+	private String jobtypelabel; //工作类型的标签
 	public PrhoProjectHours() {
 		super();
 	}
@@ -245,6 +246,14 @@ public class PrhoProjectHours extends DataEntity<PrhoProjectHours> {
 
 	public void setEndtime(Date endtime) {
 		this.endtime = endtime;
+	}
+
+	public String getJobtypelabel() {
+		return jobtypelabel;
+	}
+
+	public void setJobtypelabel(String jobtypelabel) {
+		this.jobtypelabel = jobtypelabel;
 	}
 	
 }

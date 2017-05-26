@@ -60,17 +60,18 @@
 				<th>所属项目</th>
 				<th>任务完成进度</th>
 				<th>任务完成时间</th>
-				<th>工作类型</th>
 				<th>任务类型</th>
+				<th>工作类型</th>
 				<shiro:hasPermission name="prho:prhoProjectTask:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="prhoProjectTask">
 			<tr>
-				<td><a href="${ctx}/prho/prhoProjectTask/form?id=${prhoProjectTask.id}">
+				<td><%-- <a href="${ctx}/prho/prhoProjectTask/form?id=${prhoProjectTask.id}"> --%>
 					${prhoProjectTask.userName}
-				</a></td>
+				<!-- </a> -->
+				</td>
 				<td>
 					${prhoProjectTask.taskname}
 				</td>

@@ -2,17 +2,16 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>项目工时管理</title>
+	<title>我的工时管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			var ppiid=$("#ppiid").val();
+			/* var ppiid=$("#ppiid").val();
 			 if(ppiid){
 				   $("#projectId").find("option[value='"+ppiid+"']").attr("selected", "selected");
 				 var projectName=  $('#projectId option:selected').text();
 				 $("#s2id_projectId").find(".select2-chosen").html(projectName);
-				// alert(projectName);
-			} 
+			} */ 
 			$("#inputForm").validate({
 				submitHandler: function(form){
 					loading('正在提交，请稍等...');
@@ -30,12 +29,56 @@
 			});
 			
 		});
+		$(function(){
+		
+			$("#projectId").click(function(){
+				var projectId = $("#projectId").val();
+				$.ajax( {  
+	                type : "post",  
+	                url : '${ctx}/prho/prhoProjectHours/getProjectManager',
+	                data:{projectId:projectId},
+	                success: function(data) {
+	                	if(data.userId){
+	                		  $("#projectmanagerId").find("option[value='"+data.userId+"']").attr("selected", "selected");
+	                		  var projectmanager=  $('#projectmanagerId option:selected').text();
+	         				  $("#s2id_projectmanagerId").find(".select2-chosen").html(projectmanager);
+	                	}
+	                	/* if(data.slmsExperimentBill.shiuser){
+	                	  $("#liablerName").val(data.slmsExperimentBill.shiuser.id); 
+	                	  $("#liabler").val(data.slmsExperimentBill.shiuser.name); 
+	                	} */
+	                
+	                },
+	            	error: function(request) {
+	                	alert("出错");
+	            	}
+	            }); 
+			});
+			$("#taskId").click(function(){
+				var taskId = $("#taskId").val();
+				$.ajax( {  
+	                type : "post",  
+	                url : '${ctx}/prho/prhoProjectHours/getWorkType',
+	                data:{taskId:taskId},
+	                success: function(data) {
+	                	if(data.worktype){
+	                		  $("#jobtype").find("option[value='"+data.worktype+"']").attr("selected", "selected");
+	                		  var jobtype=  $('#jobtype option:selected').text();
+	         				  $("#s2id_jobtype").find(".select2-chosen").html(jobtype);
+	                	}
+	                },
+	            	error: function(request) {
+	                	alert("出错");
+	            	}
+	            }); 
+			});
+		}); 
 	</script>
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/prho/prhoProjectHours/">项目工时列表</a></li>
-		<li class="active"><a href="${ctx}/prho/prhoProjectHours/form?id=${prhoProjectHours.id}">项目工时<shiro:hasPermission name="prho:prhoProjectHours:edit">${not empty prhoProjectHours.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="prho:prhoProjectHours:edit">查看</shiro:lacksPermission></a></li>
+		<li><a href="${ctx}/prho/prhoProjectHours/">我的工时列表</a></li>
+		<li class="active"><a href="${ctx}/prho/prhoProjectHours/form?id=${prhoProjectHours.id}">我的工时<shiro:hasPermission name="prho:prhoProjectHours:edit">${not empty prhoProjectHours.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="prho:prhoProjectHours:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="prhoProjectHours" action="${ctx}/prho/prhoProjectHours/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
@@ -49,18 +92,18 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">项目名称：</label>
+		<label class="control-label">项目名称：</label>
 			<div class="controls">
-			<form:select id="projectId" path="projectId" class="input-medium">
+			<form:select id="projectId" path="projectId" class="input-select_medium">
 					<%-- <form:option value="" label=""/> --%>
-					<form:options items="${fnprho:getAllProjectName()}" itemLabel="projectname" itemValue="id" htmlEscape="false"/>
+					<form:options items="${fnprho:getPersonalProjectName()}" itemLabel="projectname" itemValue="id" htmlEscape="false"/>
 				</form:select>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">任务名称：</label>
 			<div class="controls">
-			<form:select id="taskId" path="taskId" class="input-medium">
+			<form:select id="taskId" path="taskId" class="input-select_medium">
 					<%-- <form:option value="" label=""/> --%>
 					<form:options items="${fnprho:getAllTaskName()}" itemLabel="taskname" itemValue="id" htmlEscape="false"/>
 				</form:select>
@@ -69,16 +112,24 @@
 		<div class="control-group">
 			<label class="control-label">工作类型 ：</label>
 			<div class="controls">
-				<form:select path="jobtype" class="input-medium ">
+			<c:choose>
+			<c:when test="${''!=prhoProjectHours.jobtypelabel&& null!=prhoProjectHours.jobtypelabel}">
+			<input id="jobtype" name="jobtype" value="${prhoProjectHours.jobtype}" type="hidden">
+			  <form:input path="jobtypelabel" value="${prhoProjectHours.jobtypelabel}" readonly="true" htmlEscape="false"  class="input-medium "/>
+			</c:when>
+			<c:otherwise>
+				<form:select id="jobtype" path="jobtype" class="input-select_medium ">
 					<form:option value="" label=""/>
-					<form:options items="${fns:getDictList('work_type')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+					<form:options items="${fns:getDictList('work_type')}" itemLabel="label" itemValue="value"  htmlEscape="false"/>
 				</form:select>
+			</c:otherwise>
+			</c:choose>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">工时类型 ：</label>
 			<div class="controls">
-				<form:select path="workhourstype" class="input-medium ">
+				<form:select path="workhourstype" class="input-select_medium ">
 					<form:option value="" label=""/>
 					<form:options items="${fns:getDictList('workHours_type')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
@@ -101,15 +152,16 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">实际用时：</label>
+			<label class="control-label">实际用时(小时)：</label>
 			<div class="controls">
-				<form:input path="realhours" htmlEscape="false" class="input-medium "/>
+				<form:input path="realhours" htmlEscape="false" class="input-medium required"/>
+				<span class="help-inline"><font color="red">*</font></span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">任务完成进度：</label>
 			<div class="controls">
-				<form:select path="taskcompleteschedule" class="input-medium ">
+				<form:select path="taskcompleteschedule" class="input-select_medium ">
 					<form:option value="" label=""/>
 					<form:options items="${fns:getDictList('taskComplete_schedule')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
@@ -117,9 +169,9 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">项目负责人：</label>
+			<label class="control-label">审批人：</label>
 			<div class="controls">
-				<form:select path="projectmanagerId" class="input-medium">
+				<form:select path="projectmanagerId" class="input-select_medium">
 					<form:option value="" label=""/>
 					<form:options items="${fnprho:getAllUser()}"  itemLabel="name" itemValue="id" htmlEscape="false"/>
 				</form:select>

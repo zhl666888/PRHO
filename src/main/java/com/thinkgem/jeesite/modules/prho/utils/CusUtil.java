@@ -1,5 +1,6 @@
 package com.thinkgem.jeesite.modules.prho.utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.thinkgem.jeesite.common.utils.CacheUtils;
@@ -10,6 +11,7 @@ import com.thinkgem.jeesite.modules.prho.service.PrhoProjectInfoService;
 import com.thinkgem.jeesite.modules.prho.service.PrhoProjectTaskService;
 import com.thinkgem.jeesite.modules.prho.service.PrhoUserGroupService;
 import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 
 public class CusUtil {
@@ -48,7 +50,7 @@ public class CusUtil {
 		}
 	/**
 	 * 
-	 * 获取项目任务的所有任务名称
+	 * 获取项目任务的所有任务名称(任务名称去空)
 	 */
 	public static List<PrhoProjectTask> getAllTaskName(){
 		@SuppressWarnings("unchecked")
@@ -57,6 +59,27 @@ public class CusUtil {
 				PrhoProjectTask ppt = new PrhoProjectTask();
 				prtList = prhoProjectTaskService.findList(ppt);
 			}
-			return prtList;
+			List<PrhoProjectTask> prtListnew=new ArrayList<PrhoProjectTask>();
+			for(PrhoProjectTask pptnew:prtList){
+				if(StringUtils.isNotBlank(pptnew.getTaskname())){
+					prtListnew.add(pptnew);
+				}
+			}
+			return prtListnew;
+		}
+	/**
+	 * 
+	 * 获取当前用户下的项目名称
+	 */
+	public static List<PrhoProjectInfo> getPersonalProjectName(){
+		@SuppressWarnings("unchecked")
+			List<PrhoProjectInfo> ppiList = (List<PrhoProjectInfo>) CacheUtils.get(PRHOPROJECTINFO_LIST_CACHE, "prhoProjectInfoListCache");
+			User user = UserUtils.getUser();
+			if (ppiList == null||ppiList.size()==0) {
+				PrhoProjectInfo pri = new PrhoProjectInfo();
+				pri.setUserId(user.getId());
+				ppiList = prhoProjectInfoService.getPersonalProjectName(pri);
+			}
+			return ppiList;
 		}
 }

@@ -53,7 +53,7 @@ public class User extends DataEntity<User> {
 	private Role role;	// 根据角色查询用户条件
 	
 	private List<Role> roleList = Lists.newArrayList(); // 拥有角色列表
-
+	private String projectId;  //项目id
 	public User() {
 		super();
 		this.loginFlag = Global.YES;
@@ -321,4 +321,13 @@ public class User extends DataEntity<User> {
 	public String toString() {
 		return id;
 	}
+
+	public String getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
+	}
+	
 }

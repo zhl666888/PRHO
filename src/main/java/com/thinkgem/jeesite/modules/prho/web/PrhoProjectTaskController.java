@@ -57,6 +57,9 @@ public class PrhoProjectTaskController extends BaseController {
 	@RequiresPermissions("prho:prhoProjectTask:view")
 	@RequestMapping(value = "form")
 	public String form(PrhoProjectTask prhoProjectTask, Model model) {
+		if(StringUtils.isBlank(prhoProjectTask.getId())){
+			prhoProjectTask.setTaskcompleteschedule("0");
+		}
 		model.addAttribute("prhoProjectTask", prhoProjectTask);
 		return "modules/prho/prhoProjectTaskForm";
 	}
