@@ -5,8 +5,8 @@
 		ph.id AS "id",
 	    u.name AS 'name',
 	    u.id AS 'userid',
-	   <!--  DATE_FORMAT(ph.workTime, '%Y-%m-%d') AS 'workTime', -->
-	     ph.workTime AS 'workTime',
+	    DATE_FORMAT(ph.workTime, '%Y-%m-%d') AS 'workTime',
+	   <!--   ph.workTime AS 'workTime', -->
 		CONCAT('星期',DATE_FORMAT(ph.workTime, '%w')) AS 'weekName', 
 		pi.projectName AS 'projectname',
 		ph.taskstarttime AS "taskStartTime",
