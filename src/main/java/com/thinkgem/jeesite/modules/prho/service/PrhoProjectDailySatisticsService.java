@@ -114,6 +114,7 @@ public class PrhoProjectDailySatisticsService extends CrudService<PrhoProjectDai
 						list.get(i).setWeekName("星期日");
 					}
 				}
+				
 				/*if(null!=newWorkTime&&!newWorkTime.equals("")){
 					SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		            Date time = df.parse(newWorkTime);
