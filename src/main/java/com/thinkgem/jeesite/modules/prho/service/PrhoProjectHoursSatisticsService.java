@@ -38,6 +38,12 @@ public class PrhoProjectHoursSatisticsService extends CrudService<PrhoProjectHou
 		return super.get(id);
 	}
 	
+	/**
+	 * 项目工时统计查询
+	 * @param prhoProjectHoursStatics
+	 * @param page
+	 * @return
+	 */
 	
 	@Transactional(readOnly = false)
 	public Page<PrhoProjectHoursStatics> findPageBy(Page<PrhoProjectHoursStatics> page,PrhoProjectHoursStatics prhoProjectHoursStatics){

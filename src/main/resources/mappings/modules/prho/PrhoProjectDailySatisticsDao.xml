@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.prho.dao.PrhoProjectDailySatisticsDao">
+	<sql id="prhoProjectDailySatisticsColumns">
+		ph.id AS "id",
+	    u.name AS 'name',
+	    u.id AS 'userid',
+	    DATE_FORMAT(ph.workTime, '%Y-%m-%d') AS 'workTime',
+	   <!--   ph.workTime AS 'workTime', -->
+		CONCAT('星期',DATE_FORMAT(ph.workTime, '%w')) AS 'weekName', 
+		pi.projectName AS 'projectname',
+		ph.taskstarttime AS "taskStartTime",
+		ph.taskendtime AS "taskEndTime",
+		ph.workDesc AS 'workDesc',
+		MAX(CASE WHEN ph.workHoursType = 'workingDay' THEN ph.realHours ELSE 0 END) AS 'workLoad',
+	    MAX(CASE WHEN ph.workHoursType != 'workingDay' THEN ph.realHours ELSE 0 END) AS 'overTime',
+	    IF (ph.realHours > 0 AND (ph.workHoursType = 'workingDayOvertime' OR ph.workHoursType = 'holidayOvertime'),'是','否') AS 'ifOverTime'
+		
+	</sql>
+	
+	 <sql id="prhoProjectDailySatisticsJoins">
+		LEFT JOIN prho_project_info pi ON pi.id = ph.project_id
+		 LEFT JOIN sys_user u ON u.id = ph.staff 
+	</sql> 
+    
+	
+	<select id="findPageBy" resultType="PrhoProjectDailyStatics">
+		 SELECT  
+			<include refid="prhoProjectDailySatisticsColumns"/>
+		FROM prho_project_hours ph
+		<include refid="prhoProjectDailySatisticsJoins"/>
+		 <where>
+			 <if test="userid != null and userid  != ''">
+				AND u.id = #{userid}
+			</if>
+			<if test="starttime!=null and starttime!=''">  
+    <![CDATA[   and DATE_FORMAT(ph.taskstarttime, '%Y-%m-%d')>=  DATE_FORMAT(#{starttime}, '%Y-%m-%d')   ]]>  
+			</if>  
+			<if test="endtime!=null and endtime!=''">  
+    <![CDATA[  and DATE_FORMAT(ph.taskendtime, '%Y-%m-%d') <= DATE_FORMAT(#{endtime}, '%Y-%m-%d')    ]]>  
+			</if>
+		</where> 
+		 <choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when> 
+			<otherwise>
+				GROUP BY 	
+				DATE_FORMAT(ph.workTime, '%Y-%m-%d')
+			</otherwise> 
+		 </choose> 
+	</select>
+</mapper>
