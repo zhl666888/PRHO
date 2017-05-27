@@ -74,6 +74,10 @@
 			});
 		}); 
 	</script>
+	<style type="text/css">
+	.zhl{width:55%;}
+	.zhl_left{float:left}
+	</style>
 </head>
 <body>
 	<ul class="nav nav-tabs">
@@ -83,35 +87,38 @@
 	<form:form id="inputForm" modelAttribute="prhoProjectHours" action="${ctx}/prho/prhoProjectHours/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
-		<div class="control-group">
+	<%-- 	<div class="control-group">
 			<label class="control-label">工作日期：</label>
 			<div class="controls">
 				<input name="worktime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
 					value="<fmt:formatDate value="${prhoProjectHours.worktime}" pattern="yyyy-MM-dd"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 			</div>
-		</div>
+		</div> --%>
 		<div class="control-group">
+		<div class="zhl_left">
 		<label class="control-label">项目名称：</label>
-			<div class="controls">
+		<div class="controls zhl">
 			<form:select id="projectId" path="projectId" class="input-select_medium">
-					<%-- <form:option value="" label=""/> --%>
+					<form:option value="" label=""/>
 					<form:options items="${fnprho:getPersonalProjectName()}" itemLabel="projectname" itemValue="id" htmlEscape="false"/>
 				</form:select>
 			</div>
 		</div>
-		<div class="control-group">
+		<div class="zhl_left" style="padding-left: 12px">
 			<label class="control-label">任务名称：</label>
-			<div class="controls">
+			<div class="controls zhl">
 			<form:select id="taskId" path="taskId" class="input-select_medium">
-					<%-- <form:option value="" label=""/> --%>
+					<form:option value="" label=""/>
 					<form:options items="${fnprho:getAllTaskName()}" itemLabel="taskname" itemValue="id" htmlEscape="false"/>
 				</form:select>
 		</div>
 		</div>
+		</div>
 		<div class="control-group">
+		<div class="zhl_left">
 			<label class="control-label">工作类型 ：</label>
-			<div class="controls">
+			<div class="controls zhl">
 			<c:choose>
 			<c:when test="${''!=prhoProjectHours.jobtypelabel&& null!=prhoProjectHours.jobtypelabel}">
 			<input id="jobtype" name="jobtype" value="${prhoProjectHours.jobtype}" type="hidden">
@@ -126,68 +133,75 @@
 			</c:choose>
 			</div>
 		</div>
-		<div class="control-group">
-			<label class="control-label">工时类型 ：</label>
-			<div class="controls">
+		<div class="zhl_left" style="padding-left: 12px">
+		<label class="control-label">工时类型 ：</label>
+			<div class="controls zhl">
 				<form:select path="workhourstype" class="input-select_medium ">
 					<form:option value="" label=""/>
 					<form:options items="${fns:getDictList('workHours_type')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 			</div>
 		</div>
+		</div>
 		<div class="control-group">
+		<div class="zhl_left">
 			<label class="control-label">任务开始时间：</label>
-			<div class="controls">
+			<div class="controls zhl">
 				<input name="taskstarttime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
 					value="<fmt:formatDate value="${prhoProjectHours.taskstarttime}" pattern="yyyy-MM-dd"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 			</div>
 		</div>
-		<div class="control-group">
-			<label class="control-label">任务结束时间：</label>
-			<div class="controls">
+		<div class="zhl_left" style="padding-left: 12px">
+		<label class="control-label">任务结束时间：</label>
+			<div class="controls zhl">
 				<input name="taskendtime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
 					value="<fmt:formatDate value="${prhoProjectHours.taskendtime}" pattern="yyyy-MM-dd"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 			</div>
 		</div>
+		</div>
 		<div class="control-group">
+		<div class="zhl_left">
 			<label class="control-label">实际用时(小时)：</label>
-			<div class="controls">
+			<div class="controls zhl">
 				<form:input path="realhours" htmlEscape="false" class="input-medium required"/>
 				<span class="help-inline"><font color="red">*</font></span>
 			</div>
 		</div>
-		<div class="control-group">
-			<label class="control-label">任务完成进度：</label>
-			<div class="controls">
+		<div class="zhl_left">
+		<label class="control-label">任务完成进度：</label>
+			<div class="controls zhl" >
 				<form:select path="taskcompleteschedule" class="input-select_medium ">
 					<form:option value="" label=""/>
 					<form:options items="${fns:getDictList('taskComplete_schedule')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
-				%
+				<span class="help-inline">%</span>
 			</div>
 		</div>
+		</div>
 		<div class="control-group">
+		<div class="zhl_left">
 			<label class="control-label">审批人：</label>
-			<div class="controls">
+			<div class="controls zhl">
 				<form:select path="projectmanagerId" class="input-select_medium">
 					<form:option value="" label=""/>
 					<form:options items="${fnprho:getAllUser()}"  itemLabel="name" itemValue="id" htmlEscape="false"/>
 				</form:select>
 				</div>
+			</div>
+		<div class="zhl_left" style="padding-left: 12px">
+				<label class="control-label">人员：</label>
+			<div class="controls zhl">
+			<input id="staffId" name="staffId" value="${fns:getUser().id}" type="hidden">
+				<form:input path="staff" value="${fns:getUser().name}" readonly="true" htmlEscape="false"  class="input-medium "/>
+			</div>
+		</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">工作描述：</label>
 			<div class="controls">
 				<form:textarea path="workdesc" htmlEscape="false" rows="4" maxlength="255" class="input-xxlarge "/>
-			</div>
-		</div>
-			<div class="control-group">
-			<label class="control-label">人员：</label>
-			<div class="controls">
-			<input id="staffId" name="staffId" value="${fns:getUser().id}" type="hidden">
-				<form:input path="staff" value="${fns:getUser().name}" readonly="true" htmlEscape="false"  class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="form-actions">

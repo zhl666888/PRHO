@@ -115,7 +115,7 @@
 					${prhoProjectHours.approvalopinion}
 				</td>
 				<td>
-					${prhoProjectHours.approvalopinion}
+					${prhoProjectHours.projectmanager}
 				</td>
 				<shiro:hasPermission name="prho:prhoProjectHours:edit"><td>
     				<a href="${ctx}/prho/prhoProjectHours/form?id=${prhoProjectHours.id}">修改</a>

@@ -4,18 +4,19 @@
 package com.thinkgem.jeesite.modules.prho.entity;
 
 import org.hibernate.validator.constraints.Length;
+
 import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.thinkgem.jeesite.common.persistence.DataEntity;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 
-import com.thinkgem.jeesite.common.persistence.DataEntity;
-
 /**
- * 项目工时Entity
+ * 工时审批Entity
  * @author zhl
- * @version 2017-05-18
+ * @version 2017-05-26
  */
-public class PrhoProjectHours extends DataEntity<PrhoProjectHours> {
+public class PrhoWorktimeApproval extends DataEntity<PrhoWorktimeApproval> {
 	
 	private static final long serialVersionUID = 1L;
 	private String projectId;		// 项目id
@@ -30,23 +31,24 @@ public class PrhoProjectHours extends DataEntity<PrhoProjectHours> {
 	private Date taskendtime;		// 任务结束时间
 	private String approvalstatus;		// 审核状态 待审核、通过、未通过
 	private String approvalopinion;		// 审核意见
-	private User user;	
+	private User user;
 	private Date approvaltime;		// 审核时间
 	private Date filltime;		// 填报时间
 	private Date worktime;		// 工作日期
 	private PrhoProjectInfo prhoProjectInfo;
-	private String projectmanagerId;	//项目负责人id(审核人)
-	private String taskcompleteschedule;	//任务完成进度
-	private String projectName; 	//显示的项目名称
-	private String projectmanager; 	//显示的项目负责人
-	private Date starttime; 	//查询的任务开始时间
-	private Date endtime; 	//查询的任务结束时间
-	private String jobtypelabel;	 //工作类型的标签
-	public PrhoProjectHours() {
+	private String projectmanagerId;//项目负责人id(审批人)
+	private String taskcompleteschedule;//任务完成进度
+	private String projectName; //显示的项目名称
+	private String projectmanager; //显示的项目负责人
+	private Date starttime; //查询的任务开始时间
+	private Date endtime; //查询的任务结束时间
+	private String jobtypelabel; //工作类型的标签
+	private String staffname; //显示的人员名称
+	public PrhoWorktimeApproval() {
 		super();
 	}
 
-	public PrhoProjectHours(String id){
+	public PrhoWorktimeApproval(String id){
 		super(id);
 	}
 
@@ -156,14 +158,6 @@ public class PrhoProjectHours extends DataEntity<PrhoProjectHours> {
 		this.approvalopinion = approvalopinion;
 	}
 	
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	public Date getApprovaltime() {
 		return approvaltime;
@@ -254,6 +248,22 @@ public class PrhoProjectHours extends DataEntity<PrhoProjectHours> {
 
 	public void setJobtypelabel(String jobtypelabel) {
 		this.jobtypelabel = jobtypelabel;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public String getStaffname() {
+		return staffname;
+	}
+
+	public void setStaffname(String staffname) {
+		this.staffname = staffname;
 	}
 	
 }

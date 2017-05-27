@@ -92,14 +92,15 @@ public class PrhoProjectHoursController extends BaseController {
 		if(staffId!=""&&staffId!=null){
 			prhoProjectHours.setStaff(staffId);
 		}
+		prhoProjectHours.setApprovalstatus("0");
+		prhoProjectHours.setWorktime(prhoProjectHours.getTaskstarttime());
 		prhoProjectHoursService.save(prhoProjectHours);
-		//保存项目完成进度(项目完成时间)
+		//保存私有任务完成进度、私有任务完成时间
 		String taskId=prhoProjectHours.getTaskId();
 		PrhoProjectTask prhoProjectTask=  prhoProjectTaskService.get(taskId);
 		if(("private").equals(prhoProjectTask.getTasktype())){
 			prhoProjectTaskService.updateProjectProgress(prhoProjectHours,taskId);
 		}
-		
 		addMessage(redirectAttributes, "保存项目工时成功");
 		return "redirect:"+Global.getAdminPath()+"/prho/prhoProjectHours/?repage";
 	}
@@ -125,6 +126,7 @@ public class PrhoProjectHoursController extends BaseController {
 			PrhoProjectTask	prhoProjectTask	=prhoProjectTaskService.get(pmtid);
 			prhoProjectHours.setJobtype(prhoProjectTask.getWorktype());
 			prhoProjectHours.setTaskId(prhoProjectTask.getId());
+			prhoProjectHours.setTaskcompleteschedule("100");
 			prhoProjectHours.setJobtypelabel(DictUtils.getDictLabel(prhoProjectTask.getWorktype(), "work_type", ""));
 			
 			PrhoProjectInfo	prhoProjectInfo =prhoProjectInfoService.get(prhoProjectTask.getProjectId());

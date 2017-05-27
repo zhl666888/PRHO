@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.thinkgem.jeesite.modules.prho.dao.PrhoProjectHoursDao">
+<mapper namespace="com.thinkgem.jeesite.modules.prho.dao.PrhoWorktimeApprovalDao">
     
-	<sql id="prhoProjectHoursColumns">
+	<sql id="prhoWorktimeApprovalColumns">
 		a.id AS "id",
 		a.project_id AS "projectId",
 		a.task_id AS "taskId",
@@ -26,45 +26,45 @@
 		a.projectmanager_id AS "projectmanagerId",
 		a.taskCompleteSchedule AS "taskcompleteschedule",
 		prinfo.projectName AS "projectName",
-		u14.name AS "projectmanager",
+		u14.name AS "staffname",
 		prtask.taskName AS "taskname"
 	</sql>
 	
-	<sql id="prhoProjectHoursJoins">
-		LEFT JOIN sys_user u14 ON u14.id = a.projectmanager_id
+	<sql id="prhoWorktimeApprovalJoins">
+		LEFT JOIN sys_user u14 ON u14.id = a.staff
 		LEFT JOIN prho_project_info prinfo ON prinfo.id = a.project_id
 		LEFT JOIN prho_project_task prtask ON prtask.id = a.task_id
 	</sql>
     
-	<select id="get" resultType="PrhoProjectHours">
+	<select id="get" resultType="PrhoWorktimeApproval">
 		SELECT 
-			<include refid="prhoProjectHoursColumns"/>
+			<include refid="prhoWorktimeApprovalColumns"/>
 		FROM prho_project_hours a
-		<include refid="prhoProjectHoursJoins"/>
+		<include refid="prhoWorktimeApprovalJoins"/>
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultType="PrhoProjectHours">
+	<select id="findList" resultType="PrhoWorktimeApproval">
 		SELECT 
-			<include refid="prhoProjectHoursColumns"/>
+			<include refid="prhoWorktimeApprovalColumns"/>
 		FROM prho_project_hours a
-		<include refid="prhoProjectHoursJoins"/>
+		<include refid="prhoWorktimeApprovalJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="projectId != null and projectId != ''">
-				AND a.project_id = #{projectId}
+			<if test="approvalstatus != null and approvalstatus != ''">
+				AND a.approvalstatus = #{approvalstatus}
 			</if>
 			<if test="starttime!=null and starttime!=''">  
-    <![CDATA[   and DATE_FORMAT(taskstarttime, '%Y-%m-%d')>=  DATE_FORMAT(#{starttime}, '%Y-%m-%d')   ]]>  
+    <![CDATA[   and DATE_FORMAT(worktime, '%Y-%m-%d')>=  DATE_FORMAT(#{starttime}, '%Y-%m-%d')   ]]>  
 			</if>  
 			<if test="endtime!=null and endtime!=''">  
-    <![CDATA[  and DATE_FORMAT(taskendtime, '%Y-%m-%d') <= DATE_FORMAT(#{endtime}, '%Y-%m-%d')    ]]>  
+    <![CDATA[  and DATE_FORMAT(worktime, '%Y-%m-%d') <= DATE_FORMAT(#{endtime}, '%Y-%m-%d')    ]]>  
 			</if>  
 			<if test="staff != null and staff != ''">
 				AND a.staff = #{staff}
 			</if>
-			<if test="approvalstatus != null and approvalstatus != ''">
-				AND a.approvalstatus = #{approvalstatus}
+			<if test="projectmanagerId != null and projectmanagerId != ''">
+				AND a.projectmanager_id = #{projectmanagerId}
 			</if>
 		</where>
 		<choose>
@@ -77,11 +77,11 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultType="PrhoProjectHours">
+	<select id="findAllList" resultType="PrhoWorktimeApproval">
 		SELECT 
-			<include refid="prhoProjectHoursColumns"/>
+			<include refid="prhoWorktimeApprovalColumns"/>
 		FROM prho_project_hours a
-		<include refid="prhoProjectHoursJoins"/>
+		<include refid="prhoWorktimeApprovalJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 		</where>		
@@ -142,8 +142,15 @@
 			#{taskcompleteschedule}
 		)
 	</insert>
-	
 	<update id="update">
+		UPDATE prho_project_hours SET 	
+			approvalstatus = #{approvalstatus},
+			approvalopinion = #{approvalopinion},
+			approvaltime = #{approvaltime}
+			
+		WHERE id = #{id}
+	</update>
+	<update id="updateOld">
 		UPDATE prho_project_hours SET 	
 			project_id = #{projectId},
 			task_id = #{taskId},
