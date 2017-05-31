@@ -13,6 +13,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.persistence.DataEntity;
+import com.thinkgem.jeesite.common.utils.excel.annotation.ExcelField;
 
 /**
  * 项目信息Entity
@@ -37,6 +38,11 @@ public class PrhoProjectInfo extends DataEntity<PrhoProjectInfo> {
 	private String staffId; //项目所属人员id
 	private List<User> userList = Lists.newArrayList();  //项目与人员关系列表
 	
+	/*@SupCol(isUnique="true", isHide="true")
+	@ExcelField(title="ID", type=1, align=2, sort=1)
+	public String getId() {
+		return id;
+	}*/
 	public PrhoProjectInfo() {
 		super();
 	}
@@ -46,6 +52,7 @@ public class PrhoProjectInfo extends DataEntity<PrhoProjectInfo> {
 	}
 
 	@Length(min=0, max=64, message="项目编号长度必须介于 0 和 64 之间")
+	@ExcelField(title="项目编号", align=2, sort=5)
 	public String getProjectcode() {
 		return projectcode;
 	}
@@ -63,6 +70,7 @@ public class PrhoProjectInfo extends DataEntity<PrhoProjectInfo> {
 	}
 	
 	@Length(min=0, max=200, message="项目名称长度必须介于 0 和 200 之间")
+	@ExcelField(title="项目名称", align=2, sort=10)
 	public String getProjectname() {
 		return projectname;
 	}
@@ -72,6 +80,7 @@ public class PrhoProjectInfo extends DataEntity<PrhoProjectInfo> {
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@ExcelField(title="项目启动日期", align=2, sort=20)
 	public Date getProjectbegintime() {
 		return projectbegintime;
 	}
@@ -81,6 +90,7 @@ public class PrhoProjectInfo extends DataEntity<PrhoProjectInfo> {
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@ExcelField(title="预计结束日期", align=2, sort=25)
 	public Date getProjectplanendtime() {
 		return projectplanendtime;
 	}
@@ -90,6 +100,7 @@ public class PrhoProjectInfo extends DataEntity<PrhoProjectInfo> {
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@ExcelField(title="实际结束日期", align=2, sort=30)
 	public Date getProjectendtime() {
 		return projectendtime;
 	}
@@ -99,6 +110,7 @@ public class PrhoProjectInfo extends DataEntity<PrhoProjectInfo> {
 	}
 	
 	@Length(min=0, max=64, message="项目状态 未开始1、进行中2、已结束3长度必须介于 0 和 64 之间")
+	@ExcelField(title="项目状态", align=2, sort=35,dictType="project_status")
 	public String getProjectstatus() {
 		return projectstatus;
 	}
@@ -108,6 +120,7 @@ public class PrhoProjectInfo extends DataEntity<PrhoProjectInfo> {
 	}
 	
 	@Length(min=0, max=64, message="项目负责人，用的是用户ID")
+	@ExcelField(title="项目负责人",type=2, align=2, sort=7)
 	public String getUserId() {
 		return userId;
 	}
@@ -133,7 +146,8 @@ public class PrhoProjectInfo extends DataEntity<PrhoProjectInfo> {
 	public void setEndtime(Date endtime) {
 		this.endtime = endtime;
 	}
-
+	
+	@ExcelField(title="项目负责人",type=1, align=2, sort=7)
 	public String getUserName() {
 		return userName;
 	}
@@ -141,7 +155,8 @@ public class PrhoProjectInfo extends DataEntity<PrhoProjectInfo> {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
+	
+	@ExcelField(title="预估工时*", align=2, sort=15)
 	public String getEstimatehours() {
 		return estimatehours;
 	}

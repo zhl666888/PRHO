@@ -131,4 +131,8 @@ public class PrhoProjectInfoService extends CrudService<PrhoProjectInfoDao, Prho
 			dao.update(prhoProjectInfo);
 		}
 	}
+	public PrhoProjectInfo getProjectManagerId(PrhoProjectInfo prhoProjectInfo){
+		PrhoProjectInfo ppi=dao.getProjectManagerId(prhoProjectInfo);
+		return ppi;
+	}
 }

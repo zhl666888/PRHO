@@ -7,8 +7,8 @@ package com.thinkgem.jeesite.modules.prho.entity;
 import java.util.Date;
 
 import com.thinkgem.jeesite.common.persistence.DataEntity;
-import com.thinkgem.jeesite.common.utils.excel.annotation.ExcelField;
 import com.thinkgem.jeesite.common.supcan.annotation.treelist.cols.SupCol;
+import com.thinkgem.jeesite.common.utils.excel.annotation.ExcelField;
 
 /**
  * 工时表Entity
