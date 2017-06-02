@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.prho.dao.PrhoPersonalDevelopSpeedDao">
+    
+	<sql id="prhoPersonalDevelopSpeedColumns">
+		a.id AS "id",
+		a.project_id AS "projectId",
+		a.taskmanager AS "taskmanager",
+		a.taskname AS "taskname",
+		a.tastplanbegintime AS "tastplanbegintime",
+		a.taskplanendtime AS "taskplanendtime",
+		a.expectedhour AS "expectedhour",
+		a.taskcompleteschedule AS "taskcompleteschedule",
+		a.taskcompletetime AS "taskcompletetime",
+		a.tasktype AS "tasktype",
+		a.worktype AS "worktype",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		u3.name AS "userName",
+		prinfo.projectName AS "projectName"
+	</sql>
+	
+	<sql id="prhoPersonalDevelopSpeedJoins">
+	LEFT JOIN prho_user_project pup on  pup.project_id=a.project_id
+	LEFT JOIN sys_user user2 on user2.id=pup.user_id
+	LEFT JOIN prho_project_info prinfo ON prinfo.id = a.project_id
+
+	</sql>
+    
+	<select id="get" resultType="PrhoPersonalDevelopSpeed">
+		SELECT 
+			<include refid="prhoPersonalDevelopSpeedColumns"/>
+		FROM prho_project_task a
+		<include refid="prhoPersonalDevelopSpeedJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="PrhoPersonalDevelopSpeed">
+		SELECT 
+			<include refid="prhoPersonalDevelopSpeedColumns"/>
+		FROM prho_project_task a
+		<include refid="prhoPersonalDevelopSpeedJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="taskmanager != null and taskmanager != ''">
+				AND a.taskmanager = #{taskmanager}
+			</if>
+			<if test="taskname != null and taskname != ''">
+				AND a.taskname = #{taskname}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="PrhoPersonalDevelopSpeed">
+		SELECT 
+			<include refid="prhoPersonalDevelopSpeedColumns"/>
+		FROM prho_project_task a
+		<include refid="prhoPersonalDevelopSpeedJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO prho_project_task(
+			id,
+			project_id,
+			taskmanager,
+			taskname,
+			tastplanbegintime,
+			taskplanendtime,
+			expectedhour,
+			taskcompleteschedule,
+			taskcompletetime,
+			tasktype,
+			worktype,
+			create_date,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{projectId},
+			#{taskmanager},
+			#{taskname},
+			#{tastplanbegintime},
+			#{taskplanendtime},
+			#{expectedhour},
+			#{taskcompleteschedule},
+			#{taskcompletetime},
+			#{tasktype},
+			#{worktype},
+			#{createDate},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE prho_project_task SET 	
+			project_id = #{projectId},
+			taskmanager = #{taskmanager},
+			taskname = #{taskname},
+			tastplanbegintime = #{tastplanbegintime},
+			taskplanendtime = #{taskplanendtime},
+			expectedhour = #{expectedhour},
+			taskcompleteschedule = #{taskcompleteschedule},
+			taskcompletetime = #{taskcompletetime},
+			tasktype = #{tasktype},
+			worktype = #{worktype},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE prho_project_task SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	<select id="findPageBy" resultType="PrhoPersonalDevelopSpeed">
+		SELECT 
+			sum(a.expectedhour) AS "expectedhour",
+			a.taskcompletetime AS "taskcompletetime",
+			prinfo.projectName AS "projectName",
+			user2.name AS "staffid"
+		FROM prho_project_task a
+		<include refid="prhoPersonalDevelopSpeedJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			and  prinfo.del_flag='0' and user2.del_flag='0'
+			and worktype='development'
+			<if test="projectId != null and projectId != ''">
+				AND a.project_id = #{projectId}
+			</if>
+			<if test="radioval=='day'">
+			<if test="daytime != null and daytime != ''">
+    <![CDATA[   and DATE_FORMAT(taskcompletetime, '%Y-%m-%d')=  DATE_FORMAT(#{daytime}, '%Y-%m-%d')   ]]>  
+			</if>
+			</if>
+			<if test="radioval=='month'">
+			<if test="monthstarttime != null and monthstarttime != ''">
+    <![CDATA[   and DATE_FORMAT(taskcompletetime, '%Y-%m')>= DATE_FORMAT(#{monthstarttime}, '%Y-%m')   ]]>  
+			</if>
+			<if test="monthendtime != null and monthendtime != ''">
+    <![CDATA[   and DATE_FORMAT(taskcompletetime, '%Y-%m')<= DATE_FORMAT(#{monthendtime}, '%Y-%m')   ]]>  
+			</if>
+			</if>
+			<if test="staffid != null and staffid != ''">
+				AND pup.user_id= #{staffid}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				GROUP BY pup.user_id,a.project_id
+			</otherwise>
+		</choose>
+	</select>
+</mapper>

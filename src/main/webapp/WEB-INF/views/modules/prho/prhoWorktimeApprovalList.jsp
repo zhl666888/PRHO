@@ -116,10 +116,19 @@
 					${prhoWorktimeApproval.approvalopinion}
 				</td>
 				<td>
-					${prhoWorktimeApproval.approvaltime}
+				<fmt:formatDate value="${prhoWorktimeApproval.approvaltime}" pattern="yyyy-MM-dd"/>
 				</td>
 				<shiro:hasPermission name="prho:prhoWorktimeApproval:edit"><td>
-    				<a href="${ctx}/prho/prhoWorktimeApproval/form?id=${prhoWorktimeApproval.id}">审批</a>
+    				
+    			<c:choose>
+    			<c:when test="${prhoWorktimeApproval.approvalstatus=='1'||prhoWorktimeApproval.approvalstatus=='2'}">
+    			<a href="${ctx}/prho/prhoWorktimeApproval/form?id=${prhoWorktimeApproval.id}">修改</a>
+    			</c:when>
+    			<c:otherwise>
+    			<a href="${ctx}/prho/prhoWorktimeApproval/form?id=${prhoWorktimeApproval.id}">审批</a>
+    			</c:otherwise>
+    			</c:choose>
+    			
 					<%-- <a href="${ctx}/prho/prhoWorktimeApproval/delete?id=${prhoWorktimeApproval.id}" onclick="return confirmx('确认要删除该项目工时吗？', this.href)">删除</a> --%>
 				</td></shiro:hasPermission>
 			</tr>

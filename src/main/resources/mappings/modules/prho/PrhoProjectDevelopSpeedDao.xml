@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.prho.dao.PrhoProjectDevelopSpeedDao">
+    
+	<sql id="prhoProjectDevelopSpeedColumns">
+		a.id AS "id",
+		a.project_id AS "projectId",
+		a.taskmanager AS "taskmanager",
+		a.taskname AS "taskname",
+		a.tastplanbegintime AS "tastplanbegintime",
+		a.taskplanendtime AS "taskplanendtime",
+		a.expectedhour AS "expectedhour",
+		a.taskcompleteschedule AS "taskcompleteschedule",
+		a.taskcompletetime AS "taskcompletetime",
+		a.tasktype AS "tasktype",
+		a.worktype AS "worktype",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		u3.name AS "userName",
+		prinfo.projectName AS "projectName"
+	</sql>
+	
+	<sql id="prhoProjectDevelopSpeedJoins">
+	LEFT JOIN sys_user u3 ON u3.id = a.taskmanager
+	LEFT JOIN prho_project_info prinfo ON prinfo.id = a.project_id
+
+	</sql>
+    
+	<select id="get" resultType="PrhoProjectDevelopSpeed">
+		SELECT 
+			<include refid="prhoProjectDevelopSpeedColumns"/>
+		FROM prho_project_task a
+		<include refid="prhoProjectDevelopSpeedJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="PrhoProjectDevelopSpeed">
+		SELECT 
+			<include refid="prhoProjectDevelopSpeedColumns"/>
+		FROM prho_project_task a
+		<include refid="prhoProjectDevelopSpeedJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="taskmanager != null and taskmanager != ''">
+				AND a.taskmanager = #{taskmanager}
+			</if>
+			<if test="taskname != null and taskname != ''">
+				AND a.taskname = #{taskname}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="PrhoProjectDevelopSpeed">
+		SELECT 
+			<include refid="prhoProjectDevelopSpeedColumns"/>
+		FROM prho_project_task a
+		<include refid="prhoProjectDevelopSpeedJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO prho_project_task(
+			id,
+			project_id,
+			taskmanager,
+			taskname,
+			tastplanbegintime,
+			taskplanendtime,
+			expectedhour,
+			taskcompleteschedule,
+			taskcompletetime,
+			tasktype,
+			worktype,
+			create_date,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{projectId},
+			#{taskmanager},
+			#{taskname},
+			#{tastplanbegintime},
+			#{taskplanendtime},
+			#{expectedhour},
+			#{taskcompleteschedule},
+			#{taskcompletetime},
+			#{tasktype},
+			#{worktype},
+			#{createDate},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE prho_project_task SET 	
+			project_id = #{projectId},
+			taskmanager = #{taskmanager},
+			taskname = #{taskname},
+			tastplanbegintime = #{tastplanbegintime},
+			taskplanendtime = #{taskplanendtime},
+			expectedhour = #{expectedhour},
+			taskcompleteschedule = #{taskcompleteschedule},
+			taskcompletetime = #{taskcompletetime},
+			tasktype = #{tasktype},
+			worktype = #{worktype},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE prho_project_task SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	<select id="findPageBy" resultType="PrhoProjectDevelopSpeed">
+		SELECT 
+			<include refid="prhoProjectDevelopSpeedColumns"/>
+		FROM prho_project_task a
+		<include refid="prhoProjectDevelopSpeedJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="projectId != null and projectId != ''">
+				AND a.project_id = #{projectId}
+			</if>
+			<if test="taskname != null and taskname != ''">
+				AND a.taskname = #{taskname}
+			</if>
+			<if test="id != null and id != ''">
+				AND a.id = #{id}
+			</if>
+			<if test="taskstatus == 'finish'">
+				AND a.taskcompleteschedule = '100'
+			</if>
+			<if test="taskstatus == 'unfinished'">
+				AND a.taskcompleteschedule != '100'
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+</mapper>

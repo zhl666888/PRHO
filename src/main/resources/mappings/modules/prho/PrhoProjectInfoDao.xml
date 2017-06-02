@@ -237,6 +237,7 @@
 		FROM prho_user_project a
 		WHERE 	a.project_id = #{id} 
 	</select>
+	<!-- 通过人员名称取到人员id，人员名称不能重复 -->
 	<select id="getProjectManagerId" resultType="PrhoProjectInfo">
 	   select DISTINCT u.id AS "userId" FROM prho_project_info left join sys_user u on u.name=#{userId}  
 	</select>
