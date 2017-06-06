@@ -23,9 +23,7 @@ import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.common.utils.DateUtils;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.utils.excel.ExportExcel;
-import com.thinkgem.jeesite.common.utils.excel.ImportExcel;
 import com.thinkgem.jeesite.modules.prho.entity.PrhoPersonalDevelopSpeed;
-import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectDailyStatics;
 import com.thinkgem.jeesite.modules.prho.service.PrhoPersonalDevelopSpeedService;
 import com.thinkgem.jeesite.modules.prho.service.PrhoProjectInfoService;
 import com.thinkgem.jeesite.modules.prho.service.PrhoProjectTaskService;
@@ -61,12 +59,12 @@ public class PrhoPersonalDevelopSpeedController extends BaseController {
 	@RequiresPermissions("prho:prhoPersonalDevelopSpeed:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(PrhoPersonalDevelopSpeed prhoPersonalDevelopSpeed, HttpServletRequest request, HttpServletResponse response, Model model,@RequestParam(required = false) String radioval) {
-		Page<PrhoPersonalDevelopSpeed> page = prhoPersonalDevelopSpeedService.findPageBy(new Page<PrhoPersonalDevelopSpeed>(request, response), prhoPersonalDevelopSpeed); 
 		if(StringUtils.isNotBlank(radioval)){
 			prhoPersonalDevelopSpeed.setRadioval(radioval);
 		}else{
 			prhoPersonalDevelopSpeed.setRadioval("day");
 		}
+		Page<PrhoPersonalDevelopSpeed> page = prhoPersonalDevelopSpeedService.findPageBy(new Page<PrhoPersonalDevelopSpeed>(request, response), prhoPersonalDevelopSpeed); 
 		model.addAttribute("time",radioval);
 		model.addAttribute("page", page);
 		return "modules/prho/prhoPersonalDevelopSpeedList";

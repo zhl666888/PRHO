@@ -23,10 +23,9 @@
 	</sql>
 	
 	<sql id="prhoPersonalDevelopSpeedJoins">
-	LEFT JOIN prho_user_project pup on  pup.project_id=a.project_id
-	LEFT JOIN sys_user user2 on user2.id=pup.user_id
-	LEFT JOIN prho_project_info prinfo ON prinfo.id = a.project_id
 
+	LEFT JOIN prho_project_info prinfo ON prinfo.id = a.project_id
+	LEFT JOIN sys_user user2 on user2.id=a.taskmanager
 	</sql>
     
 	<select id="get" resultType="PrhoPersonalDevelopSpeed">
@@ -149,13 +148,18 @@
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			and  prinfo.del_flag='0' and user2.del_flag='0'
 			and worktype='development'
+			and taskcompletetime is not null
 			<if test="projectId != null and projectId != ''">
 				AND a.project_id = #{projectId}
+			</if>
+			<if test="staffid != null and staffid != ''">
+				AND a.taskmanager= #{staffid}
 			</if>
 			<if test="radioval=='day'">
 			<if test="daytime != null and daytime != ''">
     <![CDATA[   and DATE_FORMAT(taskcompletetime, '%Y-%m-%d')=  DATE_FORMAT(#{daytime}, '%Y-%m-%d')   ]]>  
 			</if>
+			GROUP BY a.taskCompleteTime
 			</if>
 			<if test="radioval=='month'">
 			<if test="monthstarttime != null and monthstarttime != ''">
@@ -164,17 +168,28 @@
 			<if test="monthendtime != null and monthendtime != ''">
     <![CDATA[   and DATE_FORMAT(taskcompletetime, '%Y-%m')<= DATE_FORMAT(#{monthendtime}, '%Y-%m')   ]]>  
 			</if>
+			GROUP BY DATE_FORMAT(taskcompletetime, '%Y-%m')
 			</if>
-			<if test="staffid != null and staffid != ''">
-				AND pup.user_id= #{staffid}
+			
+			<if test="radioval=='week'">
+			<if test="weekstarttime != null and weekstarttime != ''">
+			
+     <![CDATA[  and WEEK(taskcompletetime,0)>= WEEK(#{weekstarttime},0)   ]]>
 			</if>
+			<if test="weekendtime != null and weekendtime != ''">
+     <![CDATA[   and WEEK(taskcompletetime,0) <= WEEK(#{weekendtime},0)  ]]>
+			</if>
+			GROUP BY WEEK(taskcompletetime,0)
+			</if>
+			
+			
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}
 			</when>
-			<otherwise>
-				GROUP BY pup.user_id,a.project_id
+				<otherwise>
+				ORDER BY a.update_date DESC
 			</otherwise>
 		</choose>
 	</select>

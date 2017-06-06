@@ -40,6 +40,8 @@ public class PrhoPersonalDevelopSpeed extends DataEntity<PrhoPersonalDevelopSpee
 	private Date weekstarttime; //起始时间	周
 	private Date weekendtime; //结束时间	周
 	private String radioval;//单选按钮 选择的值
+	private String monthfw;	//月份显示的任务完成时间
+	private String weekfw; //周显示的任务完成时间
 	public PrhoPersonalDevelopSpeed() {
 		super();
 	}
@@ -223,6 +225,22 @@ public class PrhoPersonalDevelopSpeed extends DataEntity<PrhoPersonalDevelopSpee
 
 	public void setRadioval(String radioval) {
 		this.radioval = radioval;
+	}
+
+	public String getMonthfw() {
+		return monthfw;
+	}
+
+	public void setMonthfw(String monthfw) {
+		this.monthfw = monthfw;
+	}
+
+	public String getWeekfw() {
+		return weekfw;
+	}
+
+	public void setWeekfw(String weekfw) {
+		this.weekfw = weekfw;
 	}
 
 }

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
 import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectDevelopSpeed;
+import com.thinkgem.jeesite.modules.prho.utils.DateUtils;
 import com.thinkgem.jeesite.modules.prho.dao.PrhoProjectDevelopSpeedDao;
 import com.thinkgem.jeesite.modules.sys.dao.UserDao;
 
@@ -56,12 +57,35 @@ public class PrhoProjectDevelopSpeedService extends CrudService<PrhoProjectDevel
 	public Page<PrhoProjectDevelopSpeed> findPageBy(Page<PrhoProjectDevelopSpeed> page,PrhoProjectDevelopSpeed prhoProjectDevelopSpeed){
 		prhoProjectDevelopSpeed.setPage(page);
 		List<PrhoProjectDevelopSpeed> list = dao.findPageBy(prhoProjectDevelopSpeed);
-	/*	for(PrhoProjectInfo prinfo: list){
-			User user=userDao.get(prinfo.getUserId());
-			if(!"".equals(user)&&null!=user){
-				prinfo.setUser(user);
+		String monthstarttime="";
+		String monthendtime="";
+		String monthfw="";
+		if(prhoProjectDevelopSpeed.getRadioval().equals("month")){
+			if(prhoProjectDevelopSpeed.getMonthstarttime()!=null){
+				monthstarttime=DateUtils.formatDate(prhoProjectDevelopSpeed.getMonthstarttime(),"yyyy-MM");
 			}
-		}*/
+			if(prhoProjectDevelopSpeed.getMonthendtime()!=null){
+				monthendtime=DateUtils.formatDate(prhoProjectDevelopSpeed.getMonthendtime(),"yyyy-MM");
+			}
+			monthfw=monthstarttime+"-"+monthendtime;
+		}
+		String weekstarttime="";
+		String weekendtime="";
+		String weekfw="";
+		if(prhoProjectDevelopSpeed.getRadioval().equals("week")){
+			if(prhoProjectDevelopSpeed.getWeekstarttime()!=null){
+				weekstarttime=DateUtils.getWeekOfYearStr(prhoProjectDevelopSpeed.getWeekstarttime());
+			}
+			if(prhoProjectDevelopSpeed.getWeekendtime()!=null){
+				weekendtime=DateUtils.getWeekOfYearStr(prhoProjectDevelopSpeed.getWeekendtime());
+			}
+			weekfw=weekstarttime+"周-"+weekendtime+"周";
+		}
+		for(PrhoProjectDevelopSpeed ppds: list){
+			ppds.setRadioval(prhoProjectDevelopSpeed.getRadioval());
+			ppds.setMonthfw(monthfw);
+			ppds.setWeekfw(weekfw);
+		}
 		page.setList(list);
 		return page;
 		

@@ -8,23 +8,20 @@
 		$(document).ready(function() {
 			/* var val_payPlatform = $('input[name="time"]:checked').val();
 			alert(val_payPlatform); */
-			$(":radio").click(function(){
-				if($(this).val()=="day"){
-					$("#time_day").show();
-					$("#time_week").hide();
-					$("#time_month").hide();
+			var radioval=$("#rid").val();
+			if(radioval){
+ 		        $("input[type='radio'][name=time][value='"+radioval+"']").attr("checked",true);
+ 		       radioClick(radioval);
+ 			} 
+		$("#btnExport").click(function(){
+			top.$.jBox.confirm("确认要导出用户数据吗？","系统提示",function(v,h,f){
+				if(v=="ok"){
+					$("#searchForm").attr("action","${ctx}/prho/prhoPersonalDevelopSpeed/export");
+					$("#searchForm").submit();
 				}
-				if($(this).val()=="week"){
-					$("#time_week").show();
-					$("#time_day").hide();
-					$("#time_month").hide();
-				}
-				if($(this).val()=="month"){
-					$("#time_month").show();
-					$("#time_day").hide();
-					$("#time_week").hide();
-				}
-			 });
+			},{buttonsFocus:1});
+			top.$('.jbox-body .jbox-icon').css('top','55px');
+		});
 		});
 		function page(n,s){
 			$("#pageNo").val(n);
@@ -32,9 +29,25 @@
 			$("#searchForm").submit();
         	return false;
         }
-	/* 	function funccc(){
-			$dp.$('d121').value=$dp.cal.getP('y')+$dp.cal.getP('W','WW');
-			} */
+			function radioClick(time){
+				if(time=="day"){
+					$("#time_day").show();
+					$("#time_week").hide();
+					$("#time_month").hide();
+				}
+				if(time=="week"){
+					$("#time_week").show();
+					$("#time_day").hide();
+					$("#time_month").hide();
+				}
+				if(time=="month"){
+					$("#time_month").show();
+					$("#time_day").hide();
+					$("#time_week").hide();
+				}
+				var radioval = $('input[name="time"]:checked').val();
+				$("#radioval").val(radioval);
+			}
 	</script>
 </head>
 <body>
@@ -46,15 +59,17 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
+			 <input id="radioval" name="radioval" value="day" type="hidden"/>
+		  <input type="hidden" id="rid" value="${time}">
 			<li><label style="width:10px">日</label>
-			<input type="radio" checked="checked" name="time" value="day" >
+			<input type="radio" checked="checked" name="time" value="day" onchange="radioClick('day')" >
 			<%-- <form:radiobutton path="projectname"  /> --%>
 			</li>
-			<li><label style="width:10px">周</label>
-			<input type="radio" name="time" value="week" >
+			<li><label style="width:10px" >周</label>
+			<input type="radio" name="time" value="week"  onchange="radioClick('week')" >
 			</li>
 			<li><label style="width:10px">月</label>
-			<input type="radio" name="time" value="month" >
+			<input type="radio" name="time" value="month" onchange="radioClick('month')" >
 			</li>
 			<li><label>项目名称：</label>
 			<form:select path="projectId" class="input-medium">
@@ -65,33 +80,33 @@
 			</li>
 			<div id="time_day">
 			<li><label style="width:100px">任务完成时间：</label>
-			<input name="taskcompletetime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
-					value="<fmt:formatDate value="${prhoProjectDevelopSpeed.starttime}" pattern="yyyy-MM-dd"/>"
+			<input name="daytime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
+					value="<fmt:formatDate value="${prhoProjectDevelopSpeed.daytime}" pattern="yyyy-MM-dd"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 			</li>
 			</div>
 			<div id="time_week" style="display: none">
 			<li><label style="width:120px">任务完成时间(周)：</label>
-			<input name="taskcompletetime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
-					value="<fmt:formatDate value="${prhoProjectDevelopSpeed.starttime}" />"
+			<input name="weekstarttime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
+					value="<fmt:formatDate value="${prhoProjectDevelopSpeed.weekstarttime}" />"
 					onclick="WdatePicker({isShowWeek:true,onpicked:function() {$dp.$('d122_1').value=$dp.cal.getP('W','W');$dp.$('d122_2').value=$dp.cal.getP('W','WW');}})"/>
 					
 			</li>
-			<li><label style="width:120px">任务完成时间(周)：</label>
-			<input name="taskcompletetime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
-					value="<fmt:formatDate value="${prhoProjectDevelopSpeed.starttime}" pattern="yyyy-MM-dd"/>"
+			<li><label style="width:120px">任务结束时间(周)：</label>
+			<input name="weekendtime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
+					value="<fmt:formatDate value="${prhoProjectDevelopSpeed.weekendtime}" pattern="yyyy-MM-dd"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 			</li>
 			</div>
 			<div id="time_month" style="display: none">
 			<li><label style="width:120px">任务完成时间(月)：</label>
-			<input name="taskcompletetime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
-					value="<fmt:formatDate value="${prhoProjectDevelopSpeed.starttime}" pattern="yyyy-MM"/>"
+			<input name="monthstarttime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
+					value="<fmt:formatDate value="${prhoProjectDevelopSpeed.monthstarttime}" pattern="yyyy-MM"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM',isShowClear:false});"/>
 			</li>
 			<li><label style="width:120px">任务完成时间(月)：</label>
-			<input name="taskcompletetime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
-					value="<fmt:formatDate value="${prhoProjectDevelopSpeed.starttime}" pattern="yyyy-MM"/>"
+			<input name="monthendtime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
+					value="<fmt:formatDate value="${prhoProjectDevelopSpeed.monthendtime}" pattern="yyyy-MM"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM',isShowClear:false});"/>
 			</li>
 			</div>
@@ -105,6 +120,8 @@
 		<thead>
 			<tr>
 				<th>项目名称</th>
+				<th>预估工时</th>
+				<th>任务完成时间</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -112,6 +129,23 @@
 			<tr>
 				<td>
 					${prhoProjectDevelopSpeed.projectName}
+				</td>
+				<td>
+				${prhoProjectDevelopSpeed.expectedhour}
+				</td>
+				<td>
+				<c:choose>
+				<c:when test="${prhoProjectDevelopSpeed.radioval=='day'}">
+				<fmt:formatDate value="${prhoProjectDevelopSpeed.taskcompletetime}" pattern="yyyy-MM-dd"/>
+				</c:when>
+				<c:when test="${prhoProjectDevelopSpeed.radioval=='month'}">
+					${prhoProjectDevelopSpeed.monthfw}
+				</c:when>
+				<c:when test="${prhoProjectDevelopSpeed.radioval=='week'}">
+					${prhoProjectDevelopSpeed.weekfw}
+				</c:when>
+				</c:choose>
+				
 				</td>
 			</tr>
 		</c:forEach>

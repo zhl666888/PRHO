@@ -13,24 +13,15 @@
  		        $("input[type='radio'][name=time][value='"+radioval+"']").attr("checked",true);
  		       radioClick(radioval);
  			} 
-			/* $(":radio").click(function(){
-				if($(this).val()=="day"){
-					$("#time_day").show();
-					$("#time_week").hide();
-					$("#time_month").hide();
+		$("#btnExport").click(function(){
+			top.$.jBox.confirm("确认要导出用户数据吗？","系统提示",function(v,h,f){
+				if(v=="ok"){
+					$("#searchForm").attr("action","${ctx}/prho/prhoPersonalDevelopSpeed/export");
+					$("#searchForm").submit();
 				}
-				if($(this).val()=="week"){
-					$("#time_week").show();
-					$("#time_day").hide();
-					$("#time_month").hide();
-				}
-				if($(this).val()=="month"){
-					$("#time_month").show();
-					$("#time_day").hide();
-					$("#time_week").hide();
-				}
-			 });
-		}); */
+			},{buttonsFocus:1});
+			top.$('.jbox-body .jbox-icon').css('top','55px');
+		});
 		});
 		function page(n,s){
 			$("#pageNo").val(n);
@@ -106,13 +97,13 @@
 			<li><label style="width:140px">任务完成起始时间(周)：</label>
 			<input name="weekstarttime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
 					value="<fmt:formatDate value="${prhoPersonalDevelopSpeed.weekstarttime}" />"
-					onclick="WdatePicker({isShowWeek:true,onpicked:function() {$dp.$('d122_1').value=$dp.cal.getP('W','W');$dp.$('d122_2').value=$dp.cal.getP('W','WW');}})"/>
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowWeek:true})"/>
 					
 			</li>
 			<li><label style="width:140px">任务完成结束时间(周)：</label>
 			<input name="weekendtime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
 					value="<fmt:formatDate value="${prhoPersonalDevelopSpeed.weekendtime}" pattern="yyyy-MM-dd"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowWeek:true});"/>
 			</li>
 			</div>
 			<div id="time_month" style="display: none">
@@ -127,9 +118,10 @@
 					onclick="WdatePicker({dateFmt:'yyyy-MM'});"/>
 			</li>
 			</div>
-			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
-			<li><input id="btnImport" class="btn btn-primary" type="button" value="导出"/></li>
-			<li class="clearfix"></li>
+			<li class="btns">
+			<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
+			<input id="btnExport" class="btn btn-primary" type="button" value="导出"/>
+			</li>
 		</ul>
 	</form:form>
 	<sys:message content="${message}"/>
@@ -139,7 +131,7 @@
 				<th>项目名称</th>
 				<th>人员</th>
 				<th>预估工时</th>
-				<th>项目完成时间</th>
+				<th>任务完成时间</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -155,7 +147,18 @@
 					${prhoPersonalDevelopSpeed.expectedhour}
 				</td>
 				<td>
+				
+				<c:choose>
+				<c:when test="${prhoPersonalDevelopSpeed.radioval=='day'}">
 				<fmt:formatDate value="${prhoPersonalDevelopSpeed.taskcompletetime}" pattern="yyyy-MM-dd"/>
+				</c:when>
+				<c:when test="${prhoPersonalDevelopSpeed.radioval=='month'}">
+					${prhoPersonalDevelopSpeed.monthfw}
+				</c:when>
+				<c:when test="${prhoPersonalDevelopSpeed.radioval=='week'}">
+					${prhoPersonalDevelopSpeed.weekfw}
+				</c:when>
+				</c:choose>
 				</td>
 			</tr>
 		</c:forEach>

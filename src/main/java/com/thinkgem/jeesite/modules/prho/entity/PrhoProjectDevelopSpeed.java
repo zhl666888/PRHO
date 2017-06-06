@@ -33,9 +33,14 @@ public class PrhoProjectDevelopSpeed extends DataEntity<PrhoProjectDevelopSpeed>
 	private Date taskcompletetime; //任务完成时间，(依据工时填报的私有任务结束时间)
 	private String tasktype;  //任务类型
 	private String worktype;  //工作类型
-	private Date starttime; //起始时间
-	private Date endtime; //结束时间
-	
+	private Date daytime;	//查询时间 (天)
+	private Date weekstarttime; //查询开始时间(周)
+	private Date weekendtime;	//查询结束时间(周)
+	private Date monthstarttime;	//查询开始时间(月)
+	private Date monthendtime;	//查询结束时间(月)
+	private String radioval;	//单选框 选择值
+	private String monthfw;		//任务完成时间，月范围
+	private String weekfw;		//任务完成时间，周范围
 	public PrhoProjectDevelopSpeed() {
 		super();
 	}
@@ -164,20 +169,68 @@ public class PrhoProjectDevelopSpeed extends DataEntity<PrhoProjectDevelopSpeed>
 		this.worktype = worktype;
 	}
 
-	public Date getStarttime() {
-		return starttime;
+	public Date getDaytime() {
+		return daytime;
 	}
 
-	public void setStarttime(Date starttime) {
-		this.starttime = starttime;
+	public void setDaytime(Date daytime) {
+		this.daytime = daytime;
 	}
 
-	public Date getEndtime() {
-		return endtime;
+	public Date getWeekstarttime() {
+		return weekstarttime;
 	}
 
-	public void setEndtime(Date endtime) {
-		this.endtime = endtime;
+	public void setWeekstarttime(Date weekstarttime) {
+		this.weekstarttime = weekstarttime;
+	}
+
+	public Date getWeekendtime() {
+		return weekendtime;
+	}
+
+	public void setWeekendtime(Date weekendtime) {
+		this.weekendtime = weekendtime;
+	}
+
+	public Date getMonthstarttime() {
+		return monthstarttime;
+	}
+
+	public void setMonthstarttime(Date monthstarttime) {
+		this.monthstarttime = monthstarttime;
+	}
+
+	public Date getMonthendtime() {
+		return monthendtime;
+	}
+
+	public void setMonthendtime(Date monthendtime) {
+		this.monthendtime = monthendtime;
+	}
+
+	public String getRadioval() {
+		return radioval;
+	}
+
+	public void setRadioval(String radioval) {
+		this.radioval = radioval;
+	}
+
+	public String getMonthfw() {
+		return monthfw;
+	}
+
+	public void setMonthfw(String monthfw) {
+		this.monthfw = monthfw;
+	}
+
+	public String getWeekfw() {
+		return weekfw;
+	}
+
+	public void setWeekfw(String weekfw) {
+		this.weekfw = weekfw;
 	}
 
 }

@@ -43,11 +43,6 @@
 	                		  var projectmanager=  $('#projectmanagerId option:selected').text();
 	         				  $("#s2id_projectmanagerId").find(".select2-chosen").html(projectmanager);
 	                	}
-	                	/* if(data.slmsExperimentBill.shiuser){
-	                	  $("#liablerName").val(data.slmsExperimentBill.shiuser.id); 
-	                	  $("#liabler").val(data.slmsExperimentBill.shiuser.name); 
-	                	} */
-	                
 	                },
 	            	error: function(request) {
 	                	alert("出错");
