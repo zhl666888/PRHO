@@ -71,7 +71,7 @@ public class PrhoPersonalDevelopSpeedController extends BaseController {
 	}
 	/**
 	 * 导出个人开发速度分析数据
-	 * @param prhoProjectHoursStatics
+	 * @param prhoPersonalDevelopSpeed
 	 * @param request
 	 * @param response
 	 * @param redirectAttributess

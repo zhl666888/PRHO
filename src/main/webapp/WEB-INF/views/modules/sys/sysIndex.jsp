@@ -242,7 +242,7 @@
 				</div>
 			</div>
 		    <div id="footer" class="row-fluid">
-	            Copyright &copy;${fns:getConfig('copyrightYear')} ${fns:getConfig('productName')} - Powered By <a href="http://jeesite.com" target="_blank">ZHL</a> ${fns:getConfig('version')}
+	            Copyright &copy;${fns:getConfig('copyrightYear')} ${fns:getConfig('productName')} - Powered By <a href="http://jeesite.com" target="_blank">jeesite</a> ${fns:getConfig('version')}
 			</div>
 		</div>
 	</div>

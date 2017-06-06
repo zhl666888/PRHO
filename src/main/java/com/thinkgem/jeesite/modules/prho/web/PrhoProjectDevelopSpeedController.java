@@ -14,10 +14,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.common.utils.DateUtils;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.utils.excel.ExportExcel;
 import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectDevelopSpeed;
@@ -62,8 +65,29 @@ public class PrhoProjectDevelopSpeedController extends BaseController {
 			prhoProjectDevelopSpeed.setRadioval("day");
 		}
 		Page<PrhoProjectDevelopSpeed> page = prhoProjectDevelopSpeedService.findPageBy(new Page<PrhoProjectDevelopSpeed>(request, response), prhoProjectDevelopSpeed); 
-		
 		model.addAttribute("page", page);
+		model.addAttribute("time",radioval);
 		return "modules/prho/prhoProjectDevelopSpeedList";
 	}
+	/**
+	 * 导出项目开发速度分析数据
+	 * @param prhoProjectHoursStatics
+	 * @param request
+	 * @param response
+	 * @param redirectAttributess
+	 * @return
+	 */
+	  @RequiresPermissions("prho:prhoProjectDevelopSpeed:view")
+	  @RequestMapping(value = "export", method=RequestMethod.POST)
+    public String exportFile(PrhoProjectDevelopSpeed prhoProjectDevelopSpeed, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
+		try {
+            String fileName = "项目开发速度分析数据"+DateUtils.getDate("yyyyMMddHHmmss")+".xlsx";
+            Page<PrhoProjectDevelopSpeed> page = prhoProjectDevelopSpeedService.findPageBy(new Page<PrhoProjectDevelopSpeed>(request, response, -1), prhoProjectDevelopSpeed);
+            new ExportExcel("项目开发速度分析", PrhoProjectDevelopSpeed.class).setDataList(page.getList()).write(response, fileName).dispose();
+    		return null;
+		} catch (Exception e) {
+			addMessage(redirectAttributes, "导出项目开发速度分析数据失败！失败信息："+e.getMessage());
+		}
+		return "redirect:" + adminPath + "/prho/prhoProjectDevelopSpeed/list?repage";
+    }
 }

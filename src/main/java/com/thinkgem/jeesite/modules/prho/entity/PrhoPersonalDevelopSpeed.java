@@ -145,7 +145,7 @@ public class PrhoPersonalDevelopSpeed extends DataEntity<PrhoPersonalDevelopSpee
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	@ExcelField(title="项目完成时间", align=2, sort=20)
+	@ExcelField(title="任务完成时间", align=2, sort=20)
 	public Date getTaskcompletetime() {
 		return taskcompletetime;
 	}

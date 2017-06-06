@@ -5,11 +5,11 @@ package com.thinkgem.jeesite.modules.prho.entity;
 
 import org.hibernate.validator.constraints.Length;
 
-
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.thinkgem.jeesite.common.persistence.DataEntity;
+import com.thinkgem.jeesite.common.utils.excel.annotation.ExcelField;
 
 /**
  * 项目开发速度分析Entity
@@ -93,7 +93,7 @@ public class PrhoProjectDevelopSpeed extends DataEntity<PrhoProjectDevelopSpeed>
 	public void setTaskplanendtime(Date taskplanendtime) {
 		this.taskplanendtime = taskplanendtime;
 	}
-	
+	@ExcelField(title="预估工时", align=2, sort=10)
 	public String getExpectedhour() {
 		return expectedhour;
 	}
@@ -134,7 +134,8 @@ public class PrhoProjectDevelopSpeed extends DataEntity<PrhoProjectDevelopSpeed>
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
+	
+	@ExcelField(title="项目名称", align=2, sort=5)
 	public String getProjectName() {
 		return projectName;
 	}
@@ -144,6 +145,7 @@ public class PrhoProjectDevelopSpeed extends DataEntity<PrhoProjectDevelopSpeed>
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@ExcelField(title="任务完成时间", align=2, sort=35)
 	public Date getTaskcompletetime() {
 		return taskcompletetime;
 	}
