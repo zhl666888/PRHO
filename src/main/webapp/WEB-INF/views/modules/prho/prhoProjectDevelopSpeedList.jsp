@@ -48,6 +48,14 @@
 				var radioval = $('input[name="time"]:checked').val();
 				$("#radioval").val(radioval);
 			}
+			function funccc(){
+				$dp.$('weekendtime').value=$dp.cal.getP('y')+$dp.cal.getP('W','WW');
+				 
+				}
+			function funcccsta(){
+				$dp.$('weekstarttime').value=$dp.cal.getP('y')+$dp.cal.getP('W','WW');
+				 
+				}
 	</script>
 </head>
 <body>
@@ -87,15 +95,15 @@
 			</div>
 			<div id="time_week" style="display: none">
 			<li><label style="width:120px">任务完成时间(周)：</label>
-			<input name="weekstarttime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
+			<input name="weekstarttime"  type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
 					value="<fmt:formatDate value="${prhoProjectDevelopSpeed.weekstarttime}" />"
-					onclick="WdatePicker({isShowWeek:true,onpicked:function() {$dp.$('d122_1').value=$dp.cal.getP('W','W');$dp.$('d122_2').value=$dp.cal.getP('W','WW');}})"/>
+					onclick="WdatePicker({isShowWeek:true,dateFmt:'yyyy-MM-dd'})"/>   <!-- onpicked:funcccsta,errDealMode:3 -->
 					
 			</li>
 			<li><label style="width:120px">任务结束时间(周)：</label>
-			<input name="weekendtime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
+			<input name="weekendtime"  type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
 					value="<fmt:formatDate value="${prhoProjectDevelopSpeed.weekendtime}" pattern="yyyy-MM-dd"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+					onclick="WdatePicker({isShowWeek:true,dateFmt:'yyyy-MM-dd'});"/>
 			</li>
 			</div>
 			<div id="time_month" style="display: none">

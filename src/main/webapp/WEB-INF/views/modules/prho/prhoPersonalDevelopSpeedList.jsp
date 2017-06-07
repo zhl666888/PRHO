@@ -14,7 +14,7 @@
  		       radioClick(radioval);
  			} 
 		$("#btnExport").click(function(){
-			top.$.jBox.confirm("确认要导出和人开发速度分析数据吗？","系统提示",function(v,h,f){
+			top.$.jBox.confirm("确认要导出个人开发速度分析数据吗？","系统提示",function(v,h,f){
 				if(v=="ok"){
 					$("#searchForm").attr("action","${ctx}/prho/prhoPersonalDevelopSpeed/export");
 					$("#searchForm").submit();

@@ -69,17 +69,19 @@ public class PrhoProjectDevelopSpeedService extends CrudService<PrhoProjectDevel
 			}
 			monthfw=monthstarttime+"-"+monthendtime;
 		}
-		String weekstarttime="";
-		String weekendtime="";
 		String weekfw="";
+		int weekstarttime=0;
+		int weekendtime=0;
 		if(prhoProjectDevelopSpeed.getRadioval().equals("week")){
 			if(prhoProjectDevelopSpeed.getWeekstarttime()!=null){
-				weekstarttime=DateUtils.getWeekOfYearStr(prhoProjectDevelopSpeed.getWeekstarttime());
+			//	weekstarttime=DateUtils.getWeekOfYearStr(prhoProjectDevelopSpeed.getWeekstarttime());
+				weekstarttime=DateUtils.getWeekCounter(prhoProjectDevelopSpeed.getWeekstarttime());
 			}
 			if(prhoProjectDevelopSpeed.getWeekendtime()!=null){
-				weekendtime=DateUtils.getWeekOfYearStr(prhoProjectDevelopSpeed.getWeekendtime());
+				//weekendtime=DateUtils.getWeekOfYearStr(prhoProjectDevelopSpeed.getWeekendtime());
+				weekendtime=DateUtils.getWeekCounter(prhoProjectDevelopSpeed.getWeekendtime());
 			}
-			weekfw=weekstarttime+"周-"+weekendtime+"周";
+			weekfw=String.valueOf(weekstarttime)+"周-"+String.valueOf(weekendtime)+"周";
 		}
 		for(PrhoProjectDevelopSpeed ppds: list){
 			ppds.setRadioval(prhoProjectDevelopSpeed.getRadioval());

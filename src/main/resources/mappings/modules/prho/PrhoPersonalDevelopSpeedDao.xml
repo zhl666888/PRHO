@@ -159,7 +159,7 @@
 			<if test="daytime != null and daytime != ''">
     <![CDATA[   and DATE_FORMAT(taskcompletetime, '%Y-%m-%d')=  DATE_FORMAT(#{daytime}, '%Y-%m-%d')   ]]>  
 			</if>
-			GROUP BY a.taskCompleteTime
+			GROUP BY a.taskCompleteTime,a.taskManager,a.project_id
 			</if>
 			<if test="radioval=='month'">
 			<if test="monthstarttime != null and monthstarttime != ''">
@@ -168,7 +168,8 @@
 			<if test="monthendtime != null and monthendtime != ''">
     <![CDATA[   and DATE_FORMAT(taskcompletetime, '%Y-%m')<= DATE_FORMAT(#{monthendtime}, '%Y-%m')   ]]>  
 			</if>
-			GROUP BY DATE_FORMAT(taskcompletetime, '%Y-%m')
+			GROUP BY <![CDATA[ DATE_FORMAT(#{monthstarttime}, '%Y-%m')<=DATE_FORMAT(taskcompletetime, '%Y-%m')<= DATE_FORMAT(#{monthendtime}, '%Y-%m') ]]>   
+			,a.taskManager,a.project_id
 			</if>
 			
 			<if test="radioval=='week'">
@@ -179,7 +180,8 @@
 			<if test="weekendtime != null and weekendtime != ''">
      <![CDATA[   and WEEK(taskcompletetime,0) <= WEEK(#{weekendtime},0)  ]]>
 			</if>
-			GROUP BY WEEK(taskcompletetime,0)
+			GROUP BY <![CDATA[ WEEK(#{weekstarttime},0) <=WEEK(taskcompletetime,0)<= WEEK(#{weekendtime},0)  ]]>
+			,a.taskManager,a.project_id
 			</if>
 			
 			
