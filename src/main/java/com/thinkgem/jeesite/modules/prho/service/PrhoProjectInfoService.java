@@ -135,4 +135,10 @@ public class PrhoProjectInfoService extends CrudService<PrhoProjectInfoDao, Prho
 		PrhoProjectInfo ppi=dao.getProjectManagerId(prhoProjectInfo);
 		return ppi;
 	}
+	
+	@Transactional(readOnly = false)
+	public PrhoProjectInfo getByProjectName(String projectname) {
+
+		return dao.getByProjectName(projectname);
+	}
 }

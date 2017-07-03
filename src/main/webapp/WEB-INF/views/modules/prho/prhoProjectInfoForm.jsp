@@ -7,7 +7,19 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			//$("#name").focus();
+			
 			$("#inputForm").validate({
+							rules : {
+								projectname : {
+									remote : "${ctx}/prho/prhoProjectInfo/checkProjectname?oldProjectname="
+											+ encodeURIComponent('${prhoProjectInfo.projectname}')
+								}
+							},
+							messages : {
+								projectname : {
+									remote : "项目名称已存在"
+								}
+							},
 				submitHandler: function(form){
 				//	document.getElementById('btnSubmit').disabled=true;
 					loading('正在提交，请稍等...');
@@ -22,8 +34,8 @@
 						error.insertAfter(element);
 					}
 				}
+			 });
 			});
-		});
 	</script>
 	<style type="text/css">
 	   /* .input-select{width:282px;} */
@@ -57,6 +69,8 @@
 		<div class="control-group">
 			<label class="control-label">项目名称：</label>
 			<div class="controls">
+				<input id="oldProjectname" name="oldProjectname" type="hidden"
+					value="${prhoProjectInfo.projectname}">
 				<form:input path="projectname" htmlEscape="false" maxlength="200" class="input-xlarge "/>
 			</div>
 		</div>

@@ -24,4 +24,5 @@ public interface PrhoProjectInfoDao extends CrudDao<PrhoProjectInfo> {
     public List<PrhoProjectInfo> getPersonalProjectName(PrhoProjectInfo prhoProjectInfo);
     public List<PrhoProjectInfo> getPersonProlist(String id);
     public PrhoProjectInfo getProjectManagerId(PrhoProjectInfo prhoProjectInfo);
+    public PrhoProjectInfo getByProjectName(String projectname);
 }

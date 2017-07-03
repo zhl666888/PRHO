@@ -29,28 +29,25 @@
 			$("#searchForm").submit();
         	return false;
         }
-	/* 	function funccc(){
-			$dp.$('d121').value=$dp.cal.getP('y')+$dp.cal.getP('W','WW');
-			} */
-			function radioClick(time){
-				if(time=="day"){
-					$("#time_day").show();
-					$("#time_week").hide();
-					$("#time_month").hide();
-				}
-				if(time=="week"){
-					$("#time_week").show();
-					$("#time_day").hide();
-					$("#time_month").hide();
-				}
-				if(time=="month"){
-					$("#time_month").show();
-					$("#time_day").hide();
-					$("#time_week").hide();
-				}
-				var radioval = $('input[name="time"]:checked').val();
-				$("#radioval").val(radioval);
+		function radioClick(time){
+			if(time=="day"){
+				$("#time_day").show();
+				$("#time_week").hide();
+				$("#time_month").hide();
 			}
+			if(time=="week"){
+				$("#time_week").show();
+				$("#time_day").hide();
+				$("#time_month").hide();
+			}
+			if(time=="month"){
+				$("#time_month").show();
+				$("#time_day").hide();
+				$("#time_week").hide();
+			}
+			var radioval = $('input[name="time"]:checked').val();
+			$("#radioval").val(radioval);
+		}
 	</script>
 </head>
 <body>
@@ -94,25 +91,25 @@
 			</li>
 			</div>
 			<div id="time_week" style="display: none">
-			<li><label style="width:140px">任务完成起始时间(周)：</label>
+			<li><label style="width:120px">任务完成时间范围：</label>
 			<input name="weekstarttime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
 					value="<fmt:formatDate value="${prhoPersonalDevelopSpeed.weekstarttime}" />"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowWeek:true})"/>
 					
 			</li>
-			<li><label style="width:140px">任务完成结束时间(周)：</label>
+			<li><label style="width:32px">--&nbsp;&nbsp;&nbsp;&nbsp;</label><!-- <label style="width:140px">任务完成结束时间(周)：</label> -->
 			<input name="weekendtime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
 					value="<fmt:formatDate value="${prhoPersonalDevelopSpeed.weekendtime}" pattern="yyyy-MM-dd"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowWeek:true});"/>
 			</li>
 			</div>
 			<div id="time_month" style="display: none">
-			<li><label style="width:140px">任务完成起始时间(月)：</label>
+			<li><label style="width:120px">任务完成时间范围：</label>
 			<input name="monthstarttime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
 					value="<fmt:formatDate value="${prhoPersonalDevelopSpeed.monthstarttime}" pattern="yyyy-MM"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM'});"/>
 			</li>
-			<li><label style="width:140px">任务完成结束时间(月)：</label>
+			<li><label style="width:32px">--&nbsp;&nbsp;&nbsp;&nbsp;</label><!-- <label style="width:140px">任务完成结束时间(月)：</label> -->
 			<input name="monthendtime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
 					value="<fmt:formatDate value="${prhoPersonalDevelopSpeed.monthendtime}" pattern="yyyy-MM"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM'});"/>

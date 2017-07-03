@@ -94,25 +94,25 @@
 			</li>
 			</div>
 			<div id="time_week" style="display: none">
-			<li><label style="width:120px">任务完成时间(周)：</label>
+			<li><label style="width:120px">任务完成时间范围：</label>
 			<input name="weekstarttime"  type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
 					value="<fmt:formatDate value="${prhoProjectDevelopSpeed.weekstarttime}" />"
 					onclick="WdatePicker({isShowWeek:true,dateFmt:'yyyy-MM-dd'})"/>   <!-- onpicked:funcccsta,errDealMode:3 -->
 					
 			</li>
-			<li><label style="width:120px">任务结束时间(周)：</label>
+			<li><label style="width:32px">--&nbsp;&nbsp;&nbsp;&nbsp;</label><!-- <label style="width:120px">任务结束时间(周)：</label> -->
 			<input name="weekendtime"  type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
 					value="<fmt:formatDate value="${prhoProjectDevelopSpeed.weekendtime}" pattern="yyyy-MM-dd"/>"
 					onclick="WdatePicker({isShowWeek:true,dateFmt:'yyyy-MM-dd'});"/>
 			</li>
 			</div>
 			<div id="time_month" style="display: none">
-			<li><label style="width:120px">任务完成时间(月)：</label>
+			<li><label style="width:120px">任务完成时间范围：</label>
 			<input name="monthstarttime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
 					value="<fmt:formatDate value="${prhoProjectDevelopSpeed.monthstarttime}" pattern="yyyy-MM"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM',isShowClear:false});"/>
 			</li>
-			<li><label style="width:120px">任务完成时间(月)：</label>
+			<li><label style="width:32px">--&nbsp;&nbsp;&nbsp;&nbsp;</label><!-- <label style="width:120px">任务完成时间(月)：</label> -->
 			<input name="monthendtime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
 					value="<fmt:formatDate value="${prhoProjectDevelopSpeed.monthendtime}" pattern="yyyy-MM"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM',isShowClear:false});"/>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -165,6 +166,23 @@ public class PrhoProjectInfoController extends BaseController {
 		}
 		return "redirect:"+Global.getAdminPath()+"/prho/prhoProjectInfo/list?repage";
     }
-	
+	/**
+	 * 验证项目名称是否有效
+	 * 
+	 * @param projectname
+	 * @param oldProjectname
+	 * @return
+	 */
+	@ResponseBody
+	@RequiresPermissions("prho:prhoProjectInfo:edit")
+	@RequestMapping(value = "checkProjectname")
+	public String checkProjectname(String oldProjectname, String projectname) {
+		if (oldProjectname != null && projectname.equals(oldProjectname)) {
+			return "true";
+		} else if (projectname != null && prhoProjectInfoService.getByProjectName(projectname) == null) {
+			return "true";
+		}
+		return "false";
+	}
 	
 }
