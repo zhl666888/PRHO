@@ -18,7 +18,7 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/prho/prhoProjectTask/">项目任务列表</a></li>
+		<li class="active"><a href="${ctx}/prho/prhoProjectTask">项目任务列表</a></li>
 		<shiro:hasPermission name="prho:prhoProjectTask:edit"><li><a href="${ctx}/prho/prhoProjectTask/form">项目任务添加</a></li></shiro:hasPermission>
 	</ul>
 	<form:form id="searchForm" modelAttribute="prhoProjectTask" action="${ctx}/prho/prhoProjectTask/" method="post" class="breadcrumb form-search">
@@ -76,10 +76,10 @@
 					${prhoProjectTask.taskname}
 				</td>
 				<td>
-					<fmt:formatDate value="${prhoProjectTask.tastplanbegintime}" pattern="yyyy-MM-dd"/>
+					<fmt:formatDate value="${prhoProjectTask.tastplanbegintime}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
-					<fmt:formatDate value="${prhoProjectTask.taskplanendtime}" pattern="yyyy-MM-dd"/>
+					<fmt:formatDate value="${prhoProjectTask.taskplanendtime}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
 					${prhoProjectTask.expectedhour}
@@ -91,7 +91,7 @@
 					${fns:getDictLabel(prhoProjectTask.taskcompleteschedule, 'taskComplete_schedule', '')}
 				</td>
 				<td>
-					<fmt:formatDate value="${prhoProjectTask.taskcompletetime}" pattern="yyyy-MM-dd"/>
+					<fmt:formatDate value="${prhoProjectTask.taskcompletetime}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
 					${fns:getDictLabel(prhoProjectTask.tasktype, 'task_type', '')}

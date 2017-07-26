@@ -32,14 +32,14 @@
 				</form:select>
 				</li>
 			<li><label style="width:100px">任务开始时间：</label>
-				<input name="starttime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
-					value="<fmt:formatDate value="${prhoProjectHours.starttime}" pattern="yyyy-MM-dd"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+				<input name="starttime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+					value="<fmt:formatDate value="${prhoProjectHours.starttime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 			</li>
 			<li><label style="width:100px">任务结束时间：</label>
-				<input name="endtime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
-					value="<fmt:formatDate value="${prhoProjectHours.endtime}" pattern="yyyy-MM-dd"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+				<input name="endtime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+					value="<fmt:formatDate value="${prhoProjectHours.endtime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 			</li>
 			<li><label>审批状态：</label>
 				<form:select path="approvalstatus" class="input-small ">
@@ -91,10 +91,10 @@
 					${fns:getDictLabel(prhoProjectHours.workhourstype, 'workHours_type', '')}
 				</td>
 				<td>
-				<fmt:formatDate value="${prhoProjectHours.taskstarttime}" pattern="yyyy-MM-dd"/>
+				<fmt:formatDate value="${prhoProjectHours.taskstarttime}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
-				<fmt:formatDate value="${prhoProjectHours.taskendtime}" pattern="yyyy-MM-dd"/>
+				<fmt:formatDate value="${prhoProjectHours.taskendtime}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
 					${prhoProjectHours.realhours}

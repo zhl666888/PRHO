@@ -88,9 +88,9 @@
 			</li>
 			<div id="time_day">
 			<li><label style="width:100px">任务完成时间：</label>
-			<input name="daytime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
-					value="<fmt:formatDate value="${prhoProjectDevelopSpeed.daytime}" pattern="yyyy-MM-dd"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+			<input name="daytime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+					value="<fmt:formatDate value="${prhoProjectDevelopSpeed.daytime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 			</li>
 			</div>
 			<div id="time_week" style="display: none">
@@ -144,7 +144,7 @@
 				<td>
 				<c:choose>
 				<c:when test="${prhoProjectDevelopSpeed.radioval=='day'}">
-				<fmt:formatDate value="${prhoProjectDevelopSpeed.taskcompletetime}" pattern="yyyy-MM-dd"/>
+				<fmt:formatDate value="${prhoProjectDevelopSpeed.taskcompletetime}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</c:when>
 				<c:when test="${prhoProjectDevelopSpeed.radioval=='month'}">
 					${prhoProjectDevelopSpeed.monthfw}

@@ -90,7 +90,9 @@ public class PrhoProjectTaskService extends CrudService<PrhoProjectTaskDao, Prho
 			PrhoProjectTask prhoProjectTask=new PrhoProjectTask();
 			prhoProjectTask.setProjectId(prhoProjectInfo.getId());
 			prhoProjectTask.setWorktype(dictList.get(i).getValue());
-			prhoProjectTask.setTasktype("public");
+			prhoProjectTask.setTasktype("0");
+			prhoProjectTask.setTaskname(dictList.get(i).getLabel());
+			prhoProjectTask.setTaskmanager(prhoProjectInfo.getUserId());
 			save(prhoProjectTask);
 		}
 	}

@@ -3,6 +3,13 @@
  */
 package com.thinkgem.jeesite.test.web;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,8 +29,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.common.config.Global;
-import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.common.utils.StringUtils;
+import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.test.entity.TestTree;
 import com.thinkgem.jeesite.test.service.TestTreeService;
 
@@ -120,6 +127,17 @@ public class TestTreeController extends BaseController {
 			}
 		}
 		return mapList;
+	}
+	
+	public static void main(String[] args) throws IOException{
+		List<String> lines=new ArrayList<String>();
+		BufferedReader br=new BufferedReader(new InputStreamReader(new FileInputStream("c:\\prho_0626.sql"),"iso-8859-1"));
+		String line = null;
+		while ((line = br.readLine()) != null) {
+		      //lines.add(line);
+		      System.out.println(line);
+		}
+		br.close();
 	}
 	
 }

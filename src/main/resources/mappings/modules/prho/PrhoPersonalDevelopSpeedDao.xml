@@ -157,7 +157,7 @@
 			</if>
 			<if test="radioval=='day'">
 			<if test="daytime != null and daytime != ''">
-    <![CDATA[   and DATE_FORMAT(taskcompletetime, '%Y-%m-%d')=  DATE_FORMAT(#{daytime}, '%Y-%m-%d')   ]]>  
+    <![CDATA[   and DATE_FORMAT(taskcompletetime, '%Y-%m-%d %H:%i:%s')=  DATE_FORMAT(#{daytime}, '%Y-%m-%d %H:%i:%s')   ]]>  
 			</if>
 			GROUP BY a.taskCompleteTime,a.taskManager,a.project_id
 			</if>

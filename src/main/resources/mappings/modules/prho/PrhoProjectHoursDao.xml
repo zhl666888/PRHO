@@ -55,10 +55,10 @@
 				AND a.project_id = #{projectId}
 			</if>
 			<if test="starttime!=null and starttime!=''">  
-    <![CDATA[   and DATE_FORMAT(taskstarttime, '%Y-%m-%d')>=  DATE_FORMAT(#{starttime}, '%Y-%m-%d')   ]]>  
+    <![CDATA[   and DATE_FORMAT(taskstarttime, '%Y-%m-%d %H:%i:%s')>=  DATE_FORMAT(#{starttime}, '%Y-%m-%d %H:%i:%s')   ]]>  
 			</if>  
 			<if test="endtime!=null and endtime!=''">  
-    <![CDATA[  and DATE_FORMAT(taskendtime, '%Y-%m-%d') <= DATE_FORMAT(#{endtime}, '%Y-%m-%d')    ]]>  
+    <![CDATA[  and DATE_FORMAT(taskendtime, '%Y-%m-%d %H:%i:%s') <= DATE_FORMAT(#{endtime}, '%Y-%m-%d %H:%i:%s')    ]]>  
 			</if>  
 			<if test="staff != null and staff != ''">
 				AND a.staff = #{staff}

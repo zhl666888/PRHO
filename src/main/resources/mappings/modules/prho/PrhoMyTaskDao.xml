@@ -149,14 +149,14 @@
 			<if test="taskstatus == 'unfinished'">
 				AND a.taskcompleteschedule != '100'
 			</if>
-		
-				AND a.tasktype = 'private'
+		 		<!-- 私有 -->
+				AND (a.tasktype = 'private' or a.tasktype='1')
 			
 				<if test="starttime!=null and starttime!=''">  
-    <![CDATA[   and DATE_FORMAT(tastplanbegintime, '%Y-%m-%d')>=  DATE_FORMAT(#{starttime}, '%Y-%m-%d')   ]]>  
+    <![CDATA[   and DATE_FORMAT(tastplanbegintime, '%Y-%m-%d %H:%i:%s')>=  DATE_FORMAT(#{starttime}, '%Y-%m-%d %H:%i:%s')   ]]>  
 </if>  
 <if test="endtime!=null and endtime!=''">  
-    <![CDATA[  and DATE_FORMAT(taskplanendtime, '%Y-%m-%d') <= DATE_FORMAT(#{endtime}, '%Y-%m-%d')    ]]>  
+    <![CDATA[  and DATE_FORMAT(taskplanendtime, '%Y-%m-%d %H:%i:%s') <= DATE_FORMAT(#{endtime}, '%Y-%m-%d %H:%i:%s')    ]]>  
 </if>  
 		</where>
 		<choose>

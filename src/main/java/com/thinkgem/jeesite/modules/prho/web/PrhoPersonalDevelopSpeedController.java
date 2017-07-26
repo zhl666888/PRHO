@@ -77,7 +77,7 @@ public class PrhoPersonalDevelopSpeedController extends BaseController {
 	 * @param redirectAttributess
 	 * @return
 	 */
-	  @RequiresPermissions("prho:prhoPersonalDevelopSpeed:view")
+	  @RequiresPermissions("prho:prhoPersonalDevelopSpeed:export")
 	  @RequestMapping(value = "export", method=RequestMethod.POST)
     public String exportFile(PrhoPersonalDevelopSpeed prhoPersonalDevelopSpeed, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
 		try {

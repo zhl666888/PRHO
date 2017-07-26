@@ -43,6 +43,7 @@
 		<include refid="prhoProjectTaskJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
+			and prinfo.del_flag='0'
 			<if test="taskmanager != null and taskmanager != ''">
 				AND a.taskmanager = #{taskmanager}
 			</if>
@@ -143,6 +144,7 @@
 		<include refid="prhoProjectTaskJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
+			and prinfo.del_flag = '0'
 			<if test="projectId != null and projectId != ''">
 				AND a.project_id = #{projectId}
 			</if>
@@ -164,7 +166,7 @@
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
-				ORDER BY a.update_date DESC
+				ORDER BY  tasktype DESC,   a.update_date  DESC
 			</otherwise>
 		</choose>
 	</select>

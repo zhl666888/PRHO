@@ -32,17 +32,17 @@
 				</form:select>
 			</li>
 					<li><label style="width:100px">计划开始时间：</label>
-				<input name="starttime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
-					value="<fmt:formatDate value="${prhoMyTask.starttime}" pattern="yyyy-MM-dd"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+				<input name="starttime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+					value="<fmt:formatDate value="${prhoMyTask.starttime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 			</li>
 			<li><label style="width:100px">计划结束时间：</label>
-				<input name="endtime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
-					value="<fmt:formatDate value="${prhoMyTask.endtime}" pattern="yyyy-MM-dd"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+				<input name="endtime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+					value="<fmt:formatDate value="${prhoMyTask.endtime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 			</li>
 			<li><label>任务状态：</label>
-				<form:select path="taskstatus" class="input-medium ">
+				<form:select path="taskstatus" class="input-small ">
 					<form:option value="" label=""/>
 					<form:options items="${fns:getDictList('task_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
@@ -78,10 +78,10 @@
 					${prhoMyTask.taskname}
 				</td>
 				<td>
-					<fmt:formatDate value="${prhoMyTask.tastplanbegintime}" pattern="yyyy-MM-dd"/>
+					<fmt:formatDate value="${prhoMyTask.tastplanbegintime}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
-					<fmt:formatDate value="${prhoMyTask.taskplanendtime}" pattern="yyyy-MM-dd"/>
+					<fmt:formatDate value="${prhoMyTask.taskplanendtime}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
 					${prhoMyTask.expectedhour}
@@ -93,7 +93,7 @@
 					${fns:getDictLabel(prhoMyTask.taskcompleteschedule, 'taskComplete_schedule', '')}
 				</td>
 				<td>
-					<fmt:formatDate value="${prhoMyTask.taskcompletetime}" pattern="yyyy-MM-dd"/>
+					<fmt:formatDate value="${prhoMyTask.taskcompletetime}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
 					${fns:getDictLabel(prhoMyTask.tasktype, 'task_type', '')}

@@ -98,7 +98,7 @@ public class PrhoProjectHoursController extends BaseController {
 		//保存私有任务完成进度、私有任务完成时间
 		String taskId=prhoProjectHours.getTaskId();
 		PrhoProjectTask prhoProjectTask=  prhoProjectTaskService.get(taskId);
-		if(("private").equals(prhoProjectTask.getTasktype())){
+		if(("private").equals(prhoProjectTask.getTasktype())||("1").equals(prhoProjectTask.getTasktype())){
 			prhoProjectTaskService.updateProjectProgress(prhoProjectHours,taskId);
 		}
 		addMessage(redirectAttributes, "保存项目工时成功");
@@ -128,10 +128,13 @@ public class PrhoProjectHoursController extends BaseController {
 			prhoProjectHours.setTaskId(prhoProjectTask.getId());
 			prhoProjectHours.setTaskcompleteschedule("100");
 			prhoProjectHours.setJobtypelabel(DictUtils.getDictLabel(prhoProjectTask.getWorktype(), "work_type", ""));
+			model.addAttribute("tnReadonly", prhoProjectHours.getTaskId());
 			
 			PrhoProjectInfo	prhoProjectInfo =prhoProjectInfoService.get(prhoProjectTask.getProjectId());
 			prhoProjectHours.setProjectId(prhoProjectInfo.getId());
 			prhoProjectHours.setProjectmanagerId(prhoProjectInfo.getUserId());
+			model.addAttribute("pnReadonly", prhoProjectHours.getProjectId());
+			return "modules/prho/prhoFillWorkhoursForm";
 		}
 		String date=DateUtils.getDate();
 		prhoProjectHours.setWorktime(DateUtils.parseDate(date));

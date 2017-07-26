@@ -27,14 +27,14 @@
 		<ul class="ul-form">
 	
 			<li><label style="width:100px">工作开始日期：</label>
-				<input name="starttime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
-					value="<fmt:formatDate value="${prhoWorktimeApproval.starttime}" pattern="yyyy-MM-dd"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+				<input name="starttime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+					value="<fmt:formatDate value="${prhoWorktimeApproval.starttime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 			</li>
 			<li><label style="width:100px">工作结束日期：</label>
-				<input name="endtime" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
-					value="<fmt:formatDate value="${prhoWorktimeApproval.endtime}" pattern="yyyy-MM-dd"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+				<input name="endtime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+					value="<fmt:formatDate value="${prhoWorktimeApproval.endtime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 			</li>
 			<li><label>审批状态：</label>
 				<form:select path="approvalstatus" class="input-small ">
@@ -43,7 +43,7 @@
 				</form:select>
 			</li>
 				<li><label>人员：</label>
-			<form:select path="staff" class="input-medium">
+			<form:select path="staff" class="input-small">
 					<form:option value="" label=""/>
 					<form:options items="${fnprho:getAllUser()}" itemLabel="name" itemValue="id" htmlEscape="false"/>
 				</form:select>
@@ -80,7 +80,7 @@
 					${prhoWorktimeApproval.staffname}
 				</td>
 				<td>
-					<fmt:formatDate value="${prhoWorktimeApproval.worktime}" pattern="yyyy-MM-dd"/>
+					<fmt:formatDate value="${prhoWorktimeApproval.worktime}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
 					${prhoWorktimeApproval.projectName}
@@ -95,10 +95,10 @@
 					${fns:getDictLabel(prhoWorktimeApproval.workhourstype, 'workHours_type', '')}
 				</td>
 				<td>
-				<fmt:formatDate value="${prhoWorktimeApproval.taskstarttime}" pattern="yyyy-MM-dd"/>
+				<fmt:formatDate value="${prhoWorktimeApproval.taskstarttime}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
-				<fmt:formatDate value="${prhoWorktimeApproval.taskendtime}" pattern="yyyy-MM-dd"/>
+				<fmt:formatDate value="${prhoWorktimeApproval.taskendtime}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
 					${prhoWorktimeApproval.realhours}

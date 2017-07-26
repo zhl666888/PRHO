@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>我的工时管理</title>
+	<title>填报工时</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -84,8 +84,8 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/prho/prhoProjectHours/">我的工时列表</a></li>
-		<li class="active"><a href="${ctx}/prho/prhoProjectHours/form?id=${prhoProjectHours.id}">我的工时<shiro:hasPermission name="prho:prhoProjectHours:edit">${not empty prhoProjectHours.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="prho:prhoProjectHours:edit">查看</shiro:lacksPermission></a></li>
+		<li><a href="${ctx}/prho/prhoMyTask/">我的任务</a></li>
+		<li class="active"><a href="#">填报工时</a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="prhoProjectHours" action="${ctx}/prho/prhoProjectHours/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
