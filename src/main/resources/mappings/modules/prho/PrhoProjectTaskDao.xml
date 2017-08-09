@@ -176,4 +176,26 @@
 			taskcompletetime = #{taskcompletetime}
 		WHERE id = #{id}
 	</update>
+	<select id="findProjectTaskList" resultType="PrhoProjectTask">
+		SELECT 
+			<include refid="prhoProjectTaskColumns"/>
+		FROM prho_project_task a
+		<include refid="prhoProjectTaskJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			and prinfo.del_flag='0'
+			<if test="projectId != null and projectId != ''">
+				AND a.project_id = #{projectId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
 </mapper>

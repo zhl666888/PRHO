@@ -3,6 +3,10 @@
  */
 package com.thinkgem.jeesite.modules.prho.web;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -78,6 +82,13 @@ public class PrhoProjectHoursController extends BaseController {
 			prhoProjectHours.setTaskendtime(DateUtils.parseDate(date));
 			prhoProjectHours.setTaskcompleteschedule("100");
 			prhoProjectHours.setWorkhourstype("workingDay");
+		}else{
+			//修改时任务名称列表回显
+			List<PrhoProjectTask> myTaskList=new ArrayList<PrhoProjectTask>();
+			  myTaskList=prhoProjectTaskService.findProjectTaskList(prhoProjectHours.getProjectId());
+			  if(!"".equals(myTaskList)&&null!=myTaskList){
+				  model.addAttribute("myTaskList", myTaskList);
+			  }
 		}
 		model.addAttribute("prhoProjectHours", prhoProjectHours);
 		return "modules/prho/prhoProjectHoursForm";
@@ -149,11 +160,16 @@ public class PrhoProjectHoursController extends BaseController {
 	@ResponseBody
 	@RequiresPermissions("prho:prhoProjectHours:view")
 	@RequestMapping(value="getProjectManager")
-	public PrhoProjectInfo getProjectManager(String projectId){
+	public PrhoProjectInfo getProjectManager(String projectId,Model model){
 		PrhoProjectInfo prhoProjectInfo=new PrhoProjectInfo();
 		if(StringUtils.isNotBlank(projectId)){
 		 prhoProjectInfo=prhoProjectInfoService.get(projectId);
 		}
+		List<PrhoProjectTask> myTaskList=new ArrayList<PrhoProjectTask>();
+		  myTaskList=prhoProjectTaskService.findProjectTaskList(projectId);
+		  if(!"".equals(myTaskList)&&null!=myTaskList){
+			  prhoProjectInfo.setMyTaskList(myTaskList);
+		  }
 		return prhoProjectInfo;
 	}
 	@ResponseBody

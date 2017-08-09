@@ -37,6 +37,7 @@ public class PrhoProjectInfo extends DataEntity<PrhoProjectInfo> {
 	private String estimatehours;  //预估工时 新增字段
 	private String staffId; //项目所属人员id
 	private List<User> userList = Lists.newArrayList();  //项目与人员关系列表
+	private List<PrhoProjectTask> myTaskList=Lists.newArrayList(); 
 	
 	/*@SupCol(isUnique="true", isHide="true")
 	@ExcelField(title="ID", type=1, align=2, sort=1)
@@ -179,6 +180,14 @@ public class PrhoProjectInfo extends DataEntity<PrhoProjectInfo> {
 
 	public void setUserList(List<User> userList) {
 		this.userList = userList;
+	}
+
+	public List<PrhoProjectTask> getMyTaskList() {
+		return myTaskList;
+	}
+
+	public void setMyTaskList(List<PrhoProjectTask> myTaskList) {
+		this.myTaskList = myTaskList;
 	}
 
 }

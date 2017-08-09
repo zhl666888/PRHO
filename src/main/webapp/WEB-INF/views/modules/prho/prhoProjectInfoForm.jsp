@@ -77,7 +77,7 @@
 		<div class="control-group">
 			<label class="control-label">预估工时(小时)：</label>
 			<div class="controls">
-				<form:input path="estimatehours" htmlEscape="false"  class="input-xlarge required"/>
+				<form:input path="estimatehours" htmlEscape="false"  class="input-xlarge required" onkeyup="value=value.replace(/[^\-?\d.]/g,'')"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>

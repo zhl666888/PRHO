@@ -18,4 +18,5 @@ import com.thinkgem.jeesite.modules.prho.entity.PrhoProjectTask;
 public interface PrhoProjectTaskDao extends CrudDao<PrhoProjectTask> {
 	public List<PrhoProjectTask> findPageBy(PrhoProjectTask prhoProjectTask);
 	public void updateProjectProgress(PrhoProjectTask prhoProjectTask);
+	public List<PrhoProjectTask> findProjectTaskList(PrhoProjectTask prhoProjectTask);
 }

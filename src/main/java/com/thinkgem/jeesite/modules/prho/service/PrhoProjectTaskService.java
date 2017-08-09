@@ -96,4 +96,10 @@ public class PrhoProjectTaskService extends CrudService<PrhoProjectTaskDao, Prho
 			save(prhoProjectTask);
 		}
 	}
+	
+	public List<PrhoProjectTask> findProjectTaskList(String projectId){
+		PrhoProjectTask prhoProjectTask=new PrhoProjectTask();
+		prhoProjectTask.setProjectId(projectId);
+		return prTaskDao.findProjectTaskList(prhoProjectTask);
+	}
 }

@@ -190,7 +190,7 @@
 		<div class="zhl_left">
 			<label class="control-label">实际用时(小时)：</label>
 			<div class="controls zhl">
-				<form:input path="realhours" htmlEscape="false" class="input-medium required"/>
+				<form:input path="realhours" htmlEscape="false" class="input-medium required" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
 				<span class="help-inline"><font color="red">*</font></span>
 			</div>
 		</div>

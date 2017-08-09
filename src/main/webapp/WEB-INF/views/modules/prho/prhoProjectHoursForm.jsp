@@ -38,25 +38,6 @@
 			
 		});
 		$(function(){
-		
-			$("#projectId").click(function(){
-				var projectId = $("#projectId").val();
-				$.ajax( {  
-	                type : "post",  
-	                url : '${ctx}/prho/prhoProjectHours/getProjectManager',
-	                data:{projectId:projectId},
-	                success: function(data) {
-	                	if(data.userId){
-	                		  $("#projectmanagerId").find("option[value='"+data.userId+"']").attr("selected", "selected");
-	                		  var projectmanager=  $('#projectmanagerId option:selected').text();
-	         				  $("#s2id_projectmanagerId").find(".select2-chosen").html(projectmanager);
-	                	}
-	                },
-	            	error: function(request) {
-	                	alert("出错");
-	            	}
-	            }); 
-			});
 			$("#taskId").click(function(){
 				var taskId = $("#taskId").val();
 				$.ajax( {  
@@ -76,6 +57,32 @@
 	            }); 
 			});
 		}); 
+		function linkTaskName(){
+			var projectId = $("#projectId").val();
+			$.ajax( {  
+                type : "post",  
+                url : '${ctx}/prho/prhoProjectHours/getProjectManager',
+                data:{projectId:projectId},
+                success: function(data) {
+                	if(data.userId){
+                		  $("#projectmanagerId").find("option[value='"+data.userId+"']").attr("selected", "selected");
+                		  var projectmanager=  $('#projectmanagerId option:selected').text();
+         				  $("#s2id_projectmanagerId").find(".select2-chosen").html(projectmanager);
+                	}
+                	if(data.myTaskList){
+                		 $("#taskId").empty();
+                		  $.each(data.myTaskList, function(index,item){
+                              $("#taskId").append("<option  value='"+item.id+"'>"+item.taskname+"</option>")
+                          });
+                	}
+                },
+            	error: function(request) {
+                	alert("出错");
+            	}
+            }); 
+			
+			
+		}
 	</script>
 	<style type="text/css">
 	.zhl{width:55%;}
@@ -105,15 +112,15 @@
 		<div class="controls zhl">
 		<c:choose>
 			<c:when test="${''!=prhoProjectHours.projectId&& null!=prhoProjectHours.projectId}">
-			<form:select id="projectId"  path="projectId" class="input-select_medium">
+			<form:select id="projectId" onchange='linkTaskName()'  path="projectId" class="input-select_medium">
 					<form:option value="" label=""/>
-					<form:options items="${fnprho:getPersonalProjectName()}"   itemLabel="projectname" itemValue="id" htmlEscape="false"/>
+					<form:options   items="${fnprho:getPersonalProjectName()}"   itemLabel="projectname" itemValue="id" htmlEscape="false"/>
 				</form:select>
 				</c:when>
 				<c:otherwise>
-				<form:select id="projectId" path="projectId" class="input-select_medium">
+				<form:select id="projectId" onchange='linkTaskName()' path="projectId" class="input-select_medium">
 					<form:option value="" label=""/>
-					<form:options items="${fnprho:getPersonalProjectName()}" itemLabel="projectname" itemValue="id" htmlEscape="false"/>
+					<form:options  items="${fnprho:getPersonalProjectName()}" itemLabel="projectname" itemValue="id" htmlEscape="false"/>
 				</form:select>
 				</c:otherwise>
 		</c:choose>
@@ -125,15 +132,16 @@
 			<div class="controls zhl">
 			<c:choose>
 			<c:when test="${''!=prhoProjectHours.taskId&& null!=prhoProjectHours.taskId}">
-			<form:select id="taskId" readonly="readOnly" path="taskId" class="input-select_medium">
+			<form:select id="taskId"  path="taskId" class="input-select_medium">
 					<form:option value="" label=""/>
-					<form:options items="${fnprho:getAllTaskName()}"  itemLabel="taskname" itemValue="id" htmlEscape="false"/>
+					
+					 <form:options items="${myTaskList}"  itemLabel="taskname" itemValue="id" htmlEscape="false"/>
 				</form:select>
 				</c:when>
 				<c:otherwise>
 				<form:select id="taskId" path="taskId" class="input-select_medium">
 					<form:option value="" label=""/>
-					<form:options items="${fnprho:getAllTaskName()}" itemLabel="taskname" itemValue="id" htmlEscape="false"/>
+					<%-- <form:options  items="${fnprho:getAllTaskName()}" itemLabel="taskname" itemValue="id" htmlEscape="false"/> --%>
 				</form:select>
 				</c:otherwise>
 				</c:choose>
@@ -190,7 +198,7 @@
 		<div class="zhl_left">
 			<label class="control-label">实际用时(小时)：</label>
 			<div class="controls zhl">
-				<form:input path="realhours" htmlEscape="false" class="input-medium required"/>
+				<form:input path="realhours" htmlEscape="false" class="input-medium required" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" />
 				<span class="help-inline"><font color="red">*</font></span>
 			</div>
 		</div>
