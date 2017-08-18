@@ -52,28 +52,34 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>任务负责人</th>
+				<th>所属项目</th>
 				<th>任务名称</th>
+				<th>任务类型</th>
+				<th>工作类型</th>
 				<th>计划开始时间</th>
 				<th>计划结束时间</th>
 				<th>预计用时</th>
-				<th>所属项目</th>
+				<th>任务负责人</th>
 				<th>任务完成进度</th>
 				<th>任务完成时间</th>
-				<th>任务类型</th>
-				<th>工作类型</th>
+
 				<shiro:hasPermission name="prho:prhoProjectTask:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="prhoProjectTask">
 			<tr>
-				<td><%-- <a href="${ctx}/prho/prhoProjectTask/form?id=${prhoProjectTask.id}"> --%>
-					${prhoProjectTask.userName}
-				<!-- </a> -->
+				<td>
+						${prhoProjectTask.projectName}
 				</td>
 				<td>
 					${prhoProjectTask.taskname}
+				</td>
+				<td>
+						${fns:getDictLabel(prhoProjectTask.tasktype, 'task_type', '')}
+				</td>
+				<td>
+						${fns:getDictLabel(prhoProjectTask.worktype, 'work_type', '')}
 				</td>
 				<td>
 					<fmt:formatDate value="${prhoProjectTask.tastplanbegintime}" pattern="yyyy-MM-dd HH:mm:ss"/>
@@ -84,8 +90,10 @@
 				<td>
 					${prhoProjectTask.expectedhour}
 				</td>
-				<td>
-					${prhoProjectTask.projectName}
+
+				<td><%-- <a href="${ctx}/prho/prhoProjectTask/form?id=${prhoProjectTask.id}"> --%>
+						${prhoProjectTask.userName}
+					<!-- </a> -->
 				</td>
 				<td>
 					${fns:getDictLabel(prhoProjectTask.taskcompleteschedule, 'taskComplete_schedule', '')}
@@ -93,12 +101,7 @@
 				<td>
 					<fmt:formatDate value="${prhoProjectTask.taskcompletetime}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
-				<td>
-					${fns:getDictLabel(prhoProjectTask.tasktype, 'task_type', '')}
-				</td>
-				<td>
-					${fns:getDictLabel(prhoProjectTask.worktype, 'work_type', '')}
-				</td>
+
 				<shiro:hasPermission name="prho:prhoProjectTask:edit"><td>
     				<a href="${ctx}/prho/prhoProjectTask/form?id=${prhoProjectTask.id}">修改</a>
 					<a href="${ctx}/prho/prhoProjectTask/delete?id=${prhoProjectTask.id}" onclick="return confirmx('确认要删除该项目任务吗？', this.href)">删除</a>
