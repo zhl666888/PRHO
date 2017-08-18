@@ -31,12 +31,12 @@
 					<form:options items="${fnprho:getAllProjectName()}" itemLabel="projectname" itemValue="id" htmlEscape="false"/>
 				</form:select>
 			</li>
-					<li><label style="width:100px">任务开始时间：</label>
+					<li><label style="width:100px">计划开始时间：</label>
 				<input name="starttime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${prhoMyTask.starttime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 			</li>
-			<li><label style="width:100px">任务结束时间：</label>
+			<li><label style="width:100px">计划结束时间：</label>
 				<input name="endtime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${prhoMyTask.endtime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
