@@ -38,12 +38,12 @@
 					<form:options items="${fnprho:getAllUser()}" itemLabel="name" itemValue="id" htmlEscape="false"/>
 				</form:select> 
 			</li>
-			<li><label style="width:100px">任务开始时间：</label>
+			<li><label style="width:100px">开始时间：</label>
 				<input name="starttime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${prhoProjectDailyStatics.starttime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:true});"/>
 			</li>
-			<li><label style="width:100px">任务结束时间：</label>
+			<li><label style="width:100px">结束时间：</label>
 				<input name="endtime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${prhoProjectDailyStatics.endtime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:true});"/>
